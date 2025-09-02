@@ -907,7 +907,7 @@
                         </div>
                         
                         <!-- Main Content Area -->
-                        <div class="relative glass border-2 border-dashed border-white/40 rounded-3xl p-20 text-center hover:border-white/80 transition-all duration-500 overflow-hidden">
+                        <div class="relative glass border-2 border-solid border-white/20 rounded-3xl p-20 text-center hover:border-white/60 hover:shadow-2xl hover:shadow-purple-500/20 transition-all duration-500 overflow-hidden">
                             <!-- Shimmer Effect -->
                             <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
                             
@@ -1082,6 +1082,16 @@
                         <p class="text-2xl text-white/90 max-w-4xl mx-auto leading-relaxed">
                             Your resume has been analyzed using advanced AI algorithms. Here's your comprehensive ATS compatibility report.
                         </p>
+                        
+                        <!-- Analyze Another Resume Button -->
+                        <div class="mt-6">
+                            <button onclick="resetToUpload()" class="glass-button px-8 py-4 rounded-full text-lg font-semibold text-white/90 hover:text-white transition-all duration-300 hover:scale-105 flex items-center justify-center space-x-2">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+                                </svg>
+                                <span>Analyze Another Resume</span>
+                            </button>
+                        </div>
                     </div>
                     
                     <!-- Ultra-Premium Overall Score with Enhanced Visualization -->
@@ -1361,8 +1371,8 @@
             <div class="max-w-4xl mx-auto px-8 py-12 text-center">
                 <div class="fade-in">
                     <p class="text-white/90 font-medium text-lg mb-4">
-                        <span class="bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text text-transparent font-bold">© 2024 ATS Resume Scorer</span>
-                    <span class="text-2xl ml-2">✨</span> Built with ❤️ by Anushk & Manas.
+                        <span class="bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text text-transparent font-bold">© 2025 ATS Resume Scorer</span>
+                    <span class="text-2xl ml-2">✨</span> Built by Anushk & Manas.
                     </p>
                     <p class="text-white/70 mb-6">
                         <span class="text-xl mr-2">🔒</span> Your resume data is processed locally and never stored on our servers.
@@ -2020,8 +2030,7 @@
                         // Perform ATS analysis
                         await performATSAnalysis(resumeText);
                         
-                        // Show job matching controls after resume analysis is complete
-                        showJobMatchingControls();
+                        // Job matching controls removed
                         
                     } catch (error) {
                         console.error('Analysis error:', error);
@@ -3222,7 +3231,7 @@ Detailed Scores:
                 }
             }
             
-            reportContent += `\nReport generated on: ${new Date().toLocaleString()}\nPowered by AI-Enhanced ATS Resume Scorer`;
+            reportContent += `\n\nReport generated on: ${new Date().toLocaleString()}\nPowered by AI-Enhanced ATS Resume Scorer`;
 
             const blob = new Blob([reportContent], { type: 'text/plain' });
             const url = URL.createObjectURL(blob);
@@ -3474,7 +3483,6 @@ Detailed Scores:
             }
 
             // Action buttons
-            document.getElementById('analyze-another').addEventListener('click', resetToUpload);
             document.getElementById('download-report').addEventListener('click', downloadReport);
             
 

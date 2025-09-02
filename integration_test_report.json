@@ -1,0 +1,69 @@
+{
+  "timestamp": "2025-09-02 16:39:01",
+  "total_tests": 4,
+  "passed_tests": 4,
+  "success_rate": 100.0,
+  "test_results": [
+    {
+      "test_name": "Health Check",
+      "success": true,
+      "message": "Backend server is healthy",
+      "timestamp": "2025-09-02 16:38:51",
+      "details": {
+        "services": {
+          "api_key_configured": false,
+          "gemini_extractor": true,
+          "salary_predictor": true
+        },
+        "status": "healthy",
+        "version": "2.0.0"
+      }
+    },
+    {
+      "test_name": "Salary Prediction",
+      "success": true,
+      "message": "Predicted salary: $10.77 (confidence: 0.60)",
+      "timestamp": "2025-09-02 16:38:54",
+      "details": {
+        "confidence": 0.6,
+        "feature_importance": {},
+        "key_factors": [
+          "Experience level",
+          "Technical skills",
+          "Education"
+        ],
+        "market_comparison": "Estimated based on basic factors",
+        "predicted_salary": 10.77,
+        "prediction_timestamp": "2025-09-02T16:38:54.718297",
+        "salary_range": {
+          "max": 12.39,
+          "min": 9.15
+        },
+        "semantic_analysis": {
+          "note": "Fallback prediction used"
+        }
+      }
+    },
+    {
+      "test_name": "Job Analysis",
+      "success": true,
+      "message": "Analyzed job description: 0 skills identified",
+      "timestamp": "2025-09-02 16:38:57",
+      "details": {
+        "skills_count": 0,
+        "has_experience_req": false
+      }
+    },
+    {
+      "test_name": "Job Matching",
+      "success": true,
+      "message": "Match score: 0.0% | Skills matched: 0",
+      "timestamp": "2025-09-02 16:39:00",
+      "details": {
+        "match_score": 0.0,
+        "matched_skills_count": 0,
+        "missing_skills_count": 0
+      }
+    }
+  ]
+}

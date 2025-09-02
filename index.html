@@ -1,0 +1,3507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ATS Resume Scorer - AI-Powered Resume Analysis</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <!-- <script src="./salary-prediction.js"></script> -->
+    <style>
+        /* Import Premium Fonts */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap');
+        
+        /* Ultra-Modern Design System Variables */
+        :root {
+            --primary-gradient: linear-gradient(135deg, #6366f1 0%, #8b5cf6 25%, #a855f7 50%, #d946ef 75%, #ec4899 100%);
+            --secondary-gradient: linear-gradient(135deg, #06b6d4 0%, #3b82f6 25%, #6366f1 50%, #8b5cf6 75%, #a855f7 100%);
+            --success-gradient: linear-gradient(135deg, #10b981 0%, #059669 25%, #047857 50%, #065f46 75%, #064e3b 100%);
+            --warning-gradient: linear-gradient(135deg, #ffd166 0%, #f77f00 25%, #fcbf49 50%, #f9844a 75%, #ee6c4d 100%);
+            --danger-gradient: linear-gradient(135deg, #f72585 0%, #b5179e 25%, #7209b7 50%, #480ca8 75%, #3a0ca3 100%);
+            --glass-bg: rgba(255, 255, 255, 0.08);
+            --glass-bg-strong: rgba(255, 255, 255, 0.15);
+            --glass-border: rgba(255, 255, 255, 0.15);
+            --glass-border-strong: rgba(255, 255, 255, 0.25);
+            --backdrop-blur: blur(24px);
+            --backdrop-blur-strong: blur(32px);
+            --shadow-soft: 0 4px 24px rgba(0, 0, 0, 0.08);
+            --shadow-medium: 0 8px 48px rgba(0, 0, 0, 0.12);
+            --shadow-hard: 0 16px 80px rgba(0, 0, 0, 0.16);
+            --shadow-glow: 0 0 40px rgba(99, 102, 241, 0.3);
+            --border-radius: 20px;
+            --border-radius-sm: 12px;
+            --border-radius-lg: 28px;
+            --border-radius-xl: 36px;
+            --text-gradient: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #ec4899 100%);
+            --accent-glow: rgba(99, 102, 241, 0.4);
+        }
+        
+        /* Global Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #0a0a1a 0%, #1a1a2e 15%, #16213e 30%, #0f3460 50%, #1e3a8a 70%, #1e40af 85%, #2563eb 100%);
+            background-size: 400% 400%;
+            animation: gradientFlow 25s ease infinite;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+            color: #ffffff;
+        }
+        
+        /* Enhanced Animated Background */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 20% 80%, rgba(99, 102, 241, 0.4) 0%, transparent 60%),
+                        radial-gradient(circle at 80% 20%, rgba(139, 92, 246, 0.3) 0%, transparent 60%),
+                        radial-gradient(circle at 40% 40%, rgba(168, 85, 247, 0.35) 0%, transparent 60%),
+                        radial-gradient(circle at 60% 70%, rgba(236, 72, 153, 0.25) 0%, transparent 50%);
+            z-index: -1;
+            animation: floatingOrbs 30s ease-in-out infinite;
+        }
+        
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="0.5" fill="%23ffffff" opacity="0.02"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+            z-index: -1;
+            opacity: 0.6;
+        }
+        
+        @keyframes gradientFlow {
+            0% { background-position: 0% 50%; }
+            25% { background-position: 100% 25%; }
+            50% { background-position: 100% 75%; }
+            75% { background-position: 0% 75%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        @keyframes backgroundPulse {
+            0%, 100% { 
+                filter: brightness(1) saturate(1) hue-rotate(0deg);
+                transform: scale(1);
+            }
+            25% { 
+                filter: brightness(1.1) saturate(1.2) hue-rotate(5deg);
+                transform: scale(1.01);
+            }
+            50% { 
+                filter: brightness(0.95) saturate(1.1) hue-rotate(-3deg);
+                transform: scale(0.99);
+            }
+            75% { 
+                filter: brightness(1.05) saturate(1.15) hue-rotate(2deg);
+                transform: scale(1.005);
+            }
+        }
+        
+        @keyframes floatingOrbs {
+            0%, 100% { 
+                transform: translate(0, 0) rotate(0deg) scale(1);
+                opacity: 0.8;
+            }
+            25% { 
+                transform: translate(40px, -40px) rotate(90deg) scale(1.1);
+                opacity: 0.6;
+            }
+            50% { 
+                transform: translate(-30px, 30px) rotate(180deg) scale(0.9);
+                opacity: 0.9;
+            }
+            75% { 
+                transform: translate(20px, -20px) rotate(270deg) scale(1.05);
+                opacity: 0.7;
+            }
+        }
+        
+        /* Floating Animation for Hero Section Elements */
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px) rotate(0deg);
+                opacity: 0.8;
+            }
+            50% {
+                transform: translateY(-20px) rotate(180deg);
+                opacity: 1;
+            }
+        }
+        
+        .animate-float {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        /* Ultra-Premium Glassmorphism Components */
+        .glass {
+            background: var(--glass-bg);
+            backdrop-filter: var(--backdrop-blur);
+            -webkit-backdrop-filter: var(--backdrop-blur);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-soft), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            position: relative;
+        }
+        
+        .glass::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            border-radius: var(--border-radius) var(--border-radius) 0 0;
+        }
+        
+        .glass-card {
+            background: var(--glass-bg-strong);
+            backdrop-filter: var(--backdrop-blur-strong);
+            -webkit-backdrop-filter: var(--backdrop-blur-strong);
+            border: 1px solid var(--glass-border-strong);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-medium), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .glass-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: left 0.6s ease;
+        }
+        
+        .glass-card:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: var(--glass-border-strong);
+            box-shadow: var(--shadow-hard), var(--shadow-glow), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            transform: translateY(-12px) scale(1.03);
+        }
+        
+        .glass-card:hover::before {
+            left: 100%;
+        }
+        
+        /* Ultra-Premium Drag and Drop */
+        .drag-over {
+            background: rgba(99, 102, 241, 0.25) !important;
+            border-color: rgba(99, 102, 241, 0.8) !important;
+            transform: scale(1.08) !important;
+            box-shadow: 0 24px 100px rgba(99, 102, 241, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        /* Premium Button Styles */
+        .btn-primary {
+            background: var(--primary-gradient);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: var(--border-radius-sm);
+            color: white;
+            font-weight: 600;
+            padding: 16px 32px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow-medium);
+        }
+        
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.6s ease;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-4px) scale(1.05);
+            box-shadow: var(--shadow-hard), var(--shadow-glow);
+            border-color: rgba(255, 255, 255, 0.4);
+        }
+        
+        .btn-primary:hover::before {
+            left: 100%;
+        }
+        
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: var(--border-radius-sm);
+            color: white;
+            font-weight: 500;
+            padding: 16px 32px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+        
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.4);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-medium);
+        }
+        
+        /* Enhanced Progress and Score Elements */
+        .progress-bar {
+            transition: width 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .progress-bar::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            animation: shimmer 2s infinite;
+        }
+        
+        @keyframes shimmer {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+        
+        .score-circle {
+            stroke-dasharray: 251.2;
+            stroke-dashoffset: 251.2;
+            transition: stroke-dashoffset 2.5s cubic-bezier(0.4, 0, 0.2, 1);
+            filter: drop-shadow(0 0 8px rgba(99, 102, 241, 0.5));
+        }
+        
+        /* Premium Text Styles */
+        .gradient-text {
+            background: var(--text-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 700;
+        }
+        
+        .glow-text {
+            text-shadow: 0 0 20px var(--accent-glow);
+        }
+        
+        /* Fade and Slide Animations */
+        .fade-in {
+            animation: fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .slide-in-left {
+            animation: slideInLeft 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .slide-in-right {
+            animation: slideInRight 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .bounce-in {
+            animation: bounceIn 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+        
+        .scale-in {
+            animation: scaleIn 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        /* Keyframe Animations */
+        @keyframes fadeInUp {
+            from { 
+                opacity: 0; 
+                transform: translateY(30px); 
+            }
+            to { 
+                opacity: 1; 
+                transform: translateY(0); 
+            }
+        }
+        
+        /* Enhanced Modern Animations */
+        @keyframes slideInLeft {
+            from { 
+                opacity: 0; 
+                transform: translateX(-60px) scale(0.9);
+                filter: blur(8px);
+            }
+            to { 
+                opacity: 1; 
+                transform: translateX(0) scale(1);
+                filter: blur(0);
+            }
+        }
+        
+        @keyframes slideInRight {
+            from { 
+                opacity: 0; 
+                transform: translateX(60px) scale(0.9);
+                filter: blur(8px);
+            }
+            to { 
+                opacity: 1; 
+                transform: translateX(0) scale(1);
+                filter: blur(0);
+            }
+        }
+        
+        @keyframes bounceIn {
+            0% {
+                opacity: 0;
+                transform: scale(0.2) rotate(-5deg);
+                filter: blur(10px);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1.1) rotate(2deg);
+                filter: blur(2px);
+            }
+            70% {
+                transform: scale(0.95) rotate(-1deg);
+                filter: blur(1px);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1) rotate(0deg);
+                filter: blur(0);
+            }
+        }
+        
+        @keyframes scaleIn {
+            from { 
+                opacity: 0; 
+                transform: scale(0.6) rotateY(45deg);
+                filter: blur(6px);
+            }
+            to { 
+                opacity: 1; 
+                transform: scale(1) rotateY(0deg);
+                filter: blur(0);
+            }
+        }
+        
+        /* Enhanced Floating Animation */
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px) rotate(0deg);
+            }
+            33% {
+                transform: translateY(-15px) rotate(1deg);
+            }
+            66% {
+                transform: translateY(-5px) rotate(-1deg);
+            }
+        }
+        
+        .float-animation {
+            animation: float 4s ease-in-out infinite;
+        }
+        
+        /* Modern Pulse Animation */
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 1;
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(103, 126, 234, 0.7);
+            }
+            50% {
+                opacity: 0.8;
+                transform: scale(1.05);
+                box-shadow: 0 0 0 20px rgba(103, 126, 234, 0);
+            }
+        }
+        
+        .pulse-animation {
+            animation: pulse 2.5s ease-in-out infinite;
+        }
+        
+        /* Premium Gradient Animations */
+        @keyframes gradientShift {
+            0% {
+                background-position: 0% 50%;
+                filter: hue-rotate(0deg);
+            }
+            25% {
+                background-position: 100% 50%;
+                filter: hue-rotate(90deg);
+            }
+            50% {
+                background-position: 100% 100%;
+                filter: hue-rotate(180deg);
+            }
+            75% {
+                background-position: 0% 100%;
+                filter: hue-rotate(270deg);
+            }
+            100% {
+                background-position: 0% 50%;
+                filter: hue-rotate(360deg);
+            }
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(-45deg, #667eea, #764ba2, #f093fb, #f5576c, #4facfe, #00f2fe);
+            background-size: 600% 600%;
+            animation: gradientShift 20s ease infinite;
+        }
+        
+        /* Enhanced Hover Effects */
+        .hover-lift {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .hover-lift:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+        
+        .hover-glow {
+            transition: all 0.3s ease;
+        }
+        
+        .hover-glow:hover {
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.4);
+        }
+        
+        /* Button Animations */
+        .btn-animate {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-animate::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+        
+        .btn-animate:hover::before {
+            left: 100%;
+        }
+        
+        /* Modern Card Animations */
+        .card-animate {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+        }
+        
+        .card-animate:hover {
+            transform: translateY(-12px) scale(1.02);
+            box-shadow: var(--shadow-hard);
+        }
+        
+        .card-animate::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            border-radius: inherit;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+        
+        .card-animate:hover::before {
+            opacity: 1;
+        }
+        
+        /* Enhanced Score Animation */
+        .score-animate {
+            animation: scoreReveal 2.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        @keyframes scoreReveal {
+            0% {
+                transform: scale(0.3) rotateY(180deg);
+                opacity: 0;
+                filter: blur(10px);
+            }
+            50% {
+                transform: scale(1.1) rotateY(90deg);
+                opacity: 0.7;
+                filter: blur(2px);
+            }
+            100% {
+                transform: scale(1) rotateY(0deg);
+                opacity: 1;
+                filter: blur(0);
+            }
+        }
+        
+        /* Premium Notification Animations */
+        .notification-enter {
+            animation: notificationSlideIn 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .notification-exit {
+            animation: notificationSlideOut 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        @keyframes notificationSlideIn {
+            from {
+                transform: translateX(120%) scale(0.8) rotateZ(10deg);
+                opacity: 0;
+                filter: blur(8px);
+            }
+            50% {
+                transform: translateX(-10%) scale(1.05) rotateZ(-2deg);
+                opacity: 0.8;
+                filter: blur(2px);
+            }
+            to {
+                transform: translateX(0) scale(1) rotateZ(0deg);
+                opacity: 1;
+                filter: blur(0);
+            }
+        }
+        
+        @keyframes notificationSlideOut {
+            from {
+                transform: translateX(0) scale(1) rotateZ(0deg);
+                opacity: 1;
+                filter: blur(0);
+            }
+            to {
+                transform: translateX(120%) scale(0.8) rotateZ(10deg);
+                opacity: 0;
+                filter: blur(8px);
+            }
+        }
+        
+        /* Shimmer Animation for Progress Bars */
+        @keyframes shimmer {
+            0% {
+                transform: translateX(-100%) skewX(-12deg);
+                opacity: 0;
+            }
+            50% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateX(200%) skewX(-12deg);
+                opacity: 0;
+            }
+        }
+        
+        .animate-shimmer {
+            animation: shimmer 2s ease-in-out infinite;
+        }
+        
+        /* Premium Loading Spinner */
+        .enhanced-spinner {
+            animation: spin 1.5s linear infinite, pulse 3s ease-in-out infinite;
+            position: relative;
+        }
+        
+        .enhanced-spinner::before {
+            content: '';
+            position: absolute;
+            inset: -4px;
+            background: conic-gradient(from 0deg, transparent, var(--primary-gradient), transparent);
+            border-radius: 50%;
+            z-index: -1;
+            filter: blur(8px);
+            animation: spin 2s linear infinite reverse;
+        }
+        
+        @keyframes spin {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+        
+        /* Modern Button Styles */
+        .btn-modern {
+            background: var(--glass-bg);
+            backdrop-filter: var(--backdrop-blur);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--border-radius-sm);
+            color: white;
+            font-weight: 600;
+            padding: 12px 24px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn-modern:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.4);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-medium);
+        }
+        
+        .btn-modern::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.6s ease;
+        }
+        
+        .btn-modern:hover::before {
+            left: 100%;
+        }
+        
+        /* Tab Navigation Styles */
+        .tab-button {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: var(--border-radius-sm);
+            color: white;
+            font-weight: 600;
+            padding: 16px 32px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            display: flex;
+            align-items: center;
+            space-x: 12px;
+            cursor: pointer;
+        }
+        
+        .tab-button:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.4);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-medium);
+        }
+        
+        .tab-button.active {
+            background: var(--primary-gradient);
+            border-color: rgba(255, 255, 255, 0.3);
+            box-shadow: var(--shadow-glow);
+        }
+        
+        .tab-icon {
+            font-size: 1.25rem;
+            margin-right: 8px;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .btn-success {
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: var(--border-radius-sm);
+            color: white;
+            font-weight: 600;
+            padding: 16px 32px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow-medium);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .btn-success:hover:not(:disabled) {
+            transform: translateY(-4px) scale(1.05);
+            box-shadow: var(--shadow-hard), 0 0 40px rgba(16, 185, 129, 0.3);
+            border-color: rgba(255, 255, 255, 0.4);
+        }
+        
+        .btn-success:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .btn-icon {
+            font-size: 1.125rem;
+        }
+        
+        .job-match-results {
+            margin-top: 2rem;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: var(--border-radius);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+    </style>
+</head>
+<body>
+
+    
+    <!-- Ultra-Premium Hero Section with Dynamic Background -->
+    <section class="relative min-h-screen flex items-center justify-center overflow-hidden">
+        <!-- Enhanced Dynamic Animated Background -->
+        <div class="absolute inset-0">
+            <div class="absolute inset-0 bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900"></div>
+            <div class="absolute inset-0 bg-gradient-to-r from-indigo-500/20 via-purple-500/20 to-pink-500/20 animate-gradientShift"></div>
+            <div class="absolute inset-0 opacity-40">
+                <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-indigo-500/30 rounded-full blur-3xl animate-float"></div>
+                <div class="absolute top-3/4 right-1/4 w-80 h-80 bg-purple-500/25 rounded-full blur-3xl animate-float" style="animation-delay: 2s"></div>
+                <div class="absolute bottom-1/4 left-1/3 w-72 h-72 bg-pink-500/20 rounded-full blur-3xl animate-float" style="animation-delay: 4s"></div>
+                <div class="absolute top-1/2 right-1/2 w-64 h-64 bg-cyan-500/15 rounded-full blur-3xl animate-float" style="animation-delay: 6s"></div>
+            </div>
+        </div>
+        
+        <!-- Floating Geometric Elements -->
+        <div class="absolute inset-0 pointer-events-none">
+            <div class="absolute top-20 left-20 w-4 h-4 bg-white/20 rotate-45 animate-float" style="animation-delay: 1s"></div>
+            <div class="absolute top-40 right-32 w-6 h-6 bg-blue-400/30 rounded-full animate-float" style="animation-delay: 3s"></div>
+            <div class="absolute bottom-32 left-16 w-3 h-3 bg-purple-400/40 rotate-45 animate-float" style="animation-delay: 5s"></div>
+            <div class="absolute top-1/3 right-20 w-5 h-5 bg-pink-400/30 rounded-full animate-float" style="animation-delay: 2s"></div>
+            <div class="absolute bottom-20 right-40 w-4 h-4 bg-cyan-400/30 rotate-45 animate-float" style="animation-delay: 4s"></div>
+        </div>
+        
+        <!-- Hero Content -->
+        <div class="relative z-10 max-w-6xl mx-auto px-6 text-center">
+            <!-- Main Icon with Glow Effect -->
+            <div class="mb-8 fade-in">
+                <div class="inline-block relative">
+                    <div class="absolute inset-0 bg-gradient-to-r from-purple-500 to-blue-500 rounded-full blur-2xl opacity-50 scale-110 animate-pulse"></div>
+                    <div class="relative p-8 glass rounded-full float-animation">
+                        <svg class="w-20 h-20 text-white" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z" />
+                        </svg>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Enhanced Main Headline -->
+            <h1 class="text-7xl md:text-8xl font-black mb-6 tracking-tight fade-in glow-text" style="animation-delay: 0.2s">
+                <span class="gradient-text">
+                    ATS Resume
+                </span>
+                <br>
+                <span class="gradient-text">
+                    Scorer
+                </span>
+            </h1>
+            
+            <!-- Enhanced Compelling Tagline -->
+            <p class="text-2xl md:text-3xl text-white/95 font-light mb-4 max-w-4xl mx-auto leading-relaxed fade-in" style="animation-delay: 0.4s">
+                Transform your resume with <span class="font-semibold gradient-text">AI-powered analysis</span>
+            </p>
+            <p class="text-xl text-white/85 mb-12 max-w-3xl mx-auto fade-in" style="animation-delay: 0.6s">
+                Get instant feedback, optimize for ATS systems, and land your dream job with confidence
+            </p>
+            
+            <!-- Enhanced Feature Highlights -->
+            <div class="flex flex-wrap justify-center gap-6 mb-12 fade-in" style="animation-delay: 0.8s">
+                <div class="glass-card px-8 py-4 hover:scale-105 transition-all duration-500 hover:shadow-2xl hover:shadow-indigo-500/25">
+                    <span class="text-white/95 font-semibold text-lg">⚡ Instant Analysis</span>
+                </div>
+                <div class="glass-card px-8 py-4 hover:scale-105 transition-all duration-500 hover:shadow-2xl hover:shadow-purple-500/25">
+                    <span class="text-white/95 font-semibold text-lg">🎯 ATS Optimized</span>
+                </div>
+                <div class="glass-card px-8 py-4 hover:scale-105 transition-all duration-500 hover:shadow-2xl hover:shadow-pink-500/25">
+                    <span class="text-white/95 font-semibold text-lg">🚀 Career Boost</span>
+                </div>
+            </div>
+            
+            <!-- Animated Scroll Indicator -->
+            <div class="fade-in" style="animation-delay: 1s">
+                <div class="flex flex-col items-center space-y-2">
+                    <p class="text-white/60 text-sm font-medium">Start Your Analysis</p>
+                    <div class="w-6 h-10 border-2 border-white/30 rounded-full flex justify-center">
+                        <div class="w-1 h-3 bg-white/60 rounded-full mt-2 animate-bounce"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Subtle Particle Effect -->
+        <div class="absolute inset-0 pointer-events-none">
+            <div class="absolute top-1/4 left-1/2 w-1 h-1 bg-white/40 rounded-full animate-pulse" style="animation-delay: 1s"></div>
+            <div class="absolute top-1/2 left-1/4 w-1 h-1 bg-blue-300/40 rounded-full animate-pulse" style="animation-delay: 3s"></div>
+            <div class="absolute bottom-1/3 right-1/3 w-1 h-1 bg-purple-300/40 rounded-full animate-pulse" style="animation-delay: 5s"></div>
+        </div>
+    </section>
+
+    <!-- Single Section Header -->
+    <section class="max-w-6xl mx-auto px-6 py-8">
+        <div class="glass-card p-8 mb-8">
+            <div class="text-center">
+                <h2 class="text-4xl font-black mb-4">
+                    <span class="bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 bg-clip-text text-transparent">
+                        📄 Resume Analysis
+                    </span>
+                </h2>
+                <p class="text-white/80 text-lg max-w-3xl mx-auto">
+                    Upload your resume for instant AI-powered analysis and ATS scoring
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <main class="max-w-6xl mx-auto px-6 py-8">
+        <!-- Main Content Container -->
+        <div class="main-content">
+            <!-- Premium Upload Section with Enhanced Aesthetics -->
+            <section id="upload-section" class="mb-16 slide-in-left">
+            <div class="glass-card p-16 card-animate relative overflow-hidden">
+                <!-- Dynamic Background Layers -->
+                <div class="absolute inset-0 bg-gradient-to-br from-blue-500/15 via-purple-500/15 to-pink-500/15 animate-gradientShift"></div>
+                <div class="absolute inset-0 opacity-30">
+                    <div class="absolute top-10 right-10 w-32 h-32 bg-blue-400/20 rounded-full blur-2xl animate-float"></div>
+                    <div class="absolute bottom-10 left-10 w-24 h-24 bg-purple-400/20 rounded-full blur-2xl animate-float" style="animation-delay: 2s"></div>
+                </div>
+                
+                <div class="relative z-10">
+                    <!-- Enhanced Section Title -->
+                    <div class="text-center mb-12">
+                        <div class="inline-block relative mb-6">
+                            <div class="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full blur-xl opacity-30 scale-110 animate-pulse"></div>
+                            <div class="relative p-4 glass rounded-full">
+                                <svg class="w-12 h-12 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z" />
+                                </svg>
+                            </div>
+                        </div>
+                        <h2 class="text-6xl font-black mb-6 bounce-in gradient-text glow-text">
+                            Upload Your Resume
+                        </h2>
+                        <p class="text-2xl text-white/90 max-w-3xl mx-auto leading-relaxed">
+                            Ready to unlock your career potential? Let's analyze your resume with cutting-edge AI technology
+                        </p>
+                    </div>
+                    
+                    <!-- Ultra-Premium Drag and Drop Zone -->
+                    <div id="drop-zone" class="relative group cursor-pointer">
+                        <!-- Animated Border -->
+                        <div class="absolute inset-0 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 rounded-3xl p-1 opacity-60 group-hover:opacity-100 transition-opacity duration-500">
+                            <div class="glass rounded-3xl h-full w-full"></div>
+                        </div>
+                        
+                        <!-- Main Content Area -->
+                        <div class="relative glass border-2 border-dashed border-white/40 rounded-3xl p-20 text-center hover:border-white/80 transition-all duration-500 overflow-hidden">
+                            <!-- Shimmer Effect -->
+                            <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+                            
+                            <!-- Floating Particles -->
+                            <div class="absolute inset-0 pointer-events-none">
+                                <div class="absolute top-1/4 left-1/4 w-2 h-2 bg-blue-400/40 rounded-full animate-float" style="animation-delay: 1s"></div>
+                                <div class="absolute top-3/4 right-1/4 w-1 h-1 bg-purple-400/40 rounded-full animate-float" style="animation-delay: 3s"></div>
+                                <div class="absolute bottom-1/4 left-3/4 w-1.5 h-1.5 bg-pink-400/40 rounded-full animate-float" style="animation-delay: 2s"></div>
+                            </div>
+                            
+                            <div class="space-y-8 relative z-10">
+                                <!-- Enhanced Upload Icon -->
+                                <div class="relative">
+                                    <div class="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full blur-2xl opacity-40 scale-110 group-hover:opacity-60 transition-opacity duration-500"></div>
+                                    <div class="relative p-6 glass rounded-full mx-auto w-fit">
+                                        <svg class="h-20 w-20 text-white float-animation group-hover:scale-110 transition-transform duration-500" stroke="currentColor" fill="none" viewBox="0 0 48 48">
+                                            <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                        </svg>
+                                    </div>
+                                </div>
+                                
+                                <!-- Enhanced Text Content -->
+                                <div class="scale-in">
+                                    <h3 class="text-4xl font-black mb-6 group-hover:scale-105 transition-all duration-500 gradient-text">
+                                        ✨ Drag & Drop Your Resume
+                                    </h3>
+                                    <p class="text-xl text-white/90 mb-8 group-hover:text-white/95 transition-colors duration-300">or click anywhere to browse your files</p>
+                                    
+                                    <!-- Enhanced Feature Pills -->
+                                    <div class="flex flex-wrap justify-center gap-6 mb-8">
+                                        <div class="glass-card px-8 py-4 hover:scale-105 transition-all duration-500 hover:shadow-2xl hover:shadow-blue-500/25">
+                                            <span class="text-white/95 font-semibold text-lg flex items-center space-x-3">
+                                                <span class="text-xl">📄</span>
+                                                <span>PDF Format</span>
+                                            </span>
+                                        </div>
+                                        <div class="glass-card px-8 py-4 hover:scale-105 transition-all duration-500 hover:shadow-2xl hover:shadow-purple-500/25">
+                                            <span class="text-white/95 font-semibold text-lg flex items-center space-x-3">
+                                                <span class="text-xl">⚡</span>
+                                                <span>Up to 5MB</span>
+                                            </span>
+                                        </div>
+                                        <div class="glass-card px-8 py-4 hover:scale-105 transition-all duration-500 hover:shadow-2xl hover:shadow-green-500/25">
+                                            <span class="text-white/95 font-semibold text-lg flex items-center space-x-3">
+                                                <span class="text-xl">🔒</span>
+                                                <span>Secure Upload</span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Call to Action -->
+                                    <div class="inline-flex items-center space-x-3 text-lg text-white/70 glass px-8 py-4 rounded-full group-hover:bg-white/20 transition-colors duration-300">
+                                        <div class="w-3 h-3 bg-green-400 rounded-full animate-pulse"></div>
+                                        <span class="font-semibold">Ready to analyze your resume</span>
+                                    </div>
+                                </div>
+                                <input type="file" id="file-input" class="hidden" accept=".pdf" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+                <!-- Premium File Info -->
+                <div id="file-info" class="mt-8 hidden">
+                    <div class="glass-card p-6 bounce-in relative overflow-hidden">
+                        <div class="absolute inset-0 bg-gradient-to-r from-green-500/10 via-blue-500/10 to-purple-500/10"></div>
+                        <div class="flex items-center justify-between relative z-10">
+                            <div class="flex items-center space-x-4">
+                                <div class="relative">
+                                    <svg class="h-12 w-12 text-white pulse-animation" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" clip-rule="evenodd" />
+                                    </svg>
+                                    <div class="absolute -top-1 -right-1 h-5 w-5 bg-gradient-to-r from-green-400 to-emerald-500 rounded-full flex items-center justify-center shadow-lg">
+                                        <svg class="h-3 w-3 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                                        </svg>
+                                    </div>
+                                    <div class="absolute inset-0 bg-white/20 rounded-full blur-xl scale-75"></div>
+                                </div>
+                                <div class="slide-in-right">
+                                    <p id="file-name" class="font-bold text-white text-xl"></p>
+                                    <p id="file-size" class="text-sm text-white/80"></p>
+                                </div>
+                            </div>
+                            <button id="remove-file" class="text-white/80 hover:text-white hover:bg-white/10 p-3 rounded-full transition-all duration-300 hover:scale-110 group">
+                                <svg class="h-6 w-6 group-hover:rotate-90 transition-transform duration-300" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Auto-processing message -->
+                <div class="mt-10 text-center">
+                    <div class="inline-flex items-center space-x-3 text-lg text-white/70 glass px-8 py-4 rounded-full">
+                        <div class="w-3 h-3 bg-blue-400 rounded-full animate-pulse"></div>
+                        <span class="font-semibold">Resume will be analyzed automatically upon upload</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+
+        <!-- Premium Processing Section -->
+        <section id="processing-section" class="mb-12 hidden">
+            <div class="glass-card p-12 fade-in relative overflow-hidden">
+                <div class="absolute inset-0 bg-gradient-to-br from-blue-500/10 via-purple-500/10 to-pink-500/10"></div>
+                <div class="text-center relative z-10">
+                    <div class="inline-flex items-center justify-center w-28 h-28 glass rounded-full mb-8 bounce-in relative">
+                        <svg class="enhanced-spinner h-16 w-16 text-white" fill="none" viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        </svg>
+                        <div class="absolute inset-0 bg-white/20 rounded-full blur-xl scale-75"></div>
+                    </div>
+                    <h3 class="text-4xl font-bold text-white mb-4 slide-in-left">
+                        <span class="bg-gradient-to-r from-white to-blue-100 bg-clip-text text-transparent">
+                            🔍 Analyzing Your Resume
+                        </span>
+                    </h3>
+                    <p id="processing-status" class="text-white/90 mb-8 text-xl slide-in-right">Extracting text from PDF...</p>
+                    
+                    <!-- Premium Progress Bar -->
+                    <div class="w-full glass rounded-full h-4 mb-8 overflow-hidden relative">
+                        <div class="absolute inset-0 bg-white/10 rounded-full"></div>
+                        <div id="progress-bar" class="bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 h-4 rounded-full progress-bar relative" style="width: 0%">
+                            <div class="absolute inset-0 bg-white/30 rounded-full animate-pulse"></div>
+                            <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent transform -skew-x-12 animate-pulse"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-center justify-center space-x-3 text-lg text-white/80 scale-in">
+                        <svg class="h-6 w-6 animate-spin" fill="none" viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        </svg>
+                        <span class="font-medium">This may take a few moments</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Ultra-Premium Results Section with Enhanced Data Visualization -->
+        <section id="results-section" class="hidden">
+            <div class="glass-card p-16 mb-12 fade-in relative overflow-hidden">
+                <!-- Dynamic Background Effects -->
+                <div class="absolute inset-0 bg-gradient-to-br from-blue-500/15 via-purple-500/15 to-pink-500/15 animate-gradientShift"></div>
+                <div class="absolute inset-0 opacity-20">
+                    <div class="absolute top-20 right-20 w-40 h-40 bg-blue-400/30 rounded-full blur-3xl animate-float"></div>
+                    <div class="absolute bottom-20 left-20 w-32 h-32 bg-purple-400/30 rounded-full blur-3xl animate-float" style="animation-delay: 3s"></div>
+                    <div class="absolute top-1/2 left-1/2 w-24 h-24 bg-pink-400/30 rounded-full blur-3xl animate-float" style="animation-delay: 1.5s"></div>
+                </div>
+                
+                <div class="relative z-10">
+                    <!-- Enhanced Section Header -->
+                    <div class="text-center mb-16">
+                        <div class="inline-block relative mb-8">
+                            <div class="absolute inset-0 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 rounded-full blur-2xl opacity-40 scale-125 animate-pulse"></div>
+                            <div class="relative p-6 glass rounded-full">
+                                <svg class="w-16 h-16 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M9,12L11,14L15,10L20.59,4L22,5.41L11,16.41L2,7.41L3.41,6L9,12Z" />
+                                </svg>
+                            </div>
+                        </div>
+                        <h2 class="text-7xl font-black mb-8 bounce-in gradient-text glow-text">
+                            Analysis Complete
+                        </h2>
+                        <p class="text-2xl text-white/90 max-w-4xl mx-auto leading-relaxed">
+                            Your resume has been analyzed using advanced AI algorithms. Here's your comprehensive ATS compatibility report.
+                        </p>
+                    </div>
+                    
+                    <!-- Ultra-Premium Overall Score with Enhanced Visualization -->
+                    <div class="text-center mb-20">
+                        <div class="inline-block relative scale-in">
+                            <!-- Outer Glow Ring -->
+                            <div class="absolute inset-0 bg-gradient-to-br from-blue-500/30 via-purple-500/30 to-pink-500/30 rounded-full blur-3xl scale-125 animate-pulse"></div>
+                            
+                            <!-- Main Score Circle -->
+                            <div class="relative">
+                                <svg class="w-80 h-80 transform -rotate-90 relative z-10" viewBox="0 0 100 100">
+                                    <!-- Background Circle -->
+                                    <circle cx="50" cy="50" r="45" stroke="rgba(255,255,255,0.1)" stroke-width="6" fill="none"></circle>
+                                    
+                                    <!-- Animated Progress Circle -->
+                                    <circle id="score-circle" cx="50" cy="50" r="45" stroke="url(#enhanced-gradient)" stroke-width="6" fill="none" class="score-circle" stroke-linecap="round">
+                                        <defs>
+                                            <linearGradient id="enhanced-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                                                <stop offset="0%" style="stop-color:#3b82f6;stop-opacity:1" />
+                                                <stop offset="25%" style="stop-color:#8b5cf6;stop-opacity:1" />
+                                                <stop offset="50%" style="stop-color:#ec4899;stop-opacity:1" />
+                                                <stop offset="75%" style="stop-color:#ffd166;stop-opacity:1" />
+                                                <stop offset="100%" style="stop-color:#10b981;stop-opacity:1" />
+                                            </linearGradient>
+                                        </defs>
+                                    </circle>
+                                    
+                                    <!-- Inner Decorative Circle -->
+                                    <circle cx="50" cy="50" r="35" stroke="rgba(255,255,255,0.05)" stroke-width="2" fill="none" stroke-dasharray="2,4"></circle>
+                                </svg>
+                                
+                                <!-- Score Display -->
+                                <div class="absolute inset-0 flex items-center justify-center">
+                                    <div class="text-center score-animate">
+                                        <div id="overall-score" class="text-9xl font-extrabold gradient-text mb-3">0</div>
+                                        <div class="text-3xl text-white/95 font-black tracking-wider">ATS SCORE</div>
+                                        <div class="mt-6 px-8 py-3 glass rounded-full">
+                                            <span id="score-grade" class="text-xl font-bold text-white/90">Calculating...</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Floating Score Indicators - Repositioned to avoid overlap -->
+                                <div class="absolute inset-0 pointer-events-none">
+                                    <div class="absolute -top-4 right-4 glass px-3 py-1 rounded-full opacity-80">
+                                        <span class="text-xs font-medium text-white/90">Max</span>
+                                    </div>
+                                    <div class="absolute -bottom-4 left-4 glass px-3 py-1 rounded-full opacity-80">
+                                        <span class="text-xs font-medium text-white/90">Avg: 75</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Enhanced Score Interpretation -->
+                        <div class="mt-12 max-w-4xl mx-auto">
+                            <div class="glass-card p-8 hover:scale-[1.02] transition-all duration-500">
+                                <p id="score-interpretation" class="text-2xl text-white/90 font-medium text-center leading-relaxed slide-in-left"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+                <!-- Ultra-Modern Detailed Scores with Enhanced Data Visualization -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
+                    <!-- Format & Structure Score -->
+                    <div class="glass-card text-center p-10 group hover:scale-105 transition-all duration-500 relative overflow-hidden">
+                        <!-- Background Glow -->
+                        <div class="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-cyan-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                        
+                        <div class="relative z-10">
+                            <!-- Enhanced Icon with Glow -->
+                            <div class="relative mb-6">
+                                <div class="absolute inset-0 bg-blue-500/30 rounded-full blur-xl scale-110 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                                <div class="relative p-4 glass rounded-full mx-auto w-fit">
+                                    <div class="text-4xl group-hover:scale-110 transition-transform duration-300">📊</div>
+                                </div>
+                            </div>
+                            
+                            <!-- Score Display -->
+                            <div class="text-5xl font-black bg-gradient-to-r from-blue-400 to-cyan-500 bg-clip-text text-transparent score-animate mb-3" id="format-score">0</div>
+                            <div class="text-lg text-white/90 font-bold mb-6 tracking-wide">Format & Structure</div>
+                            
+                            <!-- Enhanced Progress Bar -->
+                            <div class="relative">
+                                <div class="w-full bg-white/10 rounded-full h-4 backdrop-blur-sm overflow-hidden">
+                                    <div class="bg-gradient-to-r from-blue-400 to-cyan-500 h-4 rounded-full transition-all duration-1500 ease-out shadow-lg shadow-blue-500/40 relative" style="width: 0%" id="format-progress">
+                                        <div class="absolute inset-0 bg-white/20 rounded-full animate-pulse"></div>
+                                        <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent transform -skew-x-12 animate-shimmer"></div>
+                                    </div>
+                                </div>
+                                <!-- Progress Percentage -->
+                                <div class="mt-3 text-sm font-semibold text-white/70" id="format-percentage">0%</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Content Quality Score -->
+                    <div class="glass-card text-center p-10 group hover:scale-105 transition-all duration-500 relative overflow-hidden">
+                        <!-- Background Glow -->
+                        <div class="absolute inset-0 bg-gradient-to-br from-emerald-500/10 to-green-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                        
+                        <div class="relative z-10">
+                            <!-- Enhanced Icon with Glow -->
+                            <div class="relative mb-6">
+                                <div class="absolute inset-0 bg-emerald-500/30 rounded-full blur-xl scale-110 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                                <div class="relative p-4 glass rounded-full mx-auto w-fit">
+                                    <div class="text-4xl group-hover:scale-110 transition-transform duration-300">✨</div>
+                                </div>
+                            </div>
+                            
+                            <!-- Score Display -->
+                            <div class="text-5xl font-black bg-gradient-to-r from-emerald-400 to-green-500 bg-clip-text text-transparent score-animate mb-3" id="content-score">0</div>
+                            <div class="text-lg text-white/90 font-bold mb-6 tracking-wide">Content Quality</div>
+                            
+                            <!-- Enhanced Progress Bar -->
+                            <div class="relative">
+                                <div class="w-full bg-white/10 rounded-full h-4 backdrop-blur-sm overflow-hidden">
+                                    <div class="bg-gradient-to-r from-emerald-400 to-green-500 h-4 rounded-full transition-all duration-1500 ease-out shadow-lg shadow-green-500/40 relative" style="width: 0%" id="content-progress">
+                                        <div class="absolute inset-0 bg-white/20 rounded-full animate-pulse"></div>
+                                        <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent transform -skew-x-12 animate-shimmer"></div>
+                                    </div>
+                                </div>
+                                <!-- Progress Percentage -->
+                                <div class="mt-3 text-sm font-semibold text-white/70" id="content-percentage">0%</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Keyword Optimization Score -->
+                    <div class="glass-card text-center p-10 group hover:scale-105 transition-all duration-500 relative overflow-hidden">
+                        <!-- Background Glow -->
+                        <div class="absolute inset-0 bg-gradient-to-br from-purple-500/10 to-pink-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                        
+                        <div class="relative z-10">
+                            <!-- Enhanced Icon with Glow -->
+                            <div class="relative mb-6">
+                                <div class="absolute inset-0 bg-purple-500/30 rounded-full blur-xl scale-110 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                                <div class="relative p-4 glass rounded-full mx-auto w-fit">
+                                    <div class="text-4xl group-hover:scale-110 transition-transform duration-300">🎯</div>
+                                </div>
+                            </div>
+                            
+                            <!-- Score Display -->
+                            <div class="text-5xl font-black bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text text-transparent score-animate mb-3" id="keywords-score">0</div>
+                            <div class="text-lg text-white/90 font-bold mb-6 tracking-wide">Keyword Optimization</div>
+                            
+                            <!-- Enhanced Progress Bar -->
+                            <div class="relative">
+                                <div class="w-full bg-white/10 rounded-full h-4 backdrop-blur-sm overflow-hidden">
+                                    <div class="bg-gradient-to-r from-purple-400 to-pink-500 h-4 rounded-full transition-all duration-1500 ease-out shadow-lg shadow-purple-500/40 relative" style="width: 0%" id="keywords-progress">
+                                        <div class="absolute inset-0 bg-white/20 rounded-full animate-pulse"></div>
+                                        <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent transform -skew-x-12 animate-shimmer"></div>
+                                    </div>
+                                </div>
+                                <!-- Progress Percentage -->
+                                <div class="mt-3 text-sm font-semibold text-white/70" id="keywords-percentage">0%</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- ATS Readability Score -->
+                    <div class="glass-card text-center p-10 group hover:scale-105 transition-all duration-500 relative overflow-hidden">
+                        <!-- Background Glow -->
+                        <div class="absolute inset-0 bg-gradient-to-br from-indigo-500/10 to-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                        
+                        <div class="relative z-10">
+                            <!-- Enhanced Icon with Glow -->
+                            <div class="relative mb-6">
+                                <div class="absolute inset-0 bg-indigo-500/30 rounded-full blur-xl scale-110 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                                <div class="relative p-4 glass rounded-full mx-auto w-fit">
+                                    <div class="text-4xl group-hover:scale-110 transition-transform duration-300">🤖</div>
+                                </div>
+                            </div>
+                            
+                            <!-- Score Display -->
+                            <div class="text-5xl font-black bg-gradient-to-r from-indigo-400 to-purple-500 bg-clip-text text-transparent score-animate mb-3" id="readability-score">0</div>
+                            <div class="text-lg text-white/90 font-bold mb-6 tracking-wide">ATS Readability</div>
+                            
+                            <!-- Enhanced Progress Bar -->
+                            <div class="relative">
+                                <div class="w-full bg-white/10 rounded-full h-4 backdrop-blur-sm overflow-hidden">
+                                    <div class="bg-gradient-to-r from-indigo-400 to-purple-500 h-4 rounded-full transition-all duration-1500 ease-out shadow-lg shadow-indigo-500/40 relative" style="width: 0%" id="readability-progress">
+                                        <div class="absolute inset-0 bg-white/20 rounded-full animate-pulse"></div>
+                                        <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent transform -skew-x-12 animate-shimmer"></div>
+                                    </div>
+                                </div>
+                                <!-- Progress Percentage -->
+                                <div class="mt-3 text-sm font-semibold text-white/70" id="readability-percentage">0%</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Salary Prediction Section Removed -->
+
+                <!-- Ultra-Premium AI Analysis Insights -->
+                <div id="ai-insights" class="mb-16 hidden">
+                    <h3 class="text-5xl font-black gradient-text glow-text mb-12 slide-in-left flex items-center gap-4">
+                        <span class="text-6xl">🤖</span> AI Analysis Insights
+                    </h3>
+                    <div class="glass-card p-10 hover:scale-[1.02] transition-all duration-500 border border-white/10">
+                        <div id="ai-insights-content" class="text-white/95 leading-relaxed text-xl"></div>
+                    </div>
+                </div>
+
+                <!-- Ultra-Premium Improvement Suggestions -->
+                <div class="mb-16">
+                    <h3 class="text-5xl font-black gradient-text glow-text mb-12 slide-in-right flex items-center gap-4">
+                        <span class="text-6xl">💡</span> Improvement Suggestions
+                    </h3>
+                    <div id="suggestions-list" class="space-y-8"></div>
+                </div>
+
+                <!-- Ultra-Premium Detailed Analysis -->
+                <div class="space-y-12">
+                    <div class="fade-in">
+                        <h4 class="text-4xl font-black gradient-text glow-text mb-8 flex items-center gap-4">
+                            <span class="text-5xl">📋</span> Format & Structure Analysis
+                        </h4>
+                        <div id="format-details" class="glass-card p-10 text-white/95 text-xl leading-relaxed hover:scale-[1.02] transition-all duration-500 border border-white/10"></div>
+                    </div>
+                    <div class="fade-in">
+                        <h4 class="text-4xl font-black gradient-text glow-text mb-8 flex items-center gap-4">
+                            <span class="text-5xl">📝</span> Content Quality Analysis
+                        </h4>
+                        <div id="content-details" class="glass-card p-10 text-white/95 text-xl leading-relaxed hover:scale-[1.02] transition-all duration-500 border border-white/10"></div>
+                    </div>
+                    <div class="fade-in">
+                        <h4 class="text-4xl font-black gradient-text glow-text mb-8 flex items-center gap-4">
+                            <span class="text-5xl">🔍</span> Keyword Optimization Analysis
+                        </h4>
+                        <div id="keywords-details" class="glass-card p-10 text-white/95 text-xl leading-relaxed hover:scale-[1.02] transition-all duration-500 border border-white/10"></div>
+                    </div>
+                    <div class="fade-in">
+                        <h4 class="text-4xl font-black gradient-text glow-text mb-8 flex items-center gap-4">
+                            <span class="text-5xl">📖</span> ATS Readability Analysis
+                        </h4>
+                        <div id="readability-details" class="glass-card p-10 text-white/95 text-xl leading-relaxed hover:scale-[1.02] transition-all duration-500 border border-white/10"></div>
+                    </div>
+                </div>
+
+                <!-- Ultra-Premium Action Buttons -->
+                <div class="mt-20 flex flex-col sm:flex-row gap-10 justify-center">
+                    <button id="analyze-another" class="premium-button-primary px-12 py-6 text-white font-black text-xl hover:scale-105 transition-all duration-500 group relative overflow-hidden">
+                        <div class="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-cyan-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                        <span class="relative flex items-center justify-center gap-4">
+                            <svg class="w-8 h-8 group-hover:rotate-180 transition-transform duration-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+                            </svg>
+                            <span class="gradient-text font-black">Analyze Another Resume</span>
+                        </span>
+                    </button>
+                    <button id="download-report" class="premium-button-secondary px-12 py-6 text-white font-black text-xl hover:scale-105 transition-all duration-500 group relative overflow-hidden">
+                        <div class="absolute inset-0 bg-gradient-to-r from-emerald-500/20 to-green-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                        <span class="relative flex items-center justify-center gap-4">
+                            <svg class="w-8 h-8 group-hover:translate-y-1 transition-transform duration-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                            </svg>
+                            <span class="gradient-text font-black">Download Report</span>
+                        </span>
+                    </button>
+                </div>
+            </div>
+        </section>
+        </div>
+        
+
+    </main>
+
+
+    
+    <!-- Modern Footer -->
+    <footer class="mt-20 relative">
+        <div class="glass-card mx-4 mb-8">
+            <div class="max-w-4xl mx-auto px-8 py-12 text-center">
+                <div class="fade-in">
+                    <p class="text-white/90 font-medium text-lg mb-4">
+                        <span class="bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text text-transparent font-bold">© 2024 ATS Resume Scorer</span>
+                    <span class="text-2xl ml-2">✨</span> Built with ❤️ by Anushk & Manas.
+                    </p>
+                    <p class="text-white/70 mb-6">
+                        <span class="text-xl mr-2">🔒</span> Your resume data is processed locally and never stored on our servers.
+                    </p>
+                    <div class="flex justify-center space-x-8 text-white/60">
+                        <span class="hover:text-cyan-400 transition-all duration-300 cursor-pointer hover:scale-110 font-medium">Privacy</span>
+                        <span class="hover:text-cyan-400 transition-all duration-300 cursor-pointer hover:scale-110 font-medium">Terms</span>
+                        <span class="hover:text-cyan-400 transition-all duration-300 cursor-pointer hover:scale-110 font-medium">Support</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Main Application JavaScript -->
+    <script>
+        // Initialize PDF.js worker
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+        
+        // Google Gemini API Configuration
+        // AI-powered resume analysis using Google Gemini Pro
+        // Enhances ATS scoring with intelligent content analysis
+        const GEMINI_API_CONFIG = {
+            apiKey: 'YOUR_ACTUAL_GEMINI_API_KEY_HERE', // Replace this with your actual Gemini API key
+            baseUrl: 'https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent',
+            model: 'gemini-pro'
+        };
+
+        /**
+         * Optimized scoring configuration for enhanced accuracy
+         * Based on industry standards and ATS best practices
+         */
+        const SCORING_CONFIG = {
+            // Main category weights (should sum to 1.0)
+            categoryWeights: {
+                format: 0.20,      // Reduced from 0.25 - basic requirement
+                content: 0.35,     // Increased from 0.30 - most important for human reviewers
+                keywords: 0.30,    // Increased from 0.25 - critical for ATS filtering
+                readability: 0.15  // Reduced from 0.20 - important but not critical
+            },
+            
+            // AI vs Rule-based scoring weights
+            aiIntegration: {
+                aiWeight: 0.65,        // Increased AI influence for better accuracy
+                ruleBasedWeight: 0.35, // Reduced rule-based weight
+                minAiScore: 30,        // Minimum AI score to trust AI analysis
+                maxBonusPoints: 15     // Maximum bonus points from competitive/industry analysis
+            },
+            
+            // Format analysis scoring breakdown
+            formatScoring: {
+                contactInfo: {
+                    email: 20,
+                    phone: 15,
+                    linkedin: 10  // New: LinkedIn profile bonus
+                },
+                sections: {
+                    experience: 25,
+                    education: 20,
+                    skills: 20
+                },
+                structure: {
+                    clearHeadings: 10,  // New: Clear section headings
+                    consistentFormatting: 10  // New: Consistent formatting
+                }
+            },
+            
+            // Content analysis scoring breakdown
+            contentScoring: {
+                wordCount: {
+                    minimum: 200,
+                    optimal: 400,
+                    points: 25
+                },
+                actionVerbs: {
+                    minimum: 3,
+                    optimal: 6,
+                    points: 25
+                },
+                quantifiableAchievements: {
+                    minimum: 3,
+                    optimal: 6,
+                    points: 30
+                },
+                aiEnhancement: 20  // Points for AI-detected strengths
+            },
+            
+            // Keyword analysis scoring breakdown
+            keywordScoring: {
+                coreKeywords: {
+                    maxScore: 40,
+                    threshold: 5
+                },
+                technicalKeywords: {
+                    maxScore: 30,
+                    threshold: 3
+                },
+                softSkills: {
+                    maxScore: 20,
+                    threshold: 4
+                },
+                aiIntegration: {
+                    aiWeight: 0.70,
+                    ruleWeight: 0.30
+                },
+                excellentThreshold: 85,
+                improvementThreshold: 60
+            },
+            
+            // Readability scoring breakdown
+            readabilityScoring: {
+                specialCharacters: {
+                    maxScore: 30,
+                    maxAllowed: 20,
+                    penaltyPerChar: 2,
+                    maxPenalty: 25
+                },
+                contentDensity: {
+                    maxScore: 35,
+                    minLineLength: 10,
+                    optimalRatio: 0.3,
+                    maxRatio: 0.5,
+                    penaltyMultiplier: 50
+                },
+                atsCompatibility: {
+                    maxScore: 35
+                },
+                aiIntegration: {
+                    aiWeight: 0.70,
+                    ruleWeight: 0.30,
+                    readabilityWeight: 0.60,
+                    atsWeight: 0.40
+                },
+                excellentThreshold: 85,
+                improvementThreshold: 60
+            },
+            
+            // Bonus scoring criteria
+            bonusScoring: {
+                competitivePosition: {
+                    above_average: 5,
+                    top_tier: 10
+                },
+                industryAlignment: {
+                    threshold: 80,
+                    bonus: 5
+                },
+                comprehensiveProfile: 3  // Complete profile with all sections
+            },
+            
+            // Validation thresholds
+            validationThresholds: {
+                excellent: 85,
+                good: 70,
+                average: 55,
+                needsImprovement: 40
+            }
+        };
+
+        // Add property aliases for backward compatibility with existing function calls
+        SCORING_CONFIG.contactInfo = SCORING_CONFIG.formatScoring.contactInfo;
+        SCORING_CONFIG.sections = SCORING_CONFIG.formatScoring.sections;
+        SCORING_CONFIG.structure = SCORING_CONFIG.formatScoring.structure;
+        SCORING_CONFIG.wordCount = SCORING_CONFIG.contentScoring.wordCount;
+        SCORING_CONFIG.actionVerbs = SCORING_CONFIG.contentScoring.actionVerbs;
+        SCORING_CONFIG.quantifiableAchievements = SCORING_CONFIG.contentScoring.quantifiableAchievements;
+        SCORING_CONFIG.industryAlignment = { threshold: 80 }; // Add missing industryAlignment config
+        
+        // Add missing keyword configuration properties
+        SCORING_CONFIG.keywordScoring.coreKeywords.minRequired = SCORING_CONFIG.keywordScoring.coreKeywords.threshold;
+        SCORING_CONFIG.keywordScoring.technicalKeywords.minRequired = SCORING_CONFIG.keywordScoring.technicalKeywords.threshold;
+        SCORING_CONFIG.keywordScoring.softSkills.minRequired = SCORING_CONFIG.keywordScoring.softSkills.threshold;
+        SCORING_CONFIG.keywordScoring.aiIntegration.weight = SCORING_CONFIG.keywordScoring.aiIntegration.aiWeight;
+        SCORING_CONFIG.keywordScoring.aiIntegration.fallbackWeight = SCORING_CONFIG.keywordScoring.aiIntegration.ruleWeight;
+
+        /**
+         * Check if Gemini API is properly configured
+         * @returns {boolean} True if API key is configured
+         */
+        function isGeminiConfigured() {
+            return GEMINI_API_CONFIG.apiKey && 
+                   GEMINI_API_CONFIG.apiKey !== 'YOUR_GEMINI_API_KEY_HERE' && 
+                   GEMINI_API_CONFIG.apiKey !== 'YOUR_ACTUAL_GEMINI_API_KEY_HERE' && 
+                   GEMINI_API_CONFIG.apiKey !== 'AIzaSyDXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX';
+        }
+
+        /**
+         * Analyze resume content using Google Gemini AI
+         * Provides intelligent insights for ATS optimization
+         * @param {string} resumeText - The extracted resume text
+         * @returns {Promise<Object|null>} AI analysis results or null if unavailable
+         */
+        async function analyzeWithGemini(resumeText) {
+            if (!isGeminiConfigured()) {
+                console.log('Gemini API not configured, using rule-based analysis only');
+                updateProcessingStatus('AI analysis unavailable - proceeding with rule-based analysis');
+                return null;
+            }
+
+            try {
+                updateProcessingStatus('Running AI analysis with Google Gemini...');
+                
+                const prompt = `
+                You are an expert ATS (Applicant Tracking System) analyzer and career consultant. Analyze this resume with the precision of a hiring manager and ATS system combined.
+                
+                Resume Text:
+                ${resumeText}
+                
+                Provide a comprehensive JSON analysis with this exact structure:
+                {
+                    "strengths": ["specific resume strengths with examples"],
+                    "improvements": ["actionable, specific improvements with clear instructions"],
+                    "keywordOptimization": {
+                        "score": number (0-100),
+                        "feedback": "detailed analysis of keyword density, relevance, and industry alignment",
+                        "missingKeywords": ["industry-specific keywords that should be added"],
+                        "keywordDensity": "assessment of current keyword usage"
+                    },
+                    "readabilityScore": number (0-100),
+                    "professionalSummary": "detailed feedback on summary/objective effectiveness and ATS optimization",
+                    "missingSkills": ["high-demand skills commonly expected in this field"],
+                    "industryAlignment": {
+                        "detectedIndustry": "primary industry/field detected",
+                        "alignmentScore": number (0-100),
+                        "recommendations": "how to better align with industry standards"
+                    },
+                    "atsCompatibility": {
+                        "formatScore": number (0-100),
+                        "parseabilityIssues": ["specific formatting problems that ATS might struggle with"],
+                        "sectionOrganization": "feedback on resume structure and section order"
+                    },
+                    "competitiveAnalysis": {
+                        "marketPosition": "how this resume compares to market standards",
+                        "differentiators": ["unique strengths that set candidate apart"],
+                        "gaps": ["areas where candidate falls behind market expectations"]
+                    },
+                    "overallRecommendation": "comprehensive recommendation with priority actions"
+                }
+                
+                Analysis Guidelines:
+                1. Be specific and actionable in all feedback
+                2. Consider current job market trends and ATS technology
+                3. Identify the most likely industry/role based on content
+                4. Provide keyword suggestions based on industry standards
+                5. Flag any formatting that could cause ATS parsing issues
+                6. Compare against current hiring manager expectations
+                7. Prioritize improvements by impact on ATS success
+                `;
+
+                const response = await fetch(`${GEMINI_API_CONFIG.baseUrl}?key=${GEMINI_API_CONFIG.apiKey}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        contents: [{
+                            parts: [{
+                                text: prompt
+                            }]
+                        }]
+                    })
+                });
+
+                if (!response.ok) {
+                    const errorData = await response.json().catch(() => ({}));
+                    console.error('Gemini API error:', response.status, errorData);
+                    
+                    // Provide specific error messages based on status code
+                    if (response.status === 400) {
+                        updateProcessingStatus('AI analysis failed: Invalid API key or request format');
+                    } else if (response.status === 429) {
+                        updateProcessingStatus('AI analysis failed: API quota exceeded');
+                    } else if (response.status >= 500) {
+                        updateProcessingStatus('AI analysis failed: Service temporarily unavailable');
+                    } else {
+                        updateProcessingStatus('AI analysis failed: Network error');
+                    }
+                    
+                    return null;
+                }
+
+                const data = await response.json();
+                const aiResponse = data.candidates?.[0]?.content?.parts?.[0]?.text;
+                
+                if (!aiResponse) {
+                    console.error('Invalid response format from Gemini API');
+                    return null;
+                }
+
+                // Parse JSON response from AI
+                try {
+                    const jsonMatch = aiResponse.match(/\{[\s\S]*\}/);
+                    if (jsonMatch) {
+                        return JSON.parse(jsonMatch[0]);
+                    }
+                } catch (parseError) {
+                    console.error('Failed to parse AI response as JSON:', parseError);
+                }
+                
+                return null;
+            } catch (error) {
+                console.error('Error calling Gemini API:', error);
+                updateProcessingStatus('AI analysis failed - proceeding with rule-based analysis');
+                return null;
+            }
+        }
+
+        // Global variables
+        let currentFile = null;
+        let analysisResults = null;
+
+        // DOM elements
+        const dropZone = document.getElementById('drop-zone');
+        const fileInput = document.getElementById('file-input');
+        const fileInfo = document.getElementById('file-info');
+        const fileName = document.getElementById('file-name');
+        const fileSize = document.getElementById('file-size');
+        const removeFileBtn = document.getElementById('remove-file');
+        const analyzeBtn = document.getElementById('analyze-btn');
+        const uploadSection = document.getElementById('upload-section');
+        const processingSection = document.getElementById('processing-section');
+        const resultsSection = document.getElementById('results-section');
+        const processingStatus = document.getElementById('processing-status');
+        const progressBar = document.getElementById('progress-bar');
+
+        // Dynamic status messages for enhanced user experience
+        const DYNAMIC_STATUS_MESSAGES = {
+            initializing: [
+                'Initializing AI analysis engine...',
+                'Preparing resume scanner...',
+                'Loading ATS optimization algorithms...'
+            ],
+            aiAnalysis: [
+                'Running AI analysis with Google Gemini...',
+                'Processing content with advanced AI...',
+                'Analyzing resume with machine learning...',
+                'Extracting insights with neural networks...'
+            ],
+            formatAnalysis: [
+                'Analyzing format and structure...',
+                'Checking ATS compatibility...',
+                'Evaluating document formatting...',
+                'Scanning for parsing issues...'
+            ],
+            contentAnalysis: [
+                'Evaluating content quality...',
+                'Assessing professional experience...',
+                'Analyzing skill descriptions...',
+                'Reviewing achievement statements...'
+            ],
+            keywordAnalysis: [
+                'Checking keyword optimization...',
+                'Scanning for industry keywords...',
+                'Analyzing keyword density...',
+                'Matching against job requirements...'
+            ],
+            readabilityAnalysis: [
+                'Assessing ATS readability...',
+                'Checking parsing compatibility...',
+                'Evaluating text structure...',
+                'Analyzing readability metrics...'
+            ]
+        };
+
+        let currentStatusInterval = null;
+        let statusMessageIndex = 0;
+
+        /**
+         * Enhanced processing status with dynamic rotating messages
+         * @param {string} message - Primary status message
+         * @param {string} category - Category for dynamic messages (optional)
+         * @param {boolean} enableRotation - Whether to rotate through dynamic messages
+         */
+        function updateProcessingStatus(message, category = null, enableRotation = false) {
+            if (!processingStatus) return;
+            
+            // Clear any existing rotation
+            if (currentStatusInterval) {
+                clearInterval(currentStatusInterval);
+                currentStatusInterval = null;
+            }
+            
+            if (enableRotation && category && DYNAMIC_STATUS_MESSAGES[category]) {
+                const messages = DYNAMIC_STATUS_MESSAGES[category];
+                statusMessageIndex = 0;
+                
+                // Start with the primary message
+                processingStatus.textContent = message;
+                
+                // Rotate through dynamic messages every 2 seconds
+                currentStatusInterval = setInterval(() => {
+                    statusMessageIndex = (statusMessageIndex + 1) % messages.length;
+                    processingStatus.textContent = messages[statusMessageIndex];
+                    
+                    // Add subtle animation effect
+                    processingStatus.style.opacity = '0.7';
+                    setTimeout(() => {
+                        processingStatus.style.opacity = '1';
+                    }, 200);
+                }, 2000);
+            } else {
+                // Standard single message
+                processingStatus.textContent = message;
+            }
+        }
+
+        /**
+         * Enhanced progress bar with smooth animations and color transitions
+         * @param {number} percentage - Progress percentage (0-100)
+         * @param {string} stage - Current analysis stage for color coding
+         */
+        function updateProgress(percentage, stage = 'default') {
+            if (!progressBar) return;
+            
+            // Smooth progress animation
+            progressBar.style.transition = 'width 0.5s ease-out, background 0.3s ease';
+            progressBar.style.width = `${percentage}%`;
+            
+            // Dynamic color coding based on stage
+            const stageColors = {
+                initializing: 'from-blue-400 via-cyan-400 to-blue-500',
+                aiAnalysis: 'from-purple-400 via-pink-400 to-purple-500',
+                formatAnalysis: 'from-green-400 via-emerald-400 to-green-500',
+                contentAnalysis: 'from-rose-400 via-pink-400 to-rose-500',
+                keywordAnalysis: 'from-indigo-400 via-purple-400 to-indigo-500',
+                readabilityAnalysis: 'from-teal-400 via-cyan-400 to-teal-500',
+                complete: 'from-green-400 via-emerald-400 to-green-600',
+                default: 'from-blue-400 via-purple-400 to-pink-400'
+            };
+            
+            const colorClass = stageColors[stage] || stageColors.default;
+            progressBar.className = `bg-gradient-to-r ${colorClass} h-4 rounded-full progress-bar relative`;
+            
+            // Add pulse effect for active stages
+            if (percentage > 0 && percentage < 100) {
+                progressBar.style.boxShadow = '0 0 20px rgba(139, 92, 246, 0.5)';
+            } else if (percentage === 100) {
+                progressBar.style.boxShadow = '0 0 20px rgba(34, 197, 94, 0.5)';
+            }
+        }
+
+        /**
+         * Update score display with dynamic calculation animation
+         * @param {number} score - Final score (optional, for final display)
+         * @param {string} stage - Current calculation stage
+         */
+        function updateScoreCalculation(score = null, stage = 'calculating') {
+            const scoreGrade = document.getElementById('score-grade');
+            if (!scoreGrade) return;
+            
+            if (score !== null) {
+                // Show "Calculation done" first
+                scoreGrade.innerHTML = '<span class="gradient-text">Calculation done!</span>';
+                
+                // After 2 seconds, show the final score
+                setTimeout(() => {
+                    scoreGrade.textContent = `${score}/100`;
+                    scoreGrade.style.color = score >= 80 ? '#06d6a0' : score >= 60 ? '#ffd166' : '#f72585';
+                    scoreGrade.style.transform = 'scale(1.1)';
+                    setTimeout(() => {
+                        scoreGrade.style.transform = 'scale(1)';
+                    }, 300);
+                }, 2000);
+            } else {
+                // No message during calculation - keep area empty
+                scoreGrade.innerHTML = '';
+            }
+        }
+
+        /**
+         * Clear all dynamic animations and intervals
+         */
+        function clearDynamicAnimations() {
+            if (currentStatusInterval) {
+                clearInterval(currentStatusInterval);
+                currentStatusInterval = null;
+            }
+            
+            const scoreGrade = document.getElementById('score-grade');
+            if (scoreGrade && scoreGrade.dataset.interval) {
+                clearInterval(parseInt(scoreGrade.dataset.interval));
+                delete scoreGrade.dataset.interval;
+            }
+        }
+
+        /**
+         * Format file size for display
+         * @param {number} bytes - File size in bytes
+         * @returns {string} Formatted file size
+         */
+        function formatFileSize(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
+
+        /**
+         * Show error message with improved user feedback
+         * @param {string} message - Error message to display
+         */
+        function showErrorMessage(message) {
+            // Create or update error notification
+            let errorDiv = document.getElementById('error-notification');
+            if (!errorDiv) {
+                errorDiv = document.createElement('div');
+                errorDiv.id = 'error-notification';
+                errorDiv.className = 'fixed top-4 right-4 bg-purple-500 text-white px-6 py-4 rounded-lg shadow-lg z-50 max-w-md';
+                document.body.appendChild(errorDiv);
+            }
+            
+            errorDiv.innerHTML = `
+                <div class="flex items-center">
+                    <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
+                    </svg>
+                    <span>${message}</span>
+                    <button onclick="this.parentElement.parentElement.remove()" class="ml-4 text-white hover:text-gray-200">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                        </svg>
+                    </button>
+                </div>
+            `;
+            
+            // Auto-remove after 5 seconds
+            setTimeout(() => {
+                if (errorDiv && errorDiv.parentNode) {
+                    errorDiv.remove();
+                }
+            }, 5000);
+        }
+
+        /**
+         * Show success message with improved user feedback
+         * @param {string} message - Success message to display
+         */
+        function showSuccessMessage(message) {
+            const successDiv = document.createElement('div');
+            successDiv.className = 'fixed top-4 right-4 bg-green-500 text-white px-6 py-4 rounded-lg shadow-lg z-50 max-w-md';
+            successDiv.innerHTML = `
+                <div class="flex items-center">
+                    <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                    </svg>
+                    <span>${message}</span>
+                    <button onclick="this.remove()" class="ml-4 text-white hover:text-gray-200">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                        </svg>
+                    </button>
+                </div>
+            `;
+            
+            document.body.appendChild(successDiv);
+            
+            // Auto-remove after 3 seconds
+            setTimeout(() => {
+                if (successDiv && successDiv.parentNode) {
+                    successDiv.remove();
+                }
+            }, 3000);
+        }
+
+        /**
+         * Validate uploaded file with comprehensive error handling
+         * @param {File} file - File to validate
+         * @returns {boolean} True if file is valid
+         */
+        function validateFile(file) {
+            // Check if file exists
+            if (!file) {
+                showErrorMessage('No file selected. Please choose a PDF file.');
+                return false;
+            }
+
+            // Check file type - accept both MIME type and extension
+            const isValidType = file.type === 'application/pdf' || file.name.toLowerCase().endsWith('.pdf');
+            if (!isValidType) {
+                showErrorMessage('Invalid file type. Please upload a PDF file only.');
+                return false;
+            }
+
+            // Check file size (5MB limit)
+            const maxSize = 5 * 1024 * 1024; // 5MB in bytes
+            if (file.size > maxSize) {
+                const fileSize = formatFileSize(file.size);
+                showErrorMessage(`File size (${fileSize}) exceeds the 5MB limit. Please choose a smaller file.`);
+                return false;
+            }
+
+            // Check minimum file size (avoid empty files)
+            if (file.size < 1024) { // 1KB minimum
+                showErrorMessage('File appears to be too small or empty. Please upload a valid PDF resume.');
+                return false;
+            }
+
+            return true;
+        }
+
+        /**
+         * Handle file selection with comprehensive validation and feedback
+         * @param {File} file - Selected file
+         */
+        /**
+         * Handle file selection and automatically start analysis
+         * @param {File} file - Selected PDF file
+         */
+        async function handleFileSelect(file) {
+            // Clear any previous error states
+            clearPreviousErrors();
+            
+            if (!file) {
+                showErrorMessage('No file selected. Please choose a PDF file to analyze.');
+                return;
+            }
+            
+            if (!validateFile(file)) {
+                return; // validateFile already shows error message
+            }
+
+            try {
+                currentFile = file;
+                fileName.textContent = file.name;
+                fileSize.textContent = formatFileSize(file.size);
+                fileInfo.classList.remove('hidden');
+                
+                // Hide analyze button since we're auto-processing
+                if (analyzeBtn) {
+                    analyzeBtn.style.display = 'none';
+                }
+                
+                showSuccessMessage(`File "${file.name}" selected. Starting automatic analysis...`);
+                
+                // Automatically start analysis after a brief delay
+                setTimeout(async () => {
+                    try {
+                        // Show processing section
+                        uploadSection.classList.add('hidden');
+                        processingSection.classList.remove('hidden');
+                        
+                        updateProcessingStatus('Extracting text from PDF...');
+                        updateProgress(5);
+                        
+                        // Extract text from PDF
+                        const resumeText = await extractTextFromPDF(currentFile);
+                        
+                        if (!resumeText.trim()) {
+                            throw new Error('No text could be extracted from the PDF. Please ensure the PDF contains readable text.');
+                        }
+
+                        updateProgress(20);
+                        
+                        // Perform ATS analysis
+                        await performATSAnalysis(resumeText);
+                        
+                        // Show job matching controls after resume analysis is complete
+                        showJobMatchingControls();
+                        
+                    } catch (error) {
+                        console.error('Analysis error:', error);
+                        
+                        // Provide specific error messages based on error type
+                        let errorMessage = 'An unexpected error occurred during analysis.';
+                        
+                        if (error.message.includes('No text could be extracted')) {
+                            errorMessage = 'Unable to extract text from this PDF. The file may be image-based, corrupted, or password-protected. Please try a different PDF file.';
+                        } else if (error.message.includes('Network')) {
+                            errorMessage = 'Network error occurred. Please check your internet connection and try again.';
+                        } else if (error.message.includes('API')) {
+                            errorMessage = 'AI analysis service is temporarily unavailable. The basic analysis will still work.';
+                        } else if (error.message) {
+                            errorMessage = error.message;
+                        }
+                        
+                        showErrorMessage(errorMessage);
+                        resetToUpload();
+                    }
+                }, 1000); // 1 second delay to show the success message
+                
+            } catch (error) {
+                console.error('File selection error:', error);
+                showErrorMessage('An error occurred while processing the selected file. Please try again.');
+            }
+        }
+        
+        /**
+         * Clear previous error states and messages
+         */
+        function clearPreviousErrors() {
+            // Remove any existing error/success messages
+            const existingMessages = document.querySelectorAll('.notification-message');
+            existingMessages.forEach(msg => msg.remove());
+        }
+
+        /**
+         * Remove selected file
+         */
+        /**
+         * Remove selected file and reset UI state
+         */
+        function removeFile() {
+            currentFile = null;
+            fileInfo.classList.add('hidden');
+            if (analyzeBtn) {
+                analyzeBtn.style.display = 'block'; // Show analyze button again
+                analyzeBtn.disabled = true;
+            }
+            fileInput.value = '';
+        }
+
+        /**
+         * Extract text from PDF file
+         * @param {File} file - PDF file to extract text from
+         * @returns {Promise<string>} Extracted text content
+         */
+        async function extractTextFromPDF(file) {
+            try {
+                const arrayBuffer = await file.arrayBuffer();
+                const pdf = await pdfjsLib.getDocument(arrayBuffer).promise;
+                let fullText = '';
+
+                for (let i = 1; i <= pdf.numPages; i++) {
+                    const page = await pdf.getPage(i);
+                    const textContent = await page.getTextContent();
+                    const pageText = textContent.items.map(item => item.str).join(' ');
+                    fullText += pageText + '\n';
+                }
+
+                return fullText.trim();
+            } catch (error) {
+                console.error('Error extracting text from PDF:', error);
+                
+                // Show animated error notification
+                showAnimatedNotification(
+                    'Failed to extract text from PDF. Please ensure the file is not corrupted.',
+                    'error',
+                    5000
+                );
+                
+                throw new Error('Failed to extract text from PDF. Please ensure the file is not corrupted.');
+            }
+        }
+
+        /**
+         * Analyze resume format and structure using optimized scoring
+         * @param {string} text - Resume text content
+         * @returns {Object} Format analysis results with enhanced scoring
+         */
+        function analyzeFormat(text) {
+            const analysis = {
+                score: 0,
+                details: [],
+                suggestions: [],
+                breakdown: {}
+            };
+
+            const config = SCORING_CONFIG.formatScoring;
+            let contactScore = 0;
+            let sectionScore = 0;
+            let structureScore = 0;
+
+            // Enhanced contact information analysis
+            const emailRegex = /\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b/;
+            const phoneRegex = /\b\d{3}[-.]?\d{3}[-.]?\d{4}\b/;
+            const linkedinRegex = /\b(linkedin\.com\/in\/|linkedin\.com\/pub\/)/i;
+            
+            if (emailRegex.test(text)) {
+                contactScore += config.contactInfo.email;
+                analysis.details.push('✓ Professional email address found');
+            } else {
+                analysis.suggestions.push('Add a professional email address');
+            }
+
+            if (phoneRegex.test(text)) {
+                contactScore += config.contactInfo.phone;
+                analysis.details.push('✓ Phone number found');
+            } else {
+                analysis.suggestions.push('Include a phone number');
+            }
+
+            if (linkedinRegex.test(text)) {
+                contactScore += config.contactInfo.linkedin;
+                analysis.details.push('✓ LinkedIn profile included');
+            } else {
+                analysis.suggestions.push('Consider adding LinkedIn profile URL');
+            }
+
+            // Enhanced section analysis
+            const sections = [
+                { 
+                    name: 'Experience', 
+                    regex: /\b(experience|work history|employment|professional experience|career history)\b/i, 
+                    points: config.sections.experience 
+                },
+                { 
+                    name: 'Education', 
+                    regex: /\b(education|academic|degree|university|college|certification)\b/i, 
+                    points: config.sections.education 
+                },
+                { 
+                    name: 'Skills', 
+                    regex: /\b(skills|competencies|technical skills|core competencies|expertise)\b/i, 
+                    points: config.sections.skills 
+                }
+            ];
+
+            sections.forEach(section => {
+                if (section.regex.test(text)) {
+                    sectionScore += section.points;
+                    analysis.details.push(`✓ ${section.name} section found`);
+                } else {
+                    analysis.suggestions.push(`Add a ${section.name} section`);
+                }
+            });
+
+            // Enhanced structure analysis
+            const headingRegex = /^[A-Z][A-Z\s]+$/gm; // All caps headings
+            const headingMatches = text.match(headingRegex);
+            if (headingMatches && headingMatches.length >= 3) {
+                structureScore += config.structure.clearHeadings;
+                analysis.details.push('✓ Clear section headings detected');
+            } else {
+                analysis.suggestions.push('Use clear, consistent section headings');
+            }
+
+            // Check for consistent formatting (bullet points, dates, etc.)
+            const bulletRegex = /[•·▪▫-]\s/g;
+            const dateRegex = /\b(19|20)\d{2}\b/g;
+            const bulletMatches = text.match(bulletRegex);
+            const dateMatches = text.match(dateRegex);
+            
+            if (bulletMatches && bulletMatches.length >= 3 && dateMatches && dateMatches.length >= 2) {
+                structureScore += config.structure.consistentFormatting;
+                analysis.details.push('✓ Consistent formatting detected');
+            } else {
+                analysis.suggestions.push('Use consistent formatting for dates and bullet points');
+            }
+
+            // Calculate final score and breakdown
+            analysis.breakdown = {
+                contactInfo: contactScore,
+                sections: sectionScore,
+                structure: structureScore
+            };
+            
+            analysis.score = Math.min(contactScore + sectionScore + structureScore, 100);
+            
+            // Add comprehensive profile bonus
+            if (contactScore >= 35 && sectionScore >= 60 && structureScore >= 15) {
+                const bonus = SCORING_CONFIG.bonusScoring.comprehensiveProfile;
+                analysis.score = Math.min(analysis.score + bonus, 100);
+                analysis.details.push('✓ Comprehensive profile bonus applied');
+            }
+
+            return analysis;
+        }
+
+        /**
+         * Analyze resume content quality using optimized scoring
+         * @param {string} text - Resume text content
+         * @param {Object} aiAnalysis - AI analysis results (optional)
+         * @returns {Object} Enhanced content analysis results
+         */
+        function analyzeContent(text, aiAnalysis = null) {
+            const analysis = {
+                score: 0,
+                details: [],
+                suggestions: [],
+                breakdown: {}
+            };
+
+            const config = SCORING_CONFIG.contentScoring;
+            let wordCountScore = 0;
+            let actionVerbScore = 0;
+            let achievementScore = 0;
+            let aiEnhancementScore = 0;
+
+            // Enhanced word count analysis
+            const wordCount = text.split(/\s+/).filter(word => word.length > 0).length;
+            if (wordCount >= config.wordCount.optimal) {
+                wordCountScore = config.wordCount.points;
+                analysis.details.push(`✓ Optimal content length (${wordCount} words)`);
+            } else if (wordCount >= config.wordCount.minimum) {
+                wordCountScore = Math.round((wordCount / config.wordCount.optimal) * config.wordCount.points);
+                analysis.details.push(`✓ Good content length (${wordCount} words)`);
+            } else {
+                analysis.suggestions.push(`Expand content to at least ${config.wordCount.minimum} words (currently ${wordCount})`);
+            }
+
+            // Enhanced action verb analysis
+            const actionVerbs = [
+                'achieved', 'managed', 'led', 'developed', 'created', 'implemented', 
+                'improved', 'increased', 'reduced', 'designed', 'optimized', 'streamlined',
+                'coordinated', 'executed', 'delivered', 'established', 'initiated', 
+                'transformed', 'enhanced', 'accelerated', 'generated', 'facilitated'
+            ];
+            const foundVerbs = actionVerbs.filter(verb => new RegExp(`\\b${verb}`, 'i').test(text));
+            
+            if (foundVerbs.length >= config.actionVerbs.optimal) {
+                actionVerbScore = config.actionVerbs.points;
+                analysis.details.push(`✓ Excellent use of action verbs (${foundVerbs.length} found)`);
+            } else if (foundVerbs.length >= config.actionVerbs.minimum) {
+                actionVerbScore = Math.round((foundVerbs.length / config.actionVerbs.optimal) * config.actionVerbs.points);
+                analysis.details.push(`✓ Good use of action verbs (${foundVerbs.length} found)`);
+            } else {
+                analysis.suggestions.push(`Use more action verbs to describe achievements (found ${foundVerbs.length}, need at least ${config.actionVerbs.minimum})`);
+            }
+
+            // Enhanced quantifiable achievements analysis
+            const numberRegex = /\b\d+(%|\$|k|million|billion|years?|months?|days?|hours?|projects?|clients?|teams?|people|employees|revenue|sales|growth|reduction|improvement)\b/gi;
+            const percentageRegex = /\b\d+%\b/g;
+            const currencyRegex = /\$[\d,]+/g;
+            
+            const numbers = text.match(numberRegex) || [];
+            const percentages = text.match(percentageRegex) || [];
+            const currency = text.match(currencyRegex) || [];
+            
+            const totalMetrics = numbers.length + percentages.length + currency.length;
+            
+            if (totalMetrics >= config.quantifiableAchievements.optimal) {
+                achievementScore = config.quantifiableAchievements.points;
+                analysis.details.push(`✓ Excellent quantifiable achievements (${totalMetrics} metrics found)`);
+            } else if (totalMetrics >= config.quantifiableAchievements.minimum) {
+                achievementScore = Math.round((totalMetrics / config.quantifiableAchievements.optimal) * config.quantifiableAchievements.points);
+                analysis.details.push(`✓ Good quantifiable achievements (${totalMetrics} metrics found)`);
+            } else {
+                analysis.suggestions.push(`Add more quantifiable achievements and metrics (found ${totalMetrics}, need at least ${config.quantifiableAchievements.minimum})`);
+            }
+
+            // Enhanced AI analysis integration
+            if (aiAnalysis) {
+                if (aiAnalysis.strengths && aiAnalysis.strengths.length > 0) {
+                    aiEnhancementScore = config.aiEnhancement;
+                    analysis.details.push('🤖 AI-enhanced content analysis completed');
+                    analysis.details.push(`🤖 AI identified ${aiAnalysis.strengths.length} key strengths`);
+                }
+                
+                // Add AI-specific suggestions with priority
+                if (aiAnalysis.improvements && aiAnalysis.improvements.length > 0) {
+                    const priorityImprovements = aiAnalysis.improvements.slice(0, 2);
+                    analysis.suggestions.push(...priorityImprovements.map(imp => `🤖 AI Suggestion: ${imp}`));
+                }
+                
+                // Bonus for comprehensive AI analysis
+                if (aiAnalysis.overallScore && aiAnalysis.overallScore >= 70) {
+                    aiEnhancementScore += 5;
+                    analysis.details.push('🤖 High-quality content detected by AI');
+                }
+            } else {
+                analysis.suggestions.push('Enable AI analysis for more detailed content insights');
+            }
+
+            // Calculate final score and breakdown
+            analysis.breakdown = {
+                wordCount: wordCountScore,
+                actionVerbs: actionVerbScore,
+                achievements: achievementScore,
+                aiEnhancement: aiEnhancementScore
+            };
+            
+            analysis.score = Math.min(wordCountScore + actionVerbScore + achievementScore + aiEnhancementScore, 100);
+            
+            return analysis;
+        }
+
+        /**
+         * Analyze keyword optimization with enhanced SCORING_CONFIG integration
+         * @param {string} text - Resume text content
+         * @param {Object} aiAnalysis - AI analysis results (optional)
+         * @returns {Object} Keyword analysis results with detailed scoring breakdown
+         */
+        function analyzeKeywords(text, aiAnalysis = null) {
+            const analysis = {
+                score: 0,
+                details: [],
+                suggestions: [],
+                breakdown: {}
+            };
+            
+            const config = SCORING_CONFIG.keywordScoring;
+
+            // Enhanced professional keywords categorized by importance
+            const keywords = {
+                core: ['leadership', 'management', 'project', 'team', 'analysis', 'strategy'],
+                technical: ['development', 'implementation', 'optimization', 'innovation'],
+                soft: ['collaboration', 'communication', 'problem-solving', 'results']
+            };
+
+            // Calculate keyword coverage scores
+            const coreFound = keywords.core.filter(keyword => 
+                new RegExp(`\\b${keyword}`, 'i').test(text)
+            );
+            const technicalFound = keywords.technical.filter(keyword => 
+                new RegExp(`\\b${keyword}`, 'i').test(text)
+            );
+            const softFound = keywords.soft.filter(keyword => 
+                new RegExp(`\\b${keyword}`, 'i').test(text)
+            );
+
+            // Calculate weighted scores based on SCORING_CONFIG
+            const coreScore = Math.min((coreFound.length / keywords.core.length) * config.coreKeywords.maxScore, config.coreKeywords.maxScore);
+            const technicalScore = Math.min((technicalFound.length / keywords.technical.length) * config.technicalKeywords.maxScore, config.technicalKeywords.maxScore);
+            const softScore = Math.min((softFound.length / keywords.soft.length) * config.softSkills.maxScore, config.softSkills.maxScore);
+            
+            let baseScore = Math.round(coreScore + technicalScore + softScore);
+            
+            // Store breakdown for detailed analysis
+            analysis.breakdown = {
+                coreKeywords: coreScore,
+                technicalKeywords: technicalScore,
+                softSkills: softScore,
+                aiEnhancement: 0
+            };
+            
+            // Enhanced AI analysis integration
+            if (aiAnalysis && aiAnalysis.keywordOptimization) {
+                // Use optimized AI weighting from SCORING_CONFIG
+                const aiWeight = config.aiIntegration.weight;
+                const ruleWeight = config.aiIntegration.fallbackWeight;
+                
+                analysis.score = Math.round((aiAnalysis.keywordOptimization.score * aiWeight) + (baseScore * ruleWeight));
+                analysis.breakdown.aiEnhancement = Math.round(aiAnalysis.keywordOptimization.score * aiWeight - baseScore * ruleWeight);
+                
+                analysis.details.push('🤖 AI-powered keyword analysis with enhanced scoring');
+                
+                // Add detailed AI feedback with priority indicators
+                if (aiAnalysis.keywordOptimization.feedback) {
+                    analysis.details.push(`💡 AI Insight: ${aiAnalysis.keywordOptimization.feedback}`);
+                }
+                
+                // Enhanced keyword density assessment
+                if (aiAnalysis.keywordOptimization.keywordDensity) {
+                    const density = aiAnalysis.keywordOptimization.keywordDensity;
+                    if (density === 'optimal') {
+                        analysis.details.push('✅ Optimal keyword density detected');
+                    } else {
+                        analysis.details.push(`⚠️ Keyword Density: ${density} - consider optimization`);
+                    }
+                }
+                
+                // Prioritized missing keywords suggestions
+                if (aiAnalysis.keywordOptimization.missingKeywords && aiAnalysis.keywordOptimization.missingKeywords.length > 0) {
+                    const topMissing = aiAnalysis.keywordOptimization.missingKeywords.slice(0, 3);
+                    analysis.suggestions.push(`🎯 High-priority keywords to add: ${topMissing.join(', ')}`);
+                }
+                
+                // Enhanced industry alignment with scoring impact
+                if (aiAnalysis.industryAlignment && aiAnalysis.industryAlignment.detectedIndustry) {
+                    const alignmentScore = aiAnalysis.industryAlignment.alignmentScore;
+                    analysis.details.push(`🏢 Industry: ${aiAnalysis.industryAlignment.detectedIndustry} (${alignmentScore}% alignment)`);
+                    
+                    if (alignmentScore < config.industryAlignment.threshold) {
+                        analysis.suggestions.push(`📈 Improve ${aiAnalysis.industryAlignment.detectedIndustry} industry alignment (current: ${alignmentScore}%)`);
+                    } else {
+                        analysis.details.push('✅ Strong industry keyword alignment');
+                    }
+                }
+            } else {
+                analysis.score = Math.round(baseScore);
+            }
+
+            // Enhanced keyword coverage feedback
+            const allFound = [...coreFound, ...technicalFound, ...softFound];
+            if (allFound.length > 0) {
+                analysis.details.push(`✅ Keywords found: ${allFound.slice(0, 5).join(', ')}${allFound.length > 5 ? ` (+${allFound.length - 5} more)` : ''}`);
+            }
+
+            // Enhanced suggestions based on SCORING_CONFIG thresholds
+            if (coreFound.length < config.coreKeywords.minRequired) {
+                analysis.suggestions.push(`🎯 Add ${config.coreKeywords.minRequired - coreFound.length} more core leadership/management keywords`);
+            }
+            
+            if (technicalFound.length < config.technicalKeywords.minRequired) {
+                analysis.suggestions.push(`⚙️ Include ${config.technicalKeywords.minRequired - technicalFound.length} more technical implementation keywords`);
+            }
+            
+            if (softFound.length < config.softSkills.minRequired) {
+                analysis.suggestions.push(`🤝 Add ${config.softSkills.minRequired - softFound.length} more soft skill keywords`);
+            }
+            
+            // Add general keyword optimization tips if no AI analysis
+            if (!aiAnalysis || !aiAnalysis.keywordOptimization) {
+                analysis.suggestions.push('💡 Enable AI analysis for personalized keyword recommendations');
+                analysis.suggestions.push('📋 Review job postings in your field for relevant keywords');
+            }
+            
+            // Add performance feedback based on overall score
+            if (analysis.score >= config.excellentThreshold) {
+                analysis.details.push('🌟 Excellent keyword optimization!');
+            } else if (analysis.score < config.improvementThreshold) {
+                analysis.suggestions.push('⚠️ Keyword optimization needs significant improvement');
+            }
+
+            return analysis;
+        }
+
+        /**
+         * Analyze ATS readability with enhanced SCORING_CONFIG integration
+         * @param {string} text - Resume text content
+         * @param {Object} aiAnalysis - AI analysis results (optional)
+         * @returns {Object} Enhanced readability analysis results with detailed scoring breakdown
+         */
+        function analyzeReadability(text, aiAnalysis = null) {
+            const analysis = {
+                score: 0,
+                details: [],
+                suggestions: [],
+                breakdown: {}
+            };
+            
+            const config = SCORING_CONFIG.readabilityScoring;
+
+            // Enhanced formatting analysis with detailed scoring
+            let specialCharScore = config.specialCharacters.maxScore;
+            let contentDensityScore = config.contentDensity.maxScore;
+            let atsCompatibilityScore = config.atsCompatibility.maxScore;
+            
+            // Analyze special characters with configurable thresholds
+            const specialChars = (text.match(/[^\w\s.,;:()\-]/g) || []).length;
+            if (specialChars > config.specialCharacters.maxAllowed) {
+                const penalty = Math.min(
+                    (specialChars - config.specialCharacters.maxAllowed) * config.specialCharacters.penaltyPerChar,
+                    config.specialCharacters.maxPenalty
+                );
+                specialCharScore = Math.max(specialCharScore - penalty, 0);
+                analysis.suggestions.push(`🚫 Reduce ${specialChars - config.specialCharacters.maxAllowed} special characters that may confuse ATS systems`);
+            } else {
+                analysis.details.push('✅ Optimal special character usage detected');
+            }
+
+            // Enhanced content density analysis
+            const lines = text.split('\n');
+            const shortLines = lines.filter(line => line.trim().length < config.contentDensity.minLineLength).length;
+            const densityRatio = shortLines / lines.length;
+            
+            if (densityRatio < config.contentDensity.optimalRatio) {
+                analysis.details.push('✅ Excellent content density and structure');
+            } else if (densityRatio > config.contentDensity.maxRatio) {
+                const penalty = Math.round((densityRatio - config.contentDensity.maxRatio) * config.contentDensity.penaltyMultiplier);
+                contentDensityScore = Math.max(contentDensityScore - penalty, 0);
+                analysis.suggestions.push('📝 Improve content density - consolidate short lines and add more detail');
+            }
+            
+            // Calculate base score from rule-based analysis
+            const baseScore = Math.round(specialCharScore + contentDensityScore + atsCompatibilityScore);
+            
+            // Store detailed breakdown
+            analysis.breakdown = {
+                specialCharacters: specialCharScore,
+                contentDensity: contentDensityScore,
+                atsCompatibility: atsCompatibilityScore,
+                aiEnhancement: 0
+            };
+
+            // Enhanced AI analysis integration
+            if (aiAnalysis && (aiAnalysis.readabilityScore || aiAnalysis.atsCompatibility)) {
+                let aiScore = baseScore;
+                
+                // Use AI readability score with enhanced weighting
+                if (aiAnalysis.readabilityScore) {
+                    aiScore = aiAnalysis.readabilityScore;
+                }
+                
+                // Enhanced ATS compatibility integration
+                if (aiAnalysis.atsCompatibility && aiAnalysis.atsCompatibility.score) {
+                    // Use optimized weighting from SCORING_CONFIG
+                    aiScore = Math.round(
+                        (aiScore * config.aiIntegration.readabilityWeight) + 
+                        (aiAnalysis.atsCompatibility.score * config.aiIntegration.atsWeight)
+                    );
+                }
+                
+                // Apply optimized AI vs rule-based weighting
+                analysis.score = Math.round(
+                    (aiScore * config.aiIntegration.aiWeight) + 
+                    (baseScore * config.aiIntegration.ruleWeight)
+                );
+                
+                analysis.breakdown.aiEnhancement = Math.round(aiScore * config.aiIntegration.aiWeight - baseScore * config.aiIntegration.ruleWeight);
+                analysis.details.push('🤖 AI-enhanced readability and ATS compatibility analysis');
+                
+                // Enhanced ATS compatibility insights with priority indicators
+                if (aiAnalysis.atsCompatibility) {
+                    if (aiAnalysis.atsCompatibility.feedback) {
+                        analysis.details.push(`💡 ATS Insight: ${aiAnalysis.atsCompatibility.feedback}`);
+                    }
+                    
+                    // Prioritized format issues
+                    if (aiAnalysis.atsCompatibility.formatIssues && aiAnalysis.atsCompatibility.formatIssues.length > 0) {
+                        const criticalIssues = aiAnalysis.atsCompatibility.formatIssues.slice(0, 2);
+                        analysis.suggestions.push(`🔧 Critical ATS issues: ${criticalIssues.join(', ')}`);
+                    }
+                    
+                    // Enhanced recommendations with impact assessment
+                    if (aiAnalysis.atsCompatibility.recommendations && aiAnalysis.atsCompatibility.recommendations.length > 0) {
+                        const topRecommendations = aiAnalysis.atsCompatibility.recommendations.slice(0, 2);
+                        topRecommendations.forEach(rec => {
+                            analysis.suggestions.push(`📈 ${rec}`);
+                        });
+                    }
+                    
+                    // ATS compatibility score feedback
+                    if (aiAnalysis.atsCompatibility.score >= config.excellentThreshold) {
+                        analysis.details.push('🎯 Excellent ATS compatibility detected!');
+                    } else if (aiAnalysis.atsCompatibility.score < config.improvementThreshold) {
+                        analysis.suggestions.push('⚠️ ATS compatibility needs significant improvement');
+                    }
+                }
+                
+                // Enhanced strengths feedback
+                if (aiAnalysis.strengths && aiAnalysis.strengths.length > 0) {
+                    const topStrengths = aiAnalysis.strengths.slice(0, 2);
+                    topStrengths.forEach(strength => {
+                        analysis.details.push(`💪 ${strength}`);
+                    });
+                }
+            } else {
+                analysis.score = Math.max(baseScore, 0);
+            }
+
+            // Enhanced performance feedback based on SCORING_CONFIG thresholds
+            if (analysis.score >= config.excellentThreshold) {
+                analysis.details.push('🌟 Outstanding readability and ATS compatibility!');
+            } else if (analysis.score < config.improvementThreshold) {
+                analysis.suggestions.push('⚠️ Readability and ATS compatibility need significant improvement');
+                analysis.suggestions.push('📋 Consider using simpler formatting and standard resume sections');
+            }
+
+            return analysis;
+        }
+
+        /**
+         * Perform comprehensive ATS analysis
+         * @param {string} resumeText - Extracted resume text
+         */
+        async function performATSAnalysis(resumeText) {
+            try {
+                // Initialize dynamic status and score calculation
+                updateProcessingStatus('Initializing analysis...', 'initializing', true);
+                updateProgress(10, 'initializing');
+                updateScoreCalculation(null, 'calculating');
+
+                // Step 1: AI Analysis with Gemini (if configured)
+                let aiAnalysis = null;
+                try {
+                    updateProcessingStatus('Running AI analysis with Google Gemini...', 'aiAnalysis', true);
+                    updateProgress(25, 'aiAnalysis');
+                    updateScoreCalculation(null, 'calculating');
+                    
+                    aiAnalysis = await analyzeWithGemini(resumeText);
+                    updateProgress(40, 'aiAnalysis');
+                } catch (error) {
+                    console.error('AI analysis failed:', error);
+                    updateProcessingStatus('AI analysis failed - proceeding with rule-based analysis');
+                }
+
+                // Step 2: Detailed scoring with enhanced progress tracking
+                updateProcessingStatus('Analyzing format and structure...', 'formatAnalysis', true);
+                updateProgress(45, 'formatAnalysis');
+                updateScoreCalculation(null, 'format');
+                const formatAnalysis = analyzeFormat(resumeText);
+                updateProgress(55, 'formatAnalysis');
+
+                updateProcessingStatus('Evaluating content quality...', 'contentAnalysis', true);
+                updateProgress(60, 'contentAnalysis');
+                updateScoreCalculation(null, 'content');
+                const contentAnalysis = analyzeContent(resumeText, aiAnalysis);
+                updateProgress(70, 'contentAnalysis');
+
+                updateProcessingStatus('Checking keyword optimization...', 'keywordAnalysis', true);
+                updateProgress(75, 'keywordAnalysis');
+                updateScoreCalculation(null, 'keywords');
+                const keywordAnalysis = analyzeKeywords(resumeText, aiAnalysis);
+                updateProgress(85, 'keywordAnalysis');
+
+                updateProcessingStatus('Assessing ATS readability...', 'readabilityAnalysis', true);
+                updateProgress(90, 'readabilityAnalysis');
+                updateScoreCalculation(null, 'readability');
+                const readabilityAnalysis = analyzeReadability(resumeText, aiAnalysis);
+                updateProgress(95, 'readabilityAnalysis');
+
+                // Calculate overall score using optimized SCORING_CONFIG
+                let overallScore;
+                const config = SCORING_CONFIG;
+                
+                if (aiAnalysis && aiAnalysis.overallScore && aiAnalysis.overallScore >= config.aiIntegration.minAiScore) {
+                    // Enhanced scoring with optimized AI insights
+                    const baseScore = Math.round(
+                        formatAnalysis.score * config.categoryWeights.format +
+                        contentAnalysis.score * config.categoryWeights.content +
+                        keywordAnalysis.score * config.categoryWeights.keywords +
+                        readabilityAnalysis.score * config.categoryWeights.readability
+                    );
+                    
+                    // Enhanced competitive analysis bonus
+                    let competitiveBonus = 0;
+                    if (aiAnalysis.competitiveAnalysis) {
+                        const position = aiAnalysis.competitiveAnalysis.marketPosition;
+                        if (position === 'above_average') {
+                            competitiveBonus = config.bonusScoring.competitivePosition.above_average;
+                        } else if (position === 'top_tier') {
+                            competitiveBonus = config.bonusScoring.competitivePosition.top_tier;
+                        }
+                    }
+                    
+                    // Enhanced industry alignment bonus
+                    let industryBonus = 0;
+                    if (aiAnalysis.industryAlignment && 
+                        aiAnalysis.industryAlignment.alignmentScore >= config.bonusScoring.industryAlignment.threshold) {
+                        industryBonus = config.bonusScoring.industryAlignment.bonus;
+                    }
+                    
+                    // Optimized weighted combination with enhanced AI integration
+                    const totalBonus = Math.min(competitiveBonus + industryBonus, config.aiIntegration.maxBonusPoints);
+                    overallScore = Math.min(100, Math.round(
+                        (aiAnalysis.overallScore * config.aiIntegration.aiWeight) + 
+                        (baseScore * config.aiIntegration.ruleBasedWeight) + 
+                        totalBonus
+                    ));
+                    
+                    // Add performance tier feedback
+                    if (overallScore >= config.validationThresholds.excellent) {
+                        console.log('🎉 Excellent resume performance detected!');
+                    } else if (overallScore >= config.validationThresholds.good) {
+                        console.log('✅ Good resume performance with room for improvement');
+                    }
+                } else {
+                    // Fallback to optimized rule-based scoring
+                    overallScore = Math.round(
+                        formatAnalysis.score * config.categoryWeights.format +
+                        contentAnalysis.score * config.categoryWeights.content +
+                        keywordAnalysis.score * config.categoryWeights.keywords +
+                        readabilityAnalysis.score * config.categoryWeights.readability
+                    );
+                    
+                    // Add validation feedback for rule-based scoring
+                    if (overallScore >= config.validationThresholds.excellent) {
+                        console.log('🎯 Excellent rule-based score achieved!');
+                    } else if (overallScore < config.validationThresholds.needsImprovement) {
+                        console.log('⚠️ Score below threshold - significant improvements needed');
+                    }
+                }
+
+                // Compile results
+                analysisResults = {
+                    overall: overallScore,
+                    format: formatAnalysis,
+                    content: contentAnalysis,
+                    keywords: keywordAnalysis,
+                    readability: readabilityAnalysis,
+                    aiAnalysis: aiAnalysis
+                };
+
+                // Finalize analysis with dynamic completion
+                updateProcessingStatus('Finalizing analysis...', null, false);
+                updateProgress(98, 'complete');
+                updateScoreCalculation(null, 'finalizing');
+                
+                // Brief pause for dramatic effect
+                await new Promise(resolve => setTimeout(resolve, 1000));
+                
+                updateProcessingStatus('Analysis complete!');
+                updateProgress(100, 'complete');
+                
+                // Clear all dynamic animations
+                clearDynamicAnimations();
+                
+                // Update final score with animation
+                updateScoreCalculation(overallScore);
+                
+                // Show success notification
+                showAnimatedNotification(
+                    'Resume analysis completed successfully! 🎉',
+                    'success',
+                    3000
+                );
+
+                // Salary prediction removed
+                
+                // Show results after a brief delay
+                setTimeout(() => {
+                    displayResults();
+                }, 500);
+
+            } catch (error) {
+                console.error('Analysis error:', error);
+                clearDynamicAnimations();
+                updateProcessingStatus('Analysis failed. Please try again.');
+                
+                // Show animated error notification
+                showAnimatedNotification(
+                    'Analysis failed. Please check your file and try again.',
+                    'error',
+                    5000
+                );
+                
+                setTimeout(() => {
+                    resetToUpload();
+                }, 2000);
+            }
+        }
+
+        /**
+         * Generate actionable improvement suggestions with prioritization
+         * @param {Object} analysisResults - Complete analysis results including AI insights
+         * @returns {Array} Array of prioritized suggestion objects
+         */
+        function generateActionableSuggestions(analysisResults) {
+            const suggestions = [];
+            
+            // High Priority Suggestions (Critical for ATS success)
+            
+            // ATS Compatibility Issues (Highest Priority)
+            if (analysisResults.aiAnalysis && analysisResults.aiAnalysis.atsCompatibility) {
+                const ats = analysisResults.aiAnalysis.atsCompatibility;
+                if (ats.score < 70) {
+                    suggestions.push({
+                        priority: 'high',
+                        title: 'Critical ATS Compatibility Issues',
+                        description: ats.feedback || 'Your resume has formatting issues that may prevent ATS systems from reading it properly.',
+                        impact: 'High - May prevent your resume from being seen by recruiters'
+                    });
+                }
+                
+                if (ats.formatIssues && ats.formatIssues.length > 0) {
+                    suggestions.push({
+                        priority: 'high',
+                        title: 'Fix Format Issues',
+                        description: `Address these ATS format problems: ${ats.formatIssues.slice(0, 3).join(', ')}`,
+                        impact: 'High - Improves ATS parsing accuracy'
+                    });
+                }
+            }
+            
+            // Missing Critical Keywords
+            if (analysisResults.keywords.score < 60) {
+                suggestions.push({
+                    priority: 'high',
+                    title: 'Add Industry-Specific Keywords',
+                    description: 'Your resume lacks important keywords that recruiters and ATS systems look for.',
+                    impact: 'High - Significantly improves search visibility'
+                });
+            }
+            
+            // Medium Priority Suggestions (Important for competitiveness)
+            
+            // Industry Alignment
+            if (analysisResults.aiAnalysis && analysisResults.aiAnalysis.industryAlignment) {
+                const industry = analysisResults.aiAnalysis.industryAlignment;
+                if (industry.alignmentScore < 70) {
+                    suggestions.push({
+                        priority: 'medium',
+                        title: `Improve ${industry.detectedIndustry || 'Industry'} Alignment`,
+                        description: 'Tailor your resume content to better match industry standards and expectations.',
+                        impact: 'Medium - Increases relevance for target roles'
+                    });
+                }
+            }
+            
+            // Competitive Positioning
+            if (analysisResults.aiAnalysis && analysisResults.aiAnalysis.competitiveAnalysis) {
+                const comp = analysisResults.aiAnalysis.competitiveAnalysis;
+                if (comp.marketPosition === 'below_average') {
+                    suggestions.push({
+                        priority: 'medium',
+                        title: 'Strengthen Competitive Position',
+                        description: 'Your resume needs more compelling achievements and differentiators to stand out.',
+                        impact: 'Medium - Helps you compete better against other candidates'
+                    });
+                }
+                
+                if (comp.gaps && comp.gaps.length > 0) {
+                    suggestions.push({
+                        priority: 'medium',
+                        title: 'Address Skill Gaps',
+                        description: `Consider highlighting or developing these areas: ${comp.gaps.slice(0, 3).join(', ')}`,
+                        impact: 'Medium - Fills important competency gaps'
+                    });
+                }
+            }
+            
+            // Content Quality Issues
+            if (analysisResults.content.score < 70) {
+                suggestions.push({
+                    priority: 'medium',
+                    title: 'Enhance Content Quality',
+                    description: 'Improve the depth and relevance of your professional experience descriptions.',
+                    impact: 'Medium - Makes your experience more compelling'
+                });
+            }
+            
+            // Low Priority Suggestions (Nice to have improvements)
+            
+            // Professional Summary Enhancement
+            if (analysisResults.aiAnalysis && analysisResults.aiAnalysis.professionalSummary) {
+                suggestions.push({
+                    priority: 'low',
+                    title: 'Optimize Professional Summary',
+                    description: 'Refine your professional summary to better capture your value proposition.',
+                    impact: 'Low - Improves first impression'
+                });
+            }
+            
+            // Format and Structure Improvements
+            if (analysisResults.format.score < 80) {
+                suggestions.push({
+                    priority: 'low',
+                    title: 'Polish Format and Structure',
+                    description: 'Fine-tune formatting, spacing, and section organization for better readability.',
+                    impact: 'Low - Enhances visual appeal and organization'
+                });
+            }
+            
+            // Add specific AI-driven suggestions
+            if (analysisResults.aiAnalysis && analysisResults.aiAnalysis.improvements) {
+                analysisResults.aiAnalysis.improvements.slice(0, 2).forEach(improvement => {
+                    suggestions.push({
+                        priority: 'medium',
+                        title: 'AI-Recommended Improvement',
+                        description: improvement,
+                        impact: 'Medium - AI-identified optimization opportunity'
+                    });
+                });
+            }
+            
+            // Add missing skills as suggestions
+            if (analysisResults.aiAnalysis && analysisResults.aiAnalysis.missingSkills && analysisResults.aiAnalysis.missingSkills.length > 0) {
+                suggestions.push({
+                    priority: 'medium',
+                    title: 'Consider Adding High-Demand Skills',
+                    description: `These skills are in high demand: ${analysisResults.aiAnalysis.missingSkills.slice(0, 4).join(', ')}`,
+                    impact: 'Medium - Aligns with current market demands'
+                });
+            }
+            
+            // Fallback to basic suggestions if no AI analysis
+            if (!analysisResults.aiAnalysis) {
+                const basicSuggestions = [
+                    ...analysisResults.format.suggestions,
+                    ...analysisResults.content.suggestions,
+                    ...analysisResults.keywords.suggestions,
+                    ...analysisResults.readability.suggestions
+                ];
+                
+                basicSuggestions.forEach((suggestion, index) => {
+                    suggestions.push({
+                        priority: index < 3 ? 'high' : index < 6 ? 'medium' : 'low',
+                        title: 'Improvement Recommendation',
+                        description: suggestion,
+                        impact: 'Varies - General improvement'
+                    });
+                });
+            }
+            
+            // Sort by priority and limit to top 8 suggestions
+            const priorityOrder = { 'high': 3, 'medium': 2, 'low': 1 };
+            return suggestions
+                .sort((a, b) => priorityOrder[b.priority] - priorityOrder[a.priority])
+                .slice(0, 8);
+        }
+
+        /**
+         * Display analysis results
+         */
+        function displayResults() {
+            // Hide processing, show results
+            processingSection.classList.add('hidden');
+            resultsSection.classList.remove('hidden');
+            resultsSection.classList.add('fade-in');
+            
+            // Trigger entrance animations for all result elements
+            setTimeout(() => {
+                animateResultsEntrance();
+            }, 300);
+
+            // Update overall score
+            const overallScoreElement = document.getElementById('overall-score');
+            const scoreCircle = document.getElementById('score-circle');
+            const scoreInterpretation = document.getElementById('score-interpretation');
+
+            overallScoreElement.textContent = analysisResults.overall;
+            
+            // Animate score circle
+            const circumference = 2 * Math.PI * 40; // radius = 40
+            const offset = circumference - (analysisResults.overall / 100) * circumference;
+            scoreCircle.style.strokeDashoffset = offset;
+
+            // Score interpretation
+            let interpretation = '';
+            if (analysisResults.overall >= 80) {
+                interpretation = 'Excellent! Your resume is well-optimized for ATS systems.';
+                scoreCircle.style.stroke = '#10b981'; // green
+            } else if (analysisResults.overall >= 60) {
+                interpretation = 'Good! Some improvements could boost your ATS compatibility.';
+                scoreCircle.style.stroke = '#ffd166'; // warm yellow
+            } else {
+                interpretation = 'Needs improvement. Focus on the suggestions below.';
+                scoreCircle.style.stroke = '#8b5cf6'; // purple
+            }
+            scoreInterpretation.textContent = interpretation;
+
+            // Update detailed scores with enhanced animations and percentage displays
+            animateScore('format-score', analysisResults.format.score, 'format-progress', 'format-percentage');
+            animateScore('content-score', analysisResults.content.score, 'content-progress', 'content-percentage');
+            animateScore('keywords-score', analysisResults.keywords.score, 'keywords-progress', 'keywords-percentage');
+            animateScore('readability-score', analysisResults.readability.score, 'readability-progress', 'readability-percentage');
+
+            // Display AI insights if available
+            const aiInsights = document.getElementById('ai-insights');
+            const aiInsightsContent = document.getElementById('ai-insights-content');
+            
+            if (analysisResults.aiAnalysis) {
+                aiInsights.classList.remove('hidden');
+                let insightsHtml = '';
+                
+                // Overall Recommendation
+                if (analysisResults.aiAnalysis.overallRecommendation) {
+                    insightsHtml += `<div class="mb-4 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                        <h4 class="font-semibold text-blue-900 mb-2">🎯 Overall Recommendation</h4>
+                        <p class="text-blue-800">${analysisResults.aiAnalysis.overallRecommendation}</p>
+                    </div>`;
+                }
+                
+                // Industry Alignment
+                if (analysisResults.aiAnalysis.industryAlignment) {
+                    const industry = analysisResults.aiAnalysis.industryAlignment;
+                    insightsHtml += `<div class="mb-4 p-4 bg-green-50 border border-green-200 rounded-lg">
+                        <h4 class="font-semibold text-green-900 mb-2">🏢 Industry Alignment Analysis</h4>
+                        <p class="text-green-800 mb-2"><strong>Detected Industry:</strong> ${industry.detectedIndustry || 'Not clearly identified'}</p>
+                        <p class="text-green-800 mb-2"><strong>Alignment Score:</strong> ${industry.alignmentScore || 'N/A'}/100</p>
+                        <p class="text-green-800">${industry.recommendations || 'No specific recommendations available'}</p>
+                    </div>`;
+                }
+                
+                // ATS Compatibility
+                if (analysisResults.aiAnalysis.atsCompatibility) {
+                    const ats = analysisResults.aiAnalysis.atsCompatibility;
+                    insightsHtml += `<div class="mb-4 p-4 bg-purple-50 border border-purple-200 rounded-lg">
+                        <h4 class="font-semibold text-purple-900 mb-2">🤖 ATS Compatibility Analysis</h4>
+                        <p class="text-purple-800 mb-2"><strong>Format Score:</strong> ${ats.formatScore || 'N/A'}/100</p>
+                        ${ats.parseabilityIssues && ats.parseabilityIssues.length > 0 ? 
+                            `<p class="text-purple-800 mb-2"><strong>Parsing Issues:</strong> ${ats.parseabilityIssues.join(', ')}</p>` : ''}
+                        <p class="text-purple-800">${ats.sectionOrganization || 'No specific feedback available'}</p>
+                    </div>`;
+                }
+                
+                // Competitive Analysis
+                if (analysisResults.aiAnalysis.competitiveAnalysis) {
+                    const comp = analysisResults.aiAnalysis.competitiveAnalysis;
+                    insightsHtml += `<div class="mb-4 p-4 bg-orange-50 border border-orange-200 rounded-lg">
+                        <h4 class="font-semibold text-orange-900 mb-2">📊 Competitive Market Analysis</h4>
+                        <p class="text-orange-800 mb-2"><strong>Market Position:</strong> ${comp.marketPosition || 'Analysis pending'}</p>
+                        ${comp.differentiators && comp.differentiators.length > 0 ? 
+                            `<p class="text-orange-800 mb-2"><strong>Key Differentiators:</strong> ${comp.differentiators.join(', ')}</p>` : ''}
+                        ${comp.gaps && comp.gaps.length > 0 ? 
+                            `<p class="text-orange-800"><strong>Areas for Improvement:</strong> ${comp.gaps.join(', ')}</p>` : ''}
+                    </div>`;
+                }
+                
+                // Enhanced Keyword Analysis
+                if (analysisResults.aiAnalysis.keywordOptimization) {
+                    const keywords = analysisResults.aiAnalysis.keywordOptimization;
+                    insightsHtml += `<div class="mb-4 p-4 bg-indigo-50 border border-indigo-200 rounded-lg">
+                        <h4 class="font-semibold text-indigo-900 mb-2">🔍 Advanced Keyword Analysis</h4>
+                        <p class="text-indigo-800 mb-2"><strong>Keyword Score:</strong> ${keywords.score || 'N/A'}/100</p>
+                        <p class="text-indigo-800 mb-2">${keywords.feedback || 'No detailed feedback available'}</p>
+                        ${keywords.missingKeywords && keywords.missingKeywords.length > 0 ? 
+                            `<p class="text-indigo-800 mb-2"><strong>Recommended Keywords:</strong> ${keywords.missingKeywords.join(', ')}</p>` : ''}
+                        ${keywords.keywordDensity ? 
+                            `<p class="text-indigo-800"><strong>Density Assessment:</strong> ${keywords.keywordDensity}</p>` : ''}
+                    </div>`;
+                }
+                
+                // Professional Summary Feedback
+                if (analysisResults.aiAnalysis.professionalSummary) {
+                    insightsHtml += `<div class="mb-4 p-4 bg-teal-50 border border-teal-200 rounded-lg">
+                        <h4 class="font-semibold text-teal-900 mb-2">📝 Professional Summary Analysis</h4>
+                        <p class="text-teal-800">${analysisResults.aiAnalysis.professionalSummary}</p>
+                    </div>`;
+                }
+                
+                // Missing Skills
+                if (analysisResults.aiAnalysis.missingSkills && analysisResults.aiAnalysis.missingSkills.length > 0) {
+                    insightsHtml += `<div class="mb-4 p-4 bg-red-50 border border-red-200 rounded-lg">
+                        <h4 class="font-semibold text-red-900 mb-2">⚠️ High-Demand Skills to Consider</h4>
+                        <p class="text-red-800">${analysisResults.aiAnalysis.missingSkills.join(', ')}</p>
+                    </div>`;
+                }
+                
+                aiInsightsContent.innerHTML = insightsHtml;
+            } else {
+                aiInsights.classList.add('hidden');
+            }
+
+            // Display enhanced suggestions with prioritization
+            const suggestionsList = document.getElementById('suggestions-list');
+            const enhancedSuggestions = generateActionableSuggestions(analysisResults);
+
+            suggestionsList.innerHTML = enhancedSuggestions.map((suggestion, index) => {
+                const priorityGradients = {
+                    'high': 'from-purple-400 to-pink-500',
+                    'medium': 'from-amber-400 to-yellow-500',
+                    'low': 'from-blue-400 to-cyan-500'
+                };
+                const gradientClass = priorityGradients[suggestion.priority] || priorityGradients['medium'];
+                
+                return `
+                    <div class="glass-card p-6 hover:scale-[1.02] transition-all duration-500 group">
+                        <div class="flex items-start space-x-4">
+                            <div class="flex-shrink-0">
+                                <span class="inline-flex items-center justify-center h-10 w-10 rounded-full bg-gradient-to-r ${gradientClass} text-white text-lg font-bold shadow-lg">
+                                    ${index + 1}
+                                </span>
+                            </div>
+                            <div class="flex-1">
+                                <h4 class="text-lg font-bold text-white/95 mb-3 group-hover:text-white transition-colors duration-300">${suggestion.title}</h4>
+                                <p class="text-white/80 leading-relaxed mb-3">${suggestion.description}</p>
+                                ${suggestion.impact ? `<div class="bg-white/10 rounded-lg p-3 backdrop-blur-sm"><p class="text-white/70 text-sm"><span class="font-semibold text-white/90">Impact:</span> ${suggestion.impact}</p></div>` : ''}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            // Display detailed analysis
+            document.getElementById('format-details').innerHTML = analysisResults.format.details.join('<br>');
+            document.getElementById('content-details').innerHTML = analysisResults.content.details.join('<br>');
+            document.getElementById('keywords-details').innerHTML = analysisResults.keywords.details.join('<br>');
+            document.getElementById('readability-details').innerHTML = analysisResults.readability.details.join('<br>');
+            
+            // Salary prediction display removed
+            
+            // Show success message for completed analysis
+            showSuccessMessage('Resume analysis completed successfully! Review your results below.');
+        }
+
+        /**
+         * Display salary prediction function removed
+         */
+
+        /**
+         * Reset application to upload state
+         */
+        /**
+         * Reset UI to upload state
+         */
+        function resetToUpload() {
+            processingSection.classList.add('hidden');
+            resultsSection.classList.add('hidden');
+            uploadSection.classList.remove('hidden');
+            removeFile();
+            updateProgress(0);
+        }
+
+        /**
+         * Download comprehensive analysis report as text file with enhanced error handling
+         */
+        function downloadReport() {
+            if (!analysisResults) {
+                showErrorMessage('No analysis results available to download.');
+                return;
+            }
+            
+            try {
+
+            // Generate actionable suggestions for the report
+            const actionableSuggestions = generateActionableSuggestions(analysisResults);
+            
+            let reportContent = `
+ATS Resume Analysis Report
+==========================
+
+Overall ATS Score: ${analysisResults.overall}/100
+
+Detailed Scores:
+- Format & Structure: ${analysisResults.format.score}/100
+- Content Quality: ${analysisResults.content.score}/100
+- Keyword Optimization: ${analysisResults.keywords.score}/100
+- ATS Readability: ${analysisResults.readability.score}/100`;
+
+            // Add AI Analysis Summary if available
+            if (analysisResults.aiAnalysis) {
+                reportContent += `\n\nAI-Powered Analysis Summary:
+- Overall AI Score: ${analysisResults.aiAnalysis.overallScore || 'N/A'}/100`;
+                
+                if (analysisResults.aiAnalysis.atsCompatibility) {
+                    reportContent += `\n- ATS Compatibility: ${analysisResults.aiAnalysis.atsCompatibility.score || 'N/A'}/100`;
+                }
+                
+                if (analysisResults.aiAnalysis.industryAlignment) {
+                    reportContent += `\n- Industry Alignment: ${analysisResults.aiAnalysis.industryAlignment.alignmentScore || 'N/A'}/100`;
+                    reportContent += `\n- Detected Industry: ${analysisResults.aiAnalysis.industryAlignment.detectedIndustry || 'Unknown'}`;
+                }
+                
+                if (analysisResults.aiAnalysis.competitiveAnalysis) {
+                    reportContent += `\n- Market Position: ${analysisResults.aiAnalysis.competitiveAnalysis.marketPosition || 'Unknown'}`;
+                }
+            }
+
+            // Priority-based Improvement Suggestions
+            reportContent += `\n\nPrioritized Improvement Recommendations:
+`;
+            
+            const highPriority = actionableSuggestions.filter(s => s.priority === 'high');
+            const mediumPriority = actionableSuggestions.filter(s => s.priority === 'medium');
+            const lowPriority = actionableSuggestions.filter(s => s.priority === 'low');
+            
+            if (highPriority.length > 0) {
+                reportContent += `\n🔴 HIGH PRIORITY (Address First):\n`;
+                highPriority.forEach((suggestion, i) => {
+                    reportContent += `${i + 1}. ${suggestion.title}\n   ${suggestion.description}\n   Impact: ${suggestion.impact}\n\n`;
+                });
+            }
+            
+            if (mediumPriority.length > 0) {
+                reportContent += `🟡 MEDIUM PRIORITY (Important Improvements):\n`;
+                mediumPriority.forEach((suggestion, i) => {
+                    reportContent += `${i + 1}. ${suggestion.title}\n   ${suggestion.description}\n   Impact: ${suggestion.impact}\n\n`;
+                });
+            }
+            
+            if (lowPriority.length > 0) {
+                reportContent += `🟢 LOW PRIORITY (Nice to Have):\n`;
+                lowPriority.forEach((suggestion, i) => {
+                    reportContent += `${i + 1}. ${suggestion.title}\n   ${suggestion.description}\n   Impact: ${suggestion.impact}\n\n`;
+                });
+            }
+
+            // Detailed Analysis Sections
+            reportContent += `\nDetailed Analysis:\n\n`;
+            
+            reportContent += `Format & Structure Analysis:\n${analysisResults.format.details.join('\n')}\n\n`;
+            reportContent += `Content Quality Analysis:\n${analysisResults.content.details.join('\n')}\n\n`;
+            reportContent += `Keyword Optimization Analysis:\n${analysisResults.keywords.details.join('\n')}\n\n`;
+            reportContent += `ATS Readability Analysis:\n${analysisResults.readability.details.join('\n')}\n\n`;
+            
+            // Add AI Insights if available
+            if (analysisResults.aiAnalysis) {
+                reportContent += `AI-Powered Insights:\n\n`;
+                
+                if (analysisResults.aiAnalysis.overallRecommendation) {
+                    reportContent += `Overall Recommendation:\n${analysisResults.aiAnalysis.overallRecommendation}\n\n`;
+                }
+                
+                if (analysisResults.aiAnalysis.professionalSummary) {
+                    reportContent += `Professional Summary Feedback:\n${analysisResults.aiAnalysis.professionalSummary}\n\n`;
+                }
+                
+                if (analysisResults.aiAnalysis.missingSkills && analysisResults.aiAnalysis.missingSkills.length > 0) {
+                    reportContent += `High-Demand Skills to Consider:\n${analysisResults.aiAnalysis.missingSkills.join(', ')}\n\n`;
+                }
+                
+                if (analysisResults.aiAnalysis.improvements && analysisResults.aiAnalysis.improvements.length > 0) {
+                    reportContent += `AI-Identified Improvements:\n${analysisResults.aiAnalysis.improvements.map((imp, i) => `${i + 1}. ${imp}`).join('\n')}\n\n`;
+                }
+            }
+            
+            reportContent += `\nReport generated on: ${new Date().toLocaleString()}\nPowered by AI-Enhanced ATS Resume Scorer`;
+
+            const blob = new Blob([reportContent], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `ats-analysis-${new Date().toISOString().split('T')[0]}.txt`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            
+            showSuccessMessage('Analysis report downloaded successfully!');
+            
+        } catch (error) {
+            console.error('Download error:', error);
+            showErrorMessage('Failed to download report. Please try again.');
+        }
+    }
+
+        /**
+         * Animate score display with smooth counting and progress bar
+         * @param {string} scoreElementId - ID of the score display element
+         * @param {number} targetScore - Target score to animate to
+         * @param {string} progressElementId - ID of the progress bar element
+         */
+        /**
+         * Animates score display with enhanced visual effects and percentage indicators
+         * @param {string} scoreElementId - ID of the score display element
+         * @param {number} targetScore - Target score value (0-100)
+         * @param {string} progressElementId - ID of the progress bar element
+         * @param {string} percentageElementId - ID of the percentage display element
+         */
+        function animateScore(scoreElementId, targetScore, progressElementId, percentageElementId) {
+            const scoreElement = document.getElementById(scoreElementId);
+            const progressElement = document.getElementById(progressElementId);
+            const percentageElement = document.getElementById(percentageElementId);
+            
+            if (!scoreElement || !progressElement || !percentageElement) return;
+            
+            let currentScore = 0;
+            const duration = 2000; // 2 seconds for smooth animation
+            const increment = targetScore / (duration / 16); // 60fps for smooth animation
+            
+            const timer = setInterval(() => {
+                currentScore += increment;
+                
+                if (currentScore >= targetScore) {
+                    currentScore = targetScore;
+                    clearInterval(timer);
+                }
+                
+                // Update score display with smooth counting animation
+                scoreElement.textContent = Math.round(currentScore);
+                
+                // Update percentage display with smooth counting
+                percentageElement.textContent = `${Math.round(currentScore)}%`;
+                
+                // Update progress bar with smooth width animation
+                const progressWidth = (currentScore / 100) * 100;
+                progressElement.style.width = `${progressWidth}%`;
+                
+                // Enhanced color transitions based on score performance
+                if (currentScore >= 80) {
+                    // Excellent score - keep original gradient but enhance with success colors
+                    progressElement.style.filter = 'brightness(1.1) saturate(1.2)';
+                } else if (currentScore >= 60) {
+                    // Good score - add warning tint
+                    progressElement.style.filter = 'brightness(1.05) saturate(1.1) hue-rotate(15deg)';
+                } else {
+                    // Needs improvement - add attention tint
+                    progressElement.style.filter = 'brightness(0.95) saturate(1.3) hue-rotate(-10deg)';
+                }
+            }, 16);
+        }
+        
+        /**
+         * Add staggered animation delays to elements
+         * @param {string} containerSelector - CSS selector for container
+         * @param {string} itemSelector - CSS selector for items to animate
+         */
+        function addStaggeredAnimations(containerSelector, itemSelector) {
+            const container = document.querySelector(containerSelector);
+            if (!container) return;
+            
+            const items = container.querySelectorAll(itemSelector);
+            items.forEach((item, index) => {
+                item.style.animationDelay = `${index * 0.1}s`;
+            });
+        }
+        
+        /**
+         * Add entrance animations to results sections
+         */
+        function animateResultsEntrance() {
+            // Add staggered animations to score cards
+            addStaggeredAnimations('.grid', '.card-animate');
+            
+            // Add staggered animations to insight cards
+            setTimeout(() => {
+                addStaggeredAnimations('#ai-insights-content', '.mb-4');
+            }, 500);
+            
+            // Add staggered animations to suggestion items
+            setTimeout(() => {
+                addStaggeredAnimations('#suggestions-content', '.mb-3');
+            }, 800);
+            
+            // Add staggered animations to detailed analysis sections
+            setTimeout(() => {
+                addStaggeredAnimations('#detailed-analysis', '.mb-6');
+            }, 1100);
+        }
+        
+        /**
+         * Enhanced notification system with animations
+         * @param {string} message - Notification message
+         * @param {string} type - Notification type (success, error, info)
+         * @param {number} duration - Display duration in milliseconds
+         */
+        function showAnimatedNotification(message, type = 'info', duration = 5000) {
+            // Remove existing notifications
+            const existingNotifications = document.querySelectorAll('.notification');
+            existingNotifications.forEach(notification => {
+                notification.classList.add('notification-exit');
+                setTimeout(() => notification.remove(), 300);
+            });
+            
+            // Create notification element
+            const notification = document.createElement('div');
+            notification.className = `notification fixed top-4 right-4 z-50 p-4 rounded-lg shadow-lg max-w-sm notification-enter`;
+            
+            // Set notification style based on type
+            const styles = {
+                success: 'bg-green-500 text-white',
+                error: 'bg-purple-500 text-white',
+                info: 'bg-blue-500 text-white',
+                warning: 'bg-yellow-500 text-black'
+            };
+            
+            notification.className += ` ${styles[type] || styles.info}`;
+            
+            // Add icon based on type
+            const icons = {
+                success: '✅',
+                error: '❌',
+                info: 'ℹ️',
+                warning: '⚠️'
+            };
+            
+            notification.innerHTML = `
+                <div class="flex items-center space-x-3">
+                    <span class="text-xl">${icons[type] || icons.info}</span>
+                    <span class="font-medium">${message}</span>
+                    <button class="ml-auto text-xl hover:opacity-70 transition-opacity" onclick="this.parentElement.parentElement.remove()">×</button>
+                </div>
+            `;
+            
+            // Add to document
+            document.body.appendChild(notification);
+            
+            // Auto-remove after duration
+            setTimeout(() => {
+                if (notification.parentElement) {
+                    notification.classList.add('notification-exit');
+                    setTimeout(() => notification.remove(), 300);
+                }
+            }, duration);
+        }
+
+        /**
+         * Initialize application
+         */
+        function initializeApp() {
+            // Drag and drop event listeners
+            dropZone.addEventListener('click', () => fileInput.click());
+            dropZone.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                dropZone.classList.add('drag-over');
+            });
+            dropZone.addEventListener('dragleave', () => {
+                dropZone.classList.remove('drag-over');
+            });
+            dropZone.addEventListener('drop', (e) => {
+                e.preventDefault();
+                dropZone.classList.remove('drag-over');
+                const files = e.dataTransfer.files;
+                if (files.length > 0) {
+                    handleFileSelect(files[0]);
+                }
+            });
+
+            // File input change listener
+            fileInput.addEventListener('change', (e) => {
+                if (e.target.files.length > 0) {
+                    handleFileSelect(e.target.files[0]);
+                }
+            });
+
+            // Remove file button
+            if (removeFileBtn) {
+                removeFileBtn.addEventListener('click', removeFile);
+            }
+
+            // Analyze button
+            if (analyzeBtn) {
+                analyzeBtn.addEventListener('click', async () => {
+                    if (!currentFile) return;
+
+                try {
+                    // Show processing section
+                    uploadSection.classList.add('hidden');
+                    processingSection.classList.remove('hidden');
+                    
+                    updateProcessingStatus('Extracting text from PDF...');
+                    updateProgress(5);
+                    
+                    // Extract text from PDF
+                    const resumeText = await extractTextFromPDF(currentFile);
+                    
+                    if (!resumeText.trim()) {
+                        throw new Error('No text could be extracted from the PDF. Please ensure the PDF contains readable text.');
+                    }
+
+                    updateProgress(20);
+                    
+                    // Perform ATS analysis
+                    await performATSAnalysis(resumeText);
+                    
+                } catch (error) {
+                    console.error('Analysis error:', error);
+                    
+                    // Provide specific error messages based on error type
+                    let errorMessage = 'An unexpected error occurred during analysis.';
+                    
+                    if (error.message.includes('No text could be extracted')) {
+                        errorMessage = 'Unable to extract text from this PDF. The file may be image-based, corrupted, or password-protected. Please try a different PDF file.';
+                    } else if (error.message.includes('Network')) {
+                        errorMessage = 'Network error occurred. Please check your internet connection and try again.';
+                    } else if (error.message.includes('API')) {
+                        errorMessage = 'AI analysis service is temporarily unavailable. The basic analysis will still work.';
+                    } else if (error.message) {
+                        errorMessage = error.message;
+                    }
+                    
+                    showErrorMessage(errorMessage);
+                    resetToUpload();
+                }
+                });
+            }
+
+            // Action buttons
+            document.getElementById('analyze-another').addEventListener('click', resetToUpload);
+            document.getElementById('download-report').addEventListener('click', downloadReport);
+            
+
+        }
+        
+
+        
+
+
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+
+        
+        // Initialize app when DOM is loaded
+        document.addEventListener('DOMContentLoaded', initializeApp);
+    </script>
+</body>
+</html>

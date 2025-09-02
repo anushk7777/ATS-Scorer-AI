@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Test</title>
+</head>
+<body>
+    <h1>Simple Test Page</h1>
+    <p>Testing basic functionality</p>
+    
+    <script>
+        console.log('Script loaded successfully');
+        
+        function testFunction() {
+            console.log('Test function called');
+            return 'success';
+        }
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('DOM loaded');
+            const result = testFunction();
+            console.log('Function result:', result);
+        });
+    </script>
+</body>
+</html>

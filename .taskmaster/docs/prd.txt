@@ -1,0 +1,398 @@
+# ATS Resume Scoring Application - Product Requirements Document
+
+## Project Overview
+A simple, fast-to-build web application with drag-and-drop functionality that analyzes PDF resumes and provides industry-standard, highly accurate ATS compliance scores. The focus is on delivering the most accurate ATS scoring algorithm possible while maintaining the simplest architecture for rapid development.
+
+## Core Features
+
+### 1. Simple Drag-and-Drop Interface
+- Single PDF file upload via drag-and-drop
+- File size validation (max 5MB)
+- Instant file processing indicator
+- No backend storage - purely client-side processing
+
+### 2. PDF Text Extraction & Semanticization
+- Client-side PDF text extraction using PDF.js
+- Content semanticization using AI/NLP transformers
+- Intelligent parsing of resume sections (Contact, Summary, Experience, Education, Skills)
+- Keyword extraction and context analysis
+- Content structure understanding
+
+### 3. ATS Scoring Engine
+- Real-time ATS compliance scoring (0-100)
+- Format compatibility assessment
+- Keyword density analysis
+- Section completeness evaluation
+- Readability and parsing score
+- Industry-standard ATS criteria compliance
+
+### 4. Instant Results Display
+- Clean, simple score display
+- Color-coded ATS rating
+- Key improvement suggestions
+- No complex dashboards - just essential feedback
+
+## Technical Architecture
+
+### Frontend-Only Application
+- Vanilla JavaScript or lightweight React
+- PDF.js for client-side PDF text extraction
+- Tailwind CSS for minimal, clean styling
+- No backend infrastructure required
+
+### AI/NLP Integration
+- Google Gemini API for content semanticization
+- Client-side API calls for text analysis
+- Transformer-based content understanding
+- Real-time processing without server storage
+
+### No Data Storage
+- Zero backend infrastructure
+- No file storage or databases
+- All processing happens in browser
+- Privacy-first approach with no data retention
+
+## Key Scoring Criteria
+
+### 1. Format Compatibility (25%)
+- Standard fonts usage
+- Simple formatting
+- No images or graphics in text areas
+- Proper section headers
+- Consistent spacing
+
+### 2. Content Structure (25%)
+- Clear contact information
+- Professional summary/objective
+- Work experience with dates
+- Education section
+- Skills section
+- Proper chronological order
+
+### 3. Keyword Optimization (30%)
+- Industry-relevant keywords
+- Job title variations
+- Technical skills mentions
+- Action verbs usage
+- Quantifiable achievements
+
+### 4. Readability & Parsing (20%)
+- Text extractability
+- Logical flow
+- Bullet point usage
+- Appropriate length
+- Grammar and spelling
+
+## User Experience Flow
+
+1. **Single Page Application**: Drag-and-drop area with clear instructions
+2. **Instant Processing**: PDF text extraction and AI analysis
+3. **Immediate Results**: ATS score display with key insights
+4. **Simple Feedback**: Essential improvement suggestions only
+
+## Security & Privacy
+- No file storage - all processing in browser
+- No data transmission to servers (except AI API calls)
+- Client-side only approach ensures maximum privacy
+- API calls use secure HTTPS encryption
+
+## Performance Requirements
+- PDF text extraction within 5 seconds
+- AI analysis completion within 15 seconds
+- Lightweight application (<500KB total)
+- Works offline after initial load (except AI calls)
+
+## Fastest Development Architecture
+
+### Technology Stack (Optimized for Speed)
+- **Frontend**: Vanilla HTML/CSS/JavaScript (no framework overhead)
+- **PDF Processing**: PDF.js library for client-side text extraction
+- **AI Analysis**: Google Gemini API for intelligent content parsing
+- **Styling**: Tailwind CSS via CDN for rapid UI development
+- **Deployment**: Single HTML file that can run anywhere
+
+### Development Speed Optimizations
+- Single-page application (no routing complexity)
+- No build process or bundling required
+- Client-side only (no backend infrastructure)
+- CDN-based dependencies (no package management)
+- Minimal dependencies for fastest setup
+
+## Technical Implementation Priority
+1. Basic HTML structure with drag-and-drop zone
+2. PDF.js integration for text extraction
+3. Industry-standard ATS scoring algorithm implementation
+4. Google Gemini API integration for advanced analysis
+5. Results display with detailed scoring breakdown
+6. Improvement suggestions based on ATS best practices
+
+## Implementation Details
+
+### PDF Text Extraction
+- Use PDF.js library for client-side PDF parsing
+- Extract raw text content and preserve structure
+- Handle various PDF formats and layouts
+- Error handling for corrupted or protected PDFs
+
+### Content Semanticization
+- Send extracted text to Google Gemini API
+- Use structured prompts to identify resume sections
+- Extract key information: skills, experience, education
+- Analyze keyword density and relevance
+
+### Industry-Standard ATS Scoring Algorithm
+
+#### Core ATS Compatibility Factors (Based on Real ATS Systems)
+- **Parsing Accuracy (25%)**: How well ATS can extract text and structure
+  - Font compatibility (Arial, Calibri, Times New Roman preferred)
+  - No headers/footers in text areas
+  - No text boxes, images, or graphics overlaying text
+  - Standard section headers recognition
+  - Proper spacing and margins
+
+- **Content Structure (30%)**: Standard resume format compliance
+  - Contact information at top (name, phone, email, location)
+  - Clear section headers (Experience, Education, Skills, etc.)
+  - Reverse chronological order for experience
+  - Consistent date formats (MM/YYYY or Month YYYY)
+  - Job titles, company names, and dates clearly separated
+  - Bullet points for achievements (not paragraphs)
+
+- **Keyword Optimization (25%)**: Industry and role-specific terms
+  - Hard skills mentioned explicitly
+  - Industry buzzwords and terminology
+  - Job title variations and synonyms
+  - Action verbs in experience descriptions
+  - Quantifiable achievements with numbers/percentages
+  - Relevant certifications and technologies
+
+- **ATS-Friendly Formatting (20%)**: Technical parsing requirements
+  - Single-column layout
+  - Standard file format (PDF preferred over DOC)
+  - No fancy formatting (tables, columns, text boxes)
+  - Consistent font sizes and styles
+  - Proper use of white space
+  - File size under 1MB for optimal processing
+
+#### Advanced Scoring Criteria
+- **Section Completeness**: All expected sections present
+- **Content Density**: Appropriate amount of relevant information
+- **Keyword Density**: Optimal keyword usage (not stuffing)
+- **Grammar and Spelling**: Professional language quality
+- **Length Optimization**: 1-2 pages for most roles
+- **Contact Information Accuracy**: Proper formatting and completeness
+
+### Minimal UI Components
+- Drag-and-drop zone with visual feedback
+- Loading spinner during processing
+- Score display with color coding (Red: 0-60, Yellow: 61-80, Green: 81-100)
+- Detailed scoring breakdown by category
+- Specific improvement suggestions based on ATS requirements
+- Industry-standard compliance checklist
+
+## ATS Scoring Implementation Details
+
+### Real-World ATS Compatibility Rules
+1. **Text Extraction Test**: Verify all text is machine-readable
+2. **Section Recognition**: Identify standard resume sections automatically
+3. **Date Format Validation**: Check for consistent date formatting
+4. **Contact Info Parsing**: Ensure contact details are properly structured
+5. **Keyword Analysis**: Compare against industry-standard keyword databases
+6. **Format Compliance**: Check for ATS-unfriendly elements
+
+### Scoring Algorithm Accuracy Features
+- Based on actual ATS system requirements (Workday, Greenhouse, etc.)
+- Industry-specific keyword databases
+- Real parsing simulation to test extractability
+- Format compatibility testing against common ATS platforms
+- Weighted scoring based on recruiter feedback and ATS documentation
+
+### Fast Development Approach
+- Start with core ATS rules (hardcoded for speed)
+- Add AI enhancement for keyword analysis
+- Implement one feature at a time for rapid iteration
+- Focus on accuracy over fancy UI
+- Use proven libraries and APIs for reliability
+
+## ML Salary Prediction Model Extension
+
+### Overview
+Extend the ATS Resume Scoring Application with an intelligent ML-powered salary prediction feature that provides accurate compensation estimates based on resume analysis, market data, and advanced feature engineering.
+
+### Core ML Features
+
+#### 1. Salary Prediction Engine
+- **Experience-Based Modeling**: Predict salaries based on years of experience (1-2 years: ₹4.5L, 3-5 years: ₹15-16L)
+- **Role-Specific Analysis**: Different models for various job roles and industries
+- **Location-Based Adjustments**: Geographic salary variations and cost of living factors
+- **Skills Premium Calculation**: Additional compensation for high-demand skills
+- **Market Rate Benchmarking**: Real-time comparison with industry standards
+
+#### 2. Advanced Feature Engineering
+- **ATS Score Integration**: Use existing ATS scores as model features
+- **Skill Gap Analysis**: Identify missing skills that could increase salary potential
+- **Experience Quality Metrics**: Evaluate depth and relevance of work experience
+- **Education Impact Scoring**: Weight educational background and certifications
+- **Performance Indicators**: Extract achievement metrics and quantifiable results
+- **Career Progression Analysis**: Assess promotion velocity and growth trajectory
+
+#### 3. Company-Specific Intelligence
+- **Employer Pattern Recognition**: Learn salary patterns from specific companies
+- **Industry Benchmarking**: Sector-specific compensation analysis
+- **Seasonal Hiring Trends**: Adjust predictions based on market timing
+- **Competitive Intelligence**: Factor in market competition for specific roles
+
+### Technical Architecture for ML Model
+
+#### Data Pipeline
+- **Real-time Feature Extraction**: Extract ML features from resume text during ATS analysis
+- **Data Preprocessing**: Clean and normalize extracted features for model input
+- **Feature Engineering Pipeline**: Transform raw data into predictive features
+- **Model Inference**: Real-time salary prediction using trained models
+- **Result Integration**: Combine salary predictions with ATS scoring results
+
+#### Model Architecture
+- **Ensemble Approach**: Combine multiple algorithms (Random Forest, Gradient Boosting, Neural Networks)
+- **Experience-Group Models**: Separate models for different experience levels
+- **Role-Specific Models**: Specialized models for different job categories
+- **Continuous Learning**: Update models with new market data and feedback
+
+#### Technology Stack
+- **Model Training**: Python with scikit-learn, XGBoost, TensorFlow
+- **Model Serving**: Lightweight model deployment for client-side inference
+- **Data Storage**: Synthetic training data and model artifacts
+- **API Integration**: RESTful endpoints for model predictions
+
+### Training Data Structure
+
+#### Primary Features
+- **Demographics**: Age, location, education level, years of experience
+- **ATS Metrics**: Existing ATS scores and sub-component scores
+- **Skills Analysis**: Technical skills, soft skills, certifications
+- **Experience Quality**: Role progression, company reputation, achievement metrics
+- **Market Context**: Industry, location, company size, hiring season
+
+#### Advanced Features
+- **Skill Proficiency Scores**: Weighted skill assessments
+- **Career Trajectory Metrics**: Promotion frequency, role advancement
+- **Achievement Quantification**: Extracted numerical achievements from resume
+- **Education Premium**: Advanced degrees, prestigious institutions
+- **Certification Value**: Industry-recognized certifications and their market value
+
+#### Target Variables
+- **Current Salary**: Primary prediction target
+- **Market Rate**: Industry benchmark salary
+- **Salary Range**: Minimum and maximum expected compensation
+- **Growth Potential**: Predicted salary in 1-2 years
+
+### Synthetic Data Generation
+
+#### Data Generation Strategy
+- **Experience-Based Distributions**: Generate realistic salary progressions
+- **Correlation Modeling**: Maintain realistic relationships between features
+- **Market Realism**: Align with actual market salary ranges
+- **Diversity Inclusion**: Ensure representative data across demographics
+- **Edge Case Coverage**: Include outliers and special cases
+
+#### Quality Assurance
+- **Statistical Validation**: Ensure data distributions match market reality
+- **Correlation Analysis**: Verify feature relationships are realistic
+- **Bias Detection**: Identify and mitigate potential model biases
+- **Market Alignment**: Regular validation against real salary surveys
+
+### Model Performance & Accuracy
+
+#### Accuracy Targets
+- **Overall Accuracy**: 85%+ prediction accuracy within ±15% range
+- **Experience Group Accuracy**: 90%+ for each experience bracket
+- **Role-Specific Accuracy**: 80%+ for major job categories
+- **Location Accuracy**: 85%+ for major metropolitan areas
+
+#### Evaluation Metrics
+- **Mean Absolute Error (MAE)**: Average prediction error in salary amount
+- **Mean Absolute Percentage Error (MAPE)**: Percentage-based accuracy measure
+- **R-squared Score**: Model's ability to explain salary variance
+- **Confidence Intervals**: Prediction uncertainty quantification
+
+### User Experience Integration
+
+#### Salary Prediction Display
+- **Primary Prediction**: Main salary estimate with confidence level
+- **Salary Range**: Minimum to maximum expected compensation
+- **Market Comparison**: How prediction compares to market averages
+- **Growth Trajectory**: Projected salary progression over time
+- **Improvement Opportunities**: Skills/experience that could increase salary
+
+#### Interactive Features
+- **Scenario Analysis**: "What if" salary predictions for skill additions
+- **Market Insights**: Industry trends and salary growth patterns
+- **Skill Gap Recommendations**: Specific skills to target for salary growth
+- **Career Path Suggestions**: Optimal progression for salary maximization
+
+### Implementation Roadmap
+
+#### Phase 1: Foundation (Weeks 1-4)
+- Set up ML development environment and data pipeline
+- Generate comprehensive synthetic training dataset
+- Implement basic feature extraction from resume text
+- Develop baseline prediction models
+
+#### Phase 2: Model Development (Weeks 5-8)
+- Train and validate ensemble models
+- Implement experience-group specific models
+- Develop role-specific prediction capabilities
+- Create model evaluation and testing framework
+
+#### Phase 3: Integration (Weeks 9-12)
+- Integrate ML predictions with existing ATS scoring
+- Develop user interface for salary predictions
+- Implement real-time prediction pipeline
+- Add interactive features and scenario analysis
+
+#### Phase 4: Optimization (Weeks 13-16)
+- Fine-tune model accuracy and performance
+- Implement advanced features (skill gap analysis, growth predictions)
+- Add market intelligence and competitive analysis
+- Comprehensive testing and validation
+
+### Success Metrics
+
+#### Technical Metrics
+- **Prediction Accuracy**: >85% within ±15% range
+- **Response Time**: <3 seconds for salary prediction
+- **Model Reliability**: 99.5% uptime and consistent predictions
+- **Feature Coverage**: 95% of resumes successfully analyzed
+
+#### Business Metrics
+- **User Engagement**: Increased time spent on application
+- **Prediction Utility**: User feedback on prediction accuracy
+- **Feature Adoption**: Usage rates of salary prediction features
+- **Market Validation**: Comparison with actual salary offers
+
+### Data Privacy & Security
+
+#### Privacy Protection
+- **No Personal Data Storage**: Salary predictions without storing personal information
+- **Anonymized Processing**: Remove identifying information during analysis
+- **Secure API Calls**: Encrypted communication for all ML operations
+- **Compliance**: GDPR and data protection regulation adherence
+
+#### Model Security
+- **Model Protection**: Secure model artifacts and prevent reverse engineering
+- **Input Validation**: Sanitize all inputs to prevent injection attacks
+- **Rate Limiting**: Prevent abuse of prediction endpoints
+- **Audit Logging**: Track model usage and performance metrics
+
+### Future Enhancements
+
+#### Advanced Analytics
+- **Market Trend Analysis**: Real-time salary trend tracking
+- **Competitive Intelligence**: Company-specific salary benchmarking
+- **Skill Demand Forecasting**: Predict future high-value skills
+- **Career Path Optimization**: AI-powered career guidance
+
+#### Model Improvements
+- **Real-time Learning**: Continuous model updates with new data
+- **Personalization**: User-specific prediction refinements
+- **Multi-modal Analysis**: Incorporate additional data sources
+- **Explainable AI**: Detailed explanations of prediction factors

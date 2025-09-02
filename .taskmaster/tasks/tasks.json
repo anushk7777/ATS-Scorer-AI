@@ -1,0 +1,269 @@
+{
+  "master": {
+    "tasks": [
+      {
+        "id": 35,
+        "title": "Create Basic HTML Structure and UI with Tailwind CSS",
+        "description": "Develop the single-page application's foundational HTML structure. This includes setting up the main layout, a prominent drag-and-drop zone for file uploads, and placeholder elements for the future results display. Style the page using Tailwind CSS via a CDN link for rapid, minimal UI development.",
+        "details": "Create an `index.html` file. Include the Tailwind CSS CDN link in the `<head>`. Structure the body with a main container. Implement a visually distinct area for drag-and-drop functionality with instructional text. Add a hidden loading spinner element and a placeholder section for the score and improvement suggestions.",
+        "testStrategy": "Open the `index.html` file in a browser. Verify that the layout is centered and responsive. Confirm the drag-and-drop zone is clearly visible and styled as intended. Check that the Tailwind CSS classes are being applied correctly by inspecting elements.",
+        "priority": "high",
+        "dependencies": [],
+        "status": "done",
+        "subtasks": []
+      },
+      {
+        "id": 36,
+        "title": "Implement Drag-and-Drop and File Validation Logic",
+        "description": "Write the vanilla JavaScript to handle the drag-and-drop functionality. This includes event listeners for drag-enter, drag-leave, drag-over, and drop. Implement client-side validation to ensure only a single PDF file is uploaded and that its size does not exceed the 5MB limit.",
+        "details": "In a `<script>` tag or a separate `app.js` file, add event listeners to the drag-and-drop zone. On drop, prevent the default browser action. Access the dropped file(s) from the `dataTransfer` object. Validate the file count (must be 1), file type (`application/pdf`), and file size (`file.size < 5 * 1024 * 1024`). Display an alert or message for invalid files. On valid file drop, show the processing indicator.",
+        "testStrategy": "Test by dragging and dropping a valid PDF file (<5MB). Verify the processing indicator appears. Test dropping multiple files, a non-PDF file, and a PDF file larger than 5MB; ensure appropriate error feedback is shown and the file is rejected.",
+        "priority": "high",
+        "dependencies": [
+          35
+        ],
+        "status": "done",
+        "subtasks": []
+      },
+      {
+        "id": 37,
+        "title": "Integrate PDF.js for Client-Side Text Extraction",
+        "description": "Integrate the PDF.js library to process the uploaded PDF file entirely on the client side. The goal is to extract the raw text content from the PDF for subsequent analysis.",
+        "details": "Include the PDF.js library via its CDN. When a valid PDF is received from the file handler, use the PDF.js API to load the document. Iterate through each page of the PDF, extract the text content using `page.getTextContent()`, and concatenate the text from all pages into a single string. Implement error handling for corrupted or password-protected PDFs.",
+        "testStrategy": "Use several sample PDF resumes. After dropping a PDF, log the extracted text to the browser console. Verify that the text is readable and accurately reflects the content of the PDF. Test with a multi-page PDF. Test with a known corrupted or protected PDF to ensure error handling works.",
+        "priority": "high",
+        "dependencies": [
+          36
+        ],
+        "status": "done",
+        "subtasks": []
+      },
+      {
+        "id": 38,
+        "title": "Develop Initial Rule-Based ATS Scoring Algorithm",
+        "description": "Create the first version of the ATS scoring engine based on hardcoded, rule-based checks. This version will analyze the raw extracted text for format compatibility and basic content structure without relying on AI.",
+        "details": "Create a JavaScript function `calculateInitialScore(text)`. Implement checks based on the PRD's criteria: \n- **Format Compatibility (25%):** Scan for non-standard fonts (if possible without full rendering), check for keywords like 'header'/'footer', and assess spacing patterns. \n- **Content Structure (30%):** Use regex to find standard section headers ('Experience', 'Education', 'Skills'), check for email/phone patterns, and validate date formats (MM/YYYY). \n- **Readability & Parsing (20%):** Calculate a simple score based on text length and bullet point usage (checking for '*' or '-' at the start of lines).",
+        "testStrategy": "Create test strings simulating extracted resume text. Pass these strings to the scoring function and assert that the calculated scores for each category are as expected. Test with a 'perfect' resume string and a 'poor' one to check the scoring range.",
+        "priority": "medium",
+        "dependencies": [
+          37
+        ],
+        "status": "done",
+        "subtasks": []
+      },
+      {
+        "id": 39,
+        "title": "Integrate Google Gemini API for Content Semanticization",
+        "description": "Connect to the Google Gemini API to perform advanced NLP analysis on the extracted resume text. The primary goal is to use AI to intelligently parse and semanticize the resume content.",
+        "details": "Create a function to make a client-side API call to the Gemini endpoint. Securely manage the API key. Construct a detailed prompt that instructs the model to identify and extract key resume sections (Contact, Summary, Experience, Education, Skills) and return the data in a structured JSON format. The prompt should also ask for keyword extraction and context analysis.",
+        "testStrategy": "Using a sample of extracted resume text, call the Gemini API function. Log the response to the console. Verify that the API returns a well-structured JSON object containing the correctly identified resume sections and relevant keywords. Check for proper error handling if the API call fails.",
+        "priority": "high",
+        "dependencies": [
+          37
+        ],
+        "status": "done",
+        "subtasks": []
+      },
+      {
+        "id": 40,
+        "title": "Enhance Scoring Engine with AI-Powered Analysis",
+        "description": "Refine the ATS scoring engine by incorporating the structured data received from the Gemini API. This will improve the accuracy of the 'Content Structure' and 'Keyword Optimization' scores.",
+        "details": "Modify the scoring function to accept the Gemini API output. \n- **Content Structure (30%):** Use the AI-identified sections to verify completeness (e.g., are Experience and Education present?). Check for reverse chronological order within the structured 'Experience' data. \n- **Keyword Optimization (25%):** Analyze the keywords extracted by the AI. Score based on the presence of industry-relevant terms, action verbs, and quantifiable achievements. \n- Combine these AI-driven scores with the initial rule-based scores to produce a final, weighted total.",
+        "testStrategy": "Create mock Gemini API response objects. Pass these, along with raw text, to the enhanced scoring engine. Verify that the presence or absence of key sections and keywords in the mock response correctly influences the final score. Check that the weighting (e.g., Keywords 25%, Structure 30%) is applied correctly.",
+        "priority": "medium",
+        "dependencies": [
+          38,
+          39
+        ],
+        "status": "done",
+        "subtasks": []
+      },
+      {
+        "id": 41,
+        "title": "Implement Dynamic Results Display UI",
+        "description": "Develop the UI component to display the final ATS score and the detailed breakdown. The display should be clean, simple, and provide immediate, easy-to-understand feedback.",
+        "details": "Create a JavaScript function to render the results. This function will take the final score object as input. Display the overall score (0-100) prominently. Implement the color-coding logic (Red: 0-60, Yellow: 61-80, Green: 81-100) for the score display. Show the breakdown of scores by category (Format Compatibility, Content Structure, Keyword Optimization, Readability). Unhide the results section and hide the loading spinner upon completion.",
+        "testStrategy": "Manually call the render function with sample score objects representing low, medium, and high scores. Verify that the overall score is displayed correctly and that the background color changes according to the rules. Check that the category breakdown is visible and accurate.",
+        "priority": "medium",
+        "dependencies": [
+          40
+        ],
+        "status": "done",
+        "subtasks": []
+      },
+      {
+        "id": 42,
+        "title": "Generate and Display Actionable Improvement Suggestions",
+        "description": "Based on the scoring analysis, generate a short list of the most critical improvement suggestions and display them to the user.",
+        "details": "Create a function that analyzes the score breakdown. If a category score is low, generate a corresponding suggestion. For example: \n- Low 'Format Compatibility' score: 'Avoid using tables, columns, or graphics. Stick to standard fonts like Arial or Calibri.' \n- Low 'Keyword Optimization': 'Include more industry-specific keywords and action verbs relevant to the target job.' \n- Missing 'Summary' section: 'Add a professional summary at the top of your resume.' \nDisplay these suggestions as a simple bulleted list below the score breakdown.",
+        "testStrategy": "Provide the suggestion generation function with various low-score scenarios. Verify that the generated suggestions are relevant to the low-scoring category. Ensure that no more than 3-4 key suggestions are displayed to avoid overwhelming the user. Check that the suggestions are displayed correctly in the UI.",
+        "priority": "low",
+        "dependencies": [
+          41
+        ],
+        "status": "done",
+        "subtasks": []
+      },
+      {
+        "id": 43,
+        "title": "Project Scaffolding and Initial Setup",
+        "description": "Create the basic file structure for the vanilla JavaScript application and include all necessary CDN dependencies.",
+        "details": "Create `index.html`, `script.js`, and `style.css`. In `index.html`, add the boilerplate HTML and link the CSS and JS files. Include the CDN links for Tailwind CSS and the PDF.js library as specified in the PRD.",
+        "testStrategy": "Open `index.html` in a browser. Verify that the page loads without errors, Tailwind CSS utility classes work (e.g., changing a background color), and the `pdfjsLib` object is available in the browser's developer console.",
+        "priority": "high",
+        "dependencies": [],
+        "status": "done",
+        "subtasks": []
+      },
+      {
+        "id": 44,
+        "title": "Implement Drag-and-Drop File Upload Zone",
+        "description": "Develop the UI and logic for a drag-and-drop area to accept a single PDF file.",
+        "details": "Using HTML and JavaScript, create a visually distinct drop zone. Implement event listeners for `dragover`, `dragleave`, and `drop`. Add validation to ensure the dropped file is a single PDF and does not exceed the 5MB size limit. Provide visual feedback to the user (e.g., changing border style on hover, showing an error message for invalid files).",
+        "testStrategy": "Drag a valid PDF file onto the zone and verify it is accepted. Drag a non-PDF file (e.g., .jpg, .txt) and verify it is rejected with a message. Drag a PDF file larger than 5MB and verify rejection. Drag multiple files and verify rejection.",
+        "priority": "high",
+        "dependencies": [
+          43
+        ],
+        "status": "done",
+        "subtasks": []
+      },
+      {
+        "id": 45,
+        "title": "Integrate PDF.js for Client-Side Text Extraction",
+        "description": "Use the PDF.js library to read the uploaded PDF file and extract its full text content.",
+        "details": "When a valid PDF is dropped, use the `pdfjsLib` to load the file data. Iterate through each page of the PDF, get the text content, and concatenate it into a single string. Implement a loading indicator that is displayed while the PDF is being processed. For now, log the extracted text to the console to verify success. Include basic error handling for corrupted or password-protected PDFs.",
+        "testStrategy": "Upload a sample resume in PDF format. Verify the loading indicator appears. Check the developer console to ensure the full text content of the resume is extracted and logged correctly. Test with a multi-page PDF.",
+        "priority": "high",
+        "dependencies": [
+          44
+        ],
+        "status": "done",
+        "subtasks": []
+      },
+      {
+        "id": 46,
+        "title": "Develop Baseline ATS Scoring Algorithm (Non-AI)",
+        "description": "Create the initial version of the ATS scoring engine based on hardcoded rules for format, structure, and readability.",
+        "details": "Create a JavaScript function `calculateBaseScore(text)`. This function will implement scoring logic for 'Format Compatibility' and 'Content Structure'. Use regex and string matching to check for: standard section headers (Experience, Education, Skills), presence of contact info (email, phone patterns), reverse chronological order (heuristic check on dates), and use of bullet points. Assign weights to each criterion as per the PRD (Format: 25%, Structure: 25%).",
+        "testStrategy": "Pass text from various sample resumes to the function. Manually verify that resumes with clear sections and contact info score higher than poorly formatted ones. Use unit tests to check specific rules, like email pattern detection.",
+        "priority": "high",
+        "dependencies": [
+          45
+        ],
+        "status": "done",
+        "subtasks": []
+      },
+      {
+        "id": 47,
+        "title": "Implement Gemini API Integration for Content Semanticization",
+        "description": "Set up the client-side API call to Google Gemini to analyze the extracted resume text.",
+        "details": "Create a function to send the extracted text to the Gemini API. Construct a structured prompt that asks the model to identify and extract resume sections (Contact, Summary, Experience, etc.), skills, and keywords, returning the output in a structured JSON format. Securely manage the API key on the client-side for this rapid development phase (e.g., storing in a non-committed config file). Handle API call states (loading, success, error).",
+        "testStrategy": "Using a sample extracted resume text, call the Gemini API function. Verify that the API returns a well-formed JSON object containing the expected semantic sections. Check that API errors (e.g., invalid key, network issue) are handled gracefully.",
+        "priority": "high",
+        "dependencies": [
+          45
+        ],
+        "status": "done",
+        "subtasks": []
+      },
+      {
+        "id": 48,
+        "title": "Enhance Scoring Algorithm with AI Analysis",
+        "description": "Integrate the Gemini API response to score the remaining criteria: Keyword Optimization and Readability.",
+        "details": "Update the scoring engine to use the structured JSON from the Gemini API. Implement logic for 'Keyword Optimization' (30%) by analyzing the extracted skills and keywords against a predefined list of industry terms. Implement 'Readability & Parsing' (20%) by assessing the completeness of sections returned by the AI and checking for quantifiable achievements. Combine all four scores into a final 0-100 ATS score.",
+        "testStrategy": "Process a resume and mock the Gemini API response. Verify the keyword and readability scores are calculated correctly. Test with another resume, provide a real Gemini response, and check that the final combined score is calculated as expected.",
+        "priority": "medium",
+        "dependencies": [
+          46,
+          47
+        ],
+        "status": "done",
+        "subtasks": []
+      },
+      {
+        "id": 49,
+        "title": "Create Results Display UI",
+        "description": "Develop the UI components to display the final ATS score, color-coded rating, and detailed breakdown.",
+        "details": "Create a new section in `index.html` that is initially hidden. After processing, display this section with the final score (0-100). Implement the color-coding logic (Red: 0-60, Yellow: 61-80, Green: 81-100). Add sub-sections to show the individual scores for the four categories: Format Compatibility, Content Structure, Keyword Optimization, and Readability.",
+        "testStrategy": "Manually trigger the results display with sample scores. Verify a score of 55 shows a red background, 75 shows yellow, and 90 shows green. Ensure all four category scores are displayed correctly.",
+        "priority": "high",
+        "dependencies": [
+          48
+        ],
+        "status": "done",
+        "subtasks": []
+      },
+      {
+        "id": 50,
+        "title": "Generate and Display Actionable Improvement Suggestions",
+        "description": "Based on the scoring results, generate and display specific, helpful tips for the user to improve their resume.",
+        "details": "Create a logic module that takes the detailed scoring breakdown as input. For each category with a low score, select a relevant improvement suggestion from a predefined list. For example, if 'Content Structure' is low, suggest 'Add a Professional Summary section'. If 'Keyword Optimization' is low, suggest 'Include more industry-specific keywords related to the target job'. Display these suggestions in a clear list below the score breakdown.",
+        "testStrategy": "Provide a low score for the 'Format Compatibility' category and verify the UI displays a suggestion related to formatting (e.g., 'Use standard fonts like Arial or Calibri'). Test for each of the four categories.",
+        "priority": "medium",
+        "dependencies": [
+          49
+        ],
+        "status": "done",
+        "subtasks": []
+      },
+      {
+        "id": 51,
+        "title": "ML: Generate Synthetic Salary Training Data",
+        "description": "Create a Python script to generate a synthetic dataset for training the salary prediction model.",
+        "details": "Following the PRD, write a script using libraries like pandas and numpy to generate a CSV file. The data should include features like 'years_of_experience', 'role', 'location', 'ats_score', 'skills_count', and a target variable 'salary'. Implement realistic distributions and correlations, such as salary increasing with experience and varying by role and location.",
+        "testStrategy": "Run the script and inspect the output CSV. Use data visualization (e.g., matplotlib) to plot distributions and correlations (e.g., salary vs. experience) to ensure they appear realistic and align with the PRD's specifications.",
+        "priority": "medium",
+        "dependencies": [],
+        "status": "done",
+        "subtasks": []
+      },
+      {
+        "id": 52,
+        "title": "ML: Train and Export Baseline Salary Prediction Model",
+        "description": "Use the synthetic data to train a machine learning model and export it for inference.",
+        "details": "Using Python with scikit-learn or XGBoost, load the synthetic dataset from the previous task. Preprocess the data (e.g., one-hot encode categorical features). Train a regression model (e.g., GradientBoostingRegressor) to predict 'salary'. Evaluate the model's performance using MAE and R-squared metrics. Save the trained model to a file (e.g., using pickle or joblib).",
+        "testStrategy": "Verify that the training script runs to completion. Check the console output for performance metrics (e.g., R-squared > 0.85). Ensure a model file is created in the specified directory.",
+        "priority": "low",
+        "dependencies": [
+          51
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 53,
+        "title": "ML: Implement Client-Side Feature Extraction and Prediction Logic",
+        "description": "Extract ML features from the resume analysis and implement a placeholder prediction function.",
+        "details": "In `script.js`, create a function `predictSalary(resumeData)`. This function will extract features required by the ML model from the Gemini API response and the base ATS score (e.g., years of experience, number of skills, ATS score). Since deploying a Python model for client-side JS is complex for this initial phase, implement a simplified prediction logic using a hardcoded rule-based model (e.g., if-else statements based on experience) that mimics the trained model's behavior as a placeholder.",
+        "testStrategy": "Pass sample resume analysis data to the `predictSalary` function. Verify that it extracts the correct features and returns a salary estimate based on the hardcoded rules (e.g., a resume with 5 years experience returns a higher salary than one with 1 year).",
+        "priority": "low",
+        "dependencies": [
+          47,
+          52
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 54,
+        "title": "ML: Integrate Salary Prediction into UI",
+        "description": "Create UI components to display the salary prediction results to the user.",
+        "details": "In the results section of `index.html`, add new elements to display the salary prediction. This should include the primary salary estimate, an expected range (min-max), and a simple market comparison. Call the `predictSalary` function after the ATS score is calculated and populate these new UI elements with the returned data.",
+        "testStrategy": "Process a full resume. Verify that after the ATS score is displayed, the salary prediction section also appears and is populated with realistic-looking data from the placeholder function. Check that the UI handles cases where a prediction cannot be made.",
+        "priority": "low",
+        "dependencies": [
+          49,
+          53
+        ],
+        "status": "pending",
+        "subtasks": []
+      }
+    ],
+    "metadata": {
+      "created": "2025-09-01T14:39:06.911Z",
+      "updated": "2025-09-02T09:34:38.831Z",
+      "description": "Tasks for master context"
+    }
+  }
+}

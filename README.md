@@ -9,14 +9,12 @@ The ATS Resume Analyzer is an advanced web application that combines traditional
 ### 🎯 Core Features
 - **Resume Analysis**: Upload and analyze resumes in PDF, DOC, or text format
 - **Enhanced Salary Prediction**: AI-powered salary estimation using semantic analysis
-- **Job Description Matching**: Match resumes against job requirements
 - **Skills Extraction**: Identify technical and soft skills using Gemini AI
 - **Experience Analysis**: Evaluate years of experience and expertise levels
 
 ### 🚀 Enhanced Features (v2.0)
 - **Gemini AI Integration**: Semantic keyword extraction using sentence transformers
 - **Advanced ML Model**: Retrained with semantically extracted features
-- **Job Matching Interface**: HR-friendly job description input and analysis
 - **Real-time Matching**: Live skills matching with recommendations
 - **RESTful API**: Backend services for enhanced functionality
 
@@ -28,7 +26,7 @@ The ATS Resume Analyzer is an advanced web application that combines traditional
 │   (HTML/JS)     │◄──►│   (Flask)        │◄──►│   Service       │
 │                 │    │                  │    │                 │
 │ • Resume Upload │    │ • Salary Predict │    │ • Semantic      │
-│ • Job Matching  │    │ • Job Analysis   │    │   Extraction    │
+
 │ • Results UI    │    │ • Skills Match   │    │ • Skill ID      │
 └─────────────────┘    └──────────────────┘    └─────────────────┘
                                 │
@@ -36,7 +34,7 @@ The ATS Resume Analyzer is an advanced web application that combines traditional
                        ┌──────────────────┐
                        │   ML Models      │
                        │                  │
-                       │ • Salary Model   │
+            
                        │ • Feature Eng.   │
                        │ • Predictions    │
                        └──────────────────┘
@@ -147,15 +145,7 @@ CORS_ORIGINS=http://localhost:8080
    - Market data correlation
    - Location and industry factors
 
-### Job Description Matching
 
-1. **Switch to Job Matching Tab**
-2. **Enter Job Description**: Paste the complete job posting
-3. **Analyze Requirements**: System extracts:
-   - Required skills
-   - Preferred qualifications
-   - Experience requirements
-   - Education needs
 
 4. **Upload Resume for Matching**
 5. **View Results**:
@@ -186,26 +176,6 @@ Content-Type: application/json
 }
 ```
 
-### Job Description Analysis
-```http
-POST /api/analyze-job
-Content-Type: application/json
-
-{
-  "job_description": "string"
-}
-```
-
-### Resume-Job Matching
-```http
-POST /api/match-job
-Content-Type: application/json
-
-{
-  "job_description": "string",
-  "resume_text": "string"
-}
-```
 
 ## File Structure
 

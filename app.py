@@ -263,6 +263,27 @@ def predict_salary():
         # Calculate salary using OTS calculator
         result = salary_calculator.calculate_salary(data['resume_text'])
         
+        # Check for validation errors (non-resume documents)
+        if result.breakdown.get('validation_error', False):
+            logger.warning(f"Document validation failed: {result.breakdown.get('error_message', 'Unknown validation error')}")
+            return jsonify({
+                'error': 'Invalid document type',
+                'validation_failed': True,
+                'document_analysis': {
+                    'document_type': result.breakdown.get('document_type', 'unknown'),
+                    'validation_result': result.breakdown.get('validation_result', 'invalid'),
+                    'confidence_score': result.breakdown.get('confidence_score', 0.0),
+                    'quality_score': result.breakdown.get('quality_score', 0.0),
+                    'recommendations': result.breakdown.get('recommendations', []),
+                    'message': result.breakdown.get('error_message', 'Document does not appear to be a valid resume')
+                },
+                'suggestions': [
+                    'Please upload a valid resume document',
+                    'Ensure the document contains typical resume sections like education, experience, and skills',
+                    'Check that the document is not an invoice, report, or other non-resume document'
+                ]
+            }), 400
+        
         # Project salary growth
         growth_projection_raw = salary_calculator.project_salary_growth(
             result.final_salary, years=5, 
@@ -288,13 +309,27 @@ def predict_salary():
             'growth_factors': growth_projection_raw.get('growth_factors', {})
         }
         
+        # Calculate dynamic salary range
+        dynamic_range = salary_calculator.calculate_dynamic_salary_range(
+            base_salary=result.base_salary,
+            experience_band=result.experience_band,
+            skills=result.breakdown.get('skills', []),
+            location=result.breakdown.get('location', ''),
+            college_tier=result.college_tier,
+            college_multiplier=result.college_multiplier
+        )
+        
         # Format response with enhanced college tier information
         response = {
             'estimated_salary': result.final_salary,
             'experience_level': result.experience_band,
             'salary_range': {
-                'min': result.base_salary * 0.9,
-                'max': result.base_salary * 1.3
+                'min': dynamic_range['min'],
+                'max': dynamic_range['max'],
+                'median': dynamic_range['median'],
+                'confidence_level': dynamic_range['confidence_level'],
+                'market_factors': dynamic_range['market_factors'],
+                'recommendations': dynamic_range['recommendations']
             },
             'breakdown': {
                 'base_salary': result.base_salary,

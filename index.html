@@ -969,6 +969,19 @@
                         </div>
                     </div>
                 </div>
+                
+                <!-- Analyze Another Resume Button -->
+                <div class="text-center mt-12">
+                    <button id="analyze-another-btn" class="group relative px-12 py-6 bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 text-white font-bold text-xl rounded-2xl shadow-2xl hover:shadow-blue-500/25 transition-all duration-500 hover:scale-105 transform">
+                        <div class="absolute inset-0 bg-gradient-to-r from-blue-500 via-purple-500 to-indigo-500 rounded-2xl blur opacity-0 group-hover:opacity-75 transition-opacity duration-500"></div>
+                        <div class="relative flex items-center space-x-3">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                            </svg>
+                            <span>Analyze Another Resume</span>
+                        </div>
+                    </button>
+                </div>
             </div>
         </section>
 
@@ -1408,13 +1421,23 @@
                                         <span id="experience-level" class="text-white/90 font-semibold">Calculating...</span>
                                     </div>
                                     
-                                    <!-- Salary Range -->
+                                    <!-- Enhanced Salary Range -->
                                     <div class="text-center">
-                                        <div class="text-sm text-white/70 mb-2">Salary Range</div>
-                                        <div class="flex justify-center items-center space-x-4">
+                                        <div class="text-sm text-white/70 mb-2">Dynamic Salary Range</div>
+                                        <div class="flex justify-center items-center space-x-4 mb-3">
                                             <span id="salary-min" class="text-lg font-semibold text-white/80">₹0</span>
-                                            <div class="w-16 h-1 bg-gradient-to-r from-green-400 to-emerald-500 rounded-full"></div>
+                                            <div class="w-16 h-1 bg-gradient-to-r from-green-400 to-emerald-500 rounded-full relative">
+                                                <div id="salary-median-indicator" class="absolute top-0 w-2 h-1 bg-yellow-400 rounded-full transform -translate-x-1/2" style="left: 50%;"></div>
+                                            </div>
                                             <span id="salary-max" class="text-lg font-semibold text-white/80">₹0</span>
+                                        </div>
+                                        <div class="text-xs text-white/60 mb-2">
+                                            <span>Median: </span><span id="salary-median" class="text-yellow-400 font-medium">₹0</span>
+                                        </div>
+                                        <div class="flex justify-center items-center space-x-2">
+                                            <div id="confidence-badge" class="px-2 py-1 rounded-full text-xs font-medium bg-green-500/20 text-green-400">
+                                                <span id="confidence-level">0%</span> Confidence
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -1465,6 +1488,28 @@
                                         <span class="text-white/90 font-medium">Location Factor</span>
                                     </div>
                                     <span id="location-factor" class="text-white font-semibold">×1.0</span>
+                                </div>
+                            </div>
+                            
+                            <!-- Market Factors & Recommendations -->
+                            <div class="glass-card p-6 hover:scale-[1.02] transition-all duration-300" id="market-factors-section" style="display: none;">
+                                <div class="flex items-center space-x-3 mb-4">
+                                    <div class="w-4 h-4 bg-indigo-400 rounded-full"></div>
+                                    <span class="text-white/90 font-medium">Market Factors</span>
+                                </div>
+                                <div id="market-factors-list" class="space-y-2 text-sm text-white/70">
+                                    <!-- Market factors will be populated here -->
+                                </div>
+                            </div>
+                            
+                            <!-- Salary Recommendations -->
+                            <div class="glass-card p-6 hover:scale-[1.02] transition-all duration-300" id="recommendations-section" style="display: none;">
+                                <div class="flex items-center space-x-3 mb-4">
+                                    <div class="w-4 h-4 bg-pink-400 rounded-full"></div>
+                                    <span class="text-white/90 font-medium">Recommendations</span>
+                                </div>
+                                <div id="recommendations-list" class="space-y-2 text-sm text-white/70">
+                                    <!-- Recommendations will be populated here -->
                                 </div>
                             </div>
                         </div>
@@ -3286,7 +3331,7 @@
                 // Show loading state for salary section
                 const salarySection = document.getElementById('salary-section');
                 salarySection.classList.remove('hidden');
-                salarySection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                // Removed automatic scrolling - user can manually scroll if needed
                 
                 // Show loading indicators
                 document.getElementById('predicted-salary').textContent = 'Calculating...';
@@ -3358,10 +3403,18 @@
             document.getElementById('predicted-salary').textContent = formatCurrency(salaryData.estimated_salary);
             document.getElementById('experience-level').textContent = salaryData.experience_level || 'Not specified';
             
-            // Update salary range
+            // Update enhanced salary range
             const salaryRange = salaryData.salary_range || {};
             document.getElementById('salary-min').textContent = formatCurrency(salaryRange.min || salaryData.estimated_salary * 0.8);
             document.getElementById('salary-max').textContent = formatCurrency(salaryRange.max || salaryData.estimated_salary * 1.2);
+            
+            // Update median and confidence if available
+            if (salaryRange.median) {
+                document.getElementById('salary-median').textContent = formatCurrency(salaryRange.median);
+            }
+            if (salaryRange.confidence_level !== undefined) {
+                document.getElementById('confidence-level').textContent = `${Math.round(salaryRange.confidence_level)}%`;
+            }
             
             // Update salary breakdown
             document.getElementById('base-salary').textContent = formatCurrency(salaryData.base_salary || salaryData.estimated_salary);
@@ -3884,6 +3937,21 @@ Detailed Scores:
             // Action buttons
             document.getElementById('download-report').addEventListener('click', downloadReport);
             
+            // Analyze Another Resume button
+            document.getElementById('analyze-another-btn').addEventListener('click', () => {
+                // Hide salary section
+                document.getElementById('salary-section').classList.add('hidden');
+                
+                // Reset file input and UI
+                removeFile();
+                
+                // Scroll back to upload section
+                document.getElementById('upload-section').scrollIntoView({ 
+                    behavior: 'smooth', 
+                    block: 'start' 
+                });
+            });
+            
 
         }
         
@@ -3949,9 +4017,77 @@ Detailed Scores:
                 document.getElementById('predicted-salary').textContent = formatCurrency(salaryData.estimated_salary);
                 document.getElementById('experience-level').textContent = salaryData.experience_level || 'Not specified';
                 
-                // Salary range
-                document.getElementById('salary-min').textContent = formatCurrency(salaryData.salary_range?.min || 0);
-                document.getElementById('salary-max').textContent = formatCurrency(salaryData.salary_range?.max || 0);
+                // Enhanced salary range with dynamic data
+                const salaryRange = salaryData.salary_range || {};
+                document.getElementById('salary-min').textContent = formatCurrency(salaryRange.min || 0);
+                document.getElementById('salary-max').textContent = formatCurrency(salaryRange.max || 0);
+                
+                // Display median salary
+                if (salaryRange.median) {
+                    document.getElementById('salary-median').textContent = formatCurrency(salaryRange.median);
+                    
+                    // Position median indicator on the range bar
+                    const minVal = salaryRange.min || 0;
+                    const maxVal = salaryRange.max || 0;
+                    const medianVal = salaryRange.median;
+                    if (maxVal > minVal) {
+                        const position = ((medianVal - minVal) / (maxVal - minVal)) * 100;
+                        document.getElementById('salary-median-indicator').style.left = `${Math.max(0, Math.min(100, position))}%`;
+                    }
+                }
+                
+                // Display confidence level with color coding
+                if (salaryRange.confidence_level !== undefined) {
+                    const confidence = Math.round(salaryRange.confidence_level);
+                    document.getElementById('confidence-level').textContent = `${confidence}%`;
+                    
+                    const confidenceBadge = document.getElementById('confidence-badge');
+                    if (confidence >= 80) {
+                        confidenceBadge.className = 'px-2 py-1 rounded-full text-xs font-medium bg-green-500/20 text-green-400';
+                    } else if (confidence >= 60) {
+                        confidenceBadge.className = 'px-2 py-1 rounded-full text-xs font-medium bg-yellow-500/20 text-yellow-400';
+                    } else {
+                        confidenceBadge.className = 'px-2 py-1 rounded-full text-xs font-medium bg-red-500/20 text-red-400';
+                    }
+                }
+                
+                // Display market factors
+                if (salaryRange.market_factors && salaryRange.market_factors.length > 0) {
+                    const marketFactorsSection = document.getElementById('market-factors-section');
+                    const marketFactorsList = document.getElementById('market-factors-list');
+                    
+                    marketFactorsList.innerHTML = '';
+                    salaryRange.market_factors.forEach(factor => {
+                        const factorDiv = document.createElement('div');
+                        factorDiv.className = 'flex items-center space-x-2';
+                        factorDiv.innerHTML = `
+                            <div class="w-2 h-2 bg-indigo-400 rounded-full"></div>
+                            <span>${factor}</span>
+                        `;
+                        marketFactorsList.appendChild(factorDiv);
+                    });
+                    
+                    marketFactorsSection.style.display = 'block';
+                }
+                
+                // Display recommendations
+                if (salaryRange.recommendations && salaryRange.recommendations.length > 0) {
+                    const recommendationsSection = document.getElementById('recommendations-section');
+                    const recommendationsList = document.getElementById('recommendations-list');
+                    
+                    recommendationsList.innerHTML = '';
+                    salaryRange.recommendations.forEach(recommendation => {
+                        const recDiv = document.createElement('div');
+                        recDiv.className = 'flex items-center space-x-2';
+                        recDiv.innerHTML = `
+                            <div class="w-2 h-2 bg-pink-400 rounded-full"></div>
+                            <span>${recommendation}</span>
+                        `;
+                        recommendationsList.appendChild(recDiv);
+                    });
+                    
+                    recommendationsSection.style.display = 'block';
+                }
                 
                 // Salary breakdown
                 document.getElementById('base-salary').textContent = formatCurrency(salaryData.breakdown?.base_salary || 0);
@@ -4025,13 +4161,7 @@ Detailed Scores:
                 // Show the salary section
                 document.getElementById('salary-section').classList.remove('hidden');
                 
-                // Smooth scroll to salary section
-                setTimeout(() => {
-                    document.getElementById('salary-section').scrollIntoView({ 
-                        behavior: 'smooth', 
-                        block: 'start' 
-                    });
-                }, 500);
+                // Removed automatic scrolling - user can manually scroll if needed
                 
             } catch (error) {
                 console.error('Error updating salary UI:', error);

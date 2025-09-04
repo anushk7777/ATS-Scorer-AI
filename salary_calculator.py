@@ -18,6 +18,9 @@ from typing import Dict, List, Optional, Tuple, Any
 from dataclasses import dataclass
 from pathlib import Path
 from premium_college_database import PremiumCollegeDatabase
+from city_multiplier_config import CityMultiplierConfig
+from resume_validator import ResumeContentValidator, ValidationResult
+from dynamic_salary_range import DynamicSalaryRangeCalculator
 
 
 @dataclass
@@ -72,6 +75,10 @@ class OTSSalaryCalculator:
         self.database_path = database_path
         self.config = self._load_config()
         self.college_db = PremiumCollegeDatabase(database_path)
+        self.city_config = CityMultiplierConfig()
+        
+        # Initialize dynamic salary range calculator
+        self.range_calculator = DynamicSalaryRangeCalculator(config_path)
         
     def _load_config(self) -> Dict[str, Any]:
         """
@@ -478,34 +485,20 @@ class OTSSalaryCalculator:
     
     def extract_location(self, resume_text: str) -> str:
         """
-        Extract location information from resume text.
+        Extract location information from resume text using the city multiplier configuration.
         
         Args:
             resume_text: Raw resume text content
             
         Returns:
-            Location key for multiplier lookup
+            Detected city name or 'other' if not found
         """
         resume_lower = resume_text.lower()
         
-        # Location keywords mapping
-        location_keywords = {
-            'bangalore': ['bangalore', 'bengaluru', 'blr'],
-            'mumbai': ['mumbai', 'bombay'],
-            'pune': ['pune'],
-            'hyderabad': ['hyderabad', 'hyd'],
-            'chennai': ['chennai', 'madras'],
-            'delhi_ncr': ['delhi', 'gurgaon', 'gurugram', 'noida', 'ncr', 'new delhi'],
-            'kolkata': ['kolkata', 'calcutta']
-        }
+        # Use the city configuration to detect location
+        detected_city = self.city_config.detect_city_from_text(resume_text)
         
-        # Check for location keywords in resume
-        for location, keywords in location_keywords.items():
-            for keyword in keywords:
-                if keyword in resume_lower:
-                    return location
-        
-        return 'other'
+        return detected_city if detected_city else 'other'
     
     def extract_skills(self, resume_text: str) -> List[str]:
         """
@@ -566,6 +559,39 @@ class OTSSalaryCalculator:
         Returns:
             SalaryCalculationResult object with detailed breakdown
         """
+        # Initialize resume validator if not already done
+        if not hasattr(self, 'resume_validator'):
+            self.resume_validator = ResumeContentValidator()
+        
+        # Validate resume content before processing
+        validation_result = self.resume_validator.validate_resume(resume_text)
+        
+        # Check if document is a valid resume
+        if not validation_result.is_valid_resume:
+            # Return error result for non-resume documents
+            return SalaryCalculationResult(
+                base_salary=0.0,
+                college_multiplier=0.0,
+                role_multiplier=0.0,
+                location_multiplier=0.0,
+                skill_multiplier=0.0,
+                final_salary=0.0,
+                experience_band="invalid",
+                college_tier=None,
+                breakdown={
+                    'validation_error': True,
+                    'validation_result': validation_result.validation_result.value,
+                    'document_type': validation_result.document_type.value,
+                    'confidence_score': validation_result.confidence_score,
+                    'quality_score': validation_result.quality_score,
+                    'recommendations': validation_result.recommendations,
+                    'error_message': f"Document is not a valid resume. Detected as: {validation_result.document_type.value}"
+                }
+            )
+        
+        # Log validation success
+        print(f"Resume validation passed - Confidence: {validation_result.confidence_score:.2f}, Quality: {validation_result.quality_score:.2f}")
+        
         # Extract information from resume
         years_experience = self.extract_experience_years(resume_text)
         college_name, graduation_year = self.extract_college_info(resume_text)
@@ -590,7 +616,13 @@ class OTSSalaryCalculator:
                 college_tier = enhanced_info.get('tier', college_tier)  # Update college_tier from enhanced database
         
         role_multiplier = self.config['role_multipliers'].get(role, {}).get('multiplier', 1.0)
-        location_multiplier = self.config['location_adjustments'].get(location, {}).get('multiplier', 1.0)
+        # Calculate location multiplier using city configuration
+        location_multiplier, city_info = self.city_config.get_city_multiplier(location)
+        
+        # Add tech hub bonus if applicable
+        tech_hub_bonus = self.city_config.get_tech_hub_bonus(location)
+        if tech_hub_bonus > 0:
+            location_multiplier += tech_hub_bonus
         skill_multiplier = self.calculate_skill_multiplier(skills)
         
         # Calculate final salary
@@ -607,7 +639,9 @@ class OTSSalaryCalculator:
         max_cap = self.config['validation_rules']['max_salary_cap']
         final_salary = max(min_cap, min(final_salary, max_cap))
         
-        # Create detailed breakdown with premium college info
+        # Use city_info already obtained from get_city_multiplier call
+        
+        # Create detailed breakdown with premium college and city info
         breakdown = {
             'years_experience': years_experience,
             'college_name': college_name,
@@ -620,6 +654,16 @@ class OTSSalaryCalculator:
                  'database_weightage': self.college_db.calculate_college_weightage(college_name, years_experience)[0] if college_name else 1.0,
                  'final_multiplier': college_multiplier
              },
+            'city_info': {
+                'detected_city': location,
+                'city_tier': city_info.tier.value if city_info else 'Unknown',
+                'state': city_info.state if city_info else 'Unknown',
+                'base_multiplier': location_multiplier - tech_hub_bonus if tech_hub_bonus > 0 else location_multiplier,
+                'tech_hub_bonus': tech_hub_bonus,
+                'final_location_multiplier': location_multiplier,
+                'is_tech_hub': city_info.tech_hub if city_info else False,
+                'population': city_info.population if city_info else 'Unknown'
+            },
             'calculation_steps': {
                 'base_salary': base_salary,
                 'college_multiplier': college_multiplier,
@@ -642,6 +686,79 @@ class OTSSalaryCalculator:
             college_tier=college_tier,
             breakdown=breakdown
         )
+    
+    def calculate_dynamic_salary_range(self, 
+                                      base_salary: float,
+                                      experience_band: str,
+                                      skills: List[str],
+                                      location: str,
+                                      college_tier: Optional[str] = None,
+                                      college_multiplier: float = 1.0) -> Dict[str, Any]:
+        """
+        Calculate dynamic salary range using the advanced range calculator.
+        
+        Args:
+            base_salary: Base calculated salary
+            experience_band: Experience level (freshers, junior, mid_level, senior)
+            skills: List of identified skills
+            location: Location/city
+            college_tier: College tier (if applicable)
+            college_multiplier: College premium multiplier
+            
+        Returns:
+            Dictionary containing dynamic range calculation results
+        """
+        try:
+            # Use the dynamic range calculator
+            range_result = self.range_calculator.calculate_dynamic_range(
+                base_salary=base_salary,
+                experience_band=experience_band,
+                skills=skills,
+                location=location,
+                college_tier=college_tier,
+                college_multiplier=college_multiplier
+            )
+            
+            # Convert to dictionary format for API response
+            return {
+                "min": range_result.min_salary,
+                "max": range_result.max_salary,
+                "median": range_result.median_salary,
+                "range_width": range_result.range_width,
+                "confidence_level": range_result.confidence_level,
+                "market_factors": range_result.market_factors,
+                "calculation_breakdown": range_result.calculation_breakdown,
+                "recommendations": range_result.recommendations
+            }
+            
+        except Exception as e:
+            # Fallback to simple range calculation
+            return self._get_simple_fallback_range(base_salary, experience_band)
+    
+    def _get_simple_fallback_range(self, base_salary: float, experience_band: str) -> Dict[str, Any]:
+        """
+        Get simple fallback salary range if dynamic calculation fails.
+        
+        Args:
+            base_salary: Base calculated salary
+            experience_band: Experience level
+            
+        Returns:
+            Simple range dictionary
+        """
+        # Use the simple range method from dynamic calculator
+        simple_range = self.range_calculator.get_simple_range(base_salary, experience_band)
+        
+        return {
+            "min": simple_range["min"],
+            "max": simple_range["max"],
+            "median": base_salary * 1.1,
+            "range_width": simple_range["max"] - simple_range["min"],
+            "confidence_level": 0.6,
+            "market_factors": {"fallback": True},
+            "calculation_breakdown": {"method": "simple_fallback"},
+            "recommendations": ["Using simplified range calculation due to processing error"]
+        }
     
     def project_salary_growth(self, current_salary: float, years: int = 5, 
                              current_experience: float = 0, current_role: str = "software_engineer") -> Dict[str, Any]:

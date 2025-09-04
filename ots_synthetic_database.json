@@ -7,7 +7,8 @@
       "synthetic_generation",
       "industry_benchmarks"
     ],
-    "premium_colleges_count": 45
+    "premium_colleges_count": 260,
+    "last_updated": "2025-09-04T14:11:55.470515"
   },
   "premium_colleges": {
     "tier_1": {
@@ -430,6 +431,1462 @@
           ],
           "placement_rate": 0.7862339396100828,
           "average_package": 680643
+        },
+        "national_institute_of_technology_trichy": {
+          "name": "National Institute of Technology Trichy",
+          "established": 2003,
+          "location": "Tiruchirappalli",
+          "specializations": [
+            "Mechanical",
+            "Artificial Intelligence",
+            "Information Technology"
+          ],
+          "placement_rate": 0.8161,
+          "average_package": 1137617
+        },
+        "national_institute_of_technology_warangal": {
+          "name": "National Institute of Technology Warangal",
+          "established": 1962,
+          "location": "Warangal",
+          "specializations": [
+            "Chemical",
+            "Civil",
+            "Information Technology"
+          ],
+          "placement_rate": 0.7833,
+          "average_package": 1174075
+        },
+        "national_institute_of_technology_rourkela": {
+          "name": "National Institute of Technology Rourkela",
+          "established": 1970,
+          "location": "Rourkela",
+          "specializations": [
+            "Electrical",
+            "Cybersecurity",
+            "Information Technology",
+            "Civil"
+          ],
+          "placement_rate": 0.7553,
+          "average_package": 1080282
+        },
+        "national_institute_of_technology_kurukshetra": {
+          "name": "National Institute of Technology Kurukshetra",
+          "established": 1961,
+          "location": "Kurukshetra",
+          "specializations": [
+            "Aerospace",
+            "Civil",
+            "Computer Science",
+            "Electronics"
+          ],
+          "placement_rate": 0.8374,
+          "average_package": 842819
+        },
+        "national_institute_of_technology_durgapur": {
+          "name": "National Institute of Technology Durgapur",
+          "established": 1986,
+          "location": "Durgapur",
+          "specializations": [
+            "Cybersecurity",
+            "Chemical",
+            "Data Science",
+            "Electrical"
+          ],
+          "placement_rate": 0.7715,
+          "average_package": 556321
+        },
+        "national_institute_of_technology_jamshedpur": {
+          "name": "National Institute of Technology Jamshedpur",
+          "established": 1965,
+          "location": "Jamshedpur",
+          "specializations": [
+            "Electrical",
+            "Computer Science",
+            "Software Engineering",
+            "Aerospace",
+            "Civil",
+            "Mechanical"
+          ],
+          "placement_rate": 0.7948,
+          "average_package": 778316
+        },
+        "national_institute_of_technology_hamirpur": {
+          "name": "National Institute of Technology Hamirpur",
+          "established": 1991,
+          "location": "Hamirpur",
+          "specializations": [
+            "Biotechnology",
+            "Information Technology",
+            "Mechanical"
+          ],
+          "placement_rate": 0.6951,
+          "average_package": 875607
+        },
+        "national_institute_of_technology_jalandhar": {
+          "name": "National Institute of Technology Jalandhar",
+          "established": 1990,
+          "location": "Jalandhar",
+          "specializations": [
+            "Aerospace",
+            "Chemical",
+            "Artificial Intelligence"
+          ],
+          "placement_rate": 0.8012,
+          "average_package": 847892
+        },
+        "national_institute_of_technology_patna": {
+          "name": "National Institute of Technology Patna",
+          "established": 1968,
+          "location": "Patna",
+          "specializations": [
+            "Software Engineering",
+            "Electronics",
+            "Aerospace",
+            "Cybersecurity"
+          ],
+          "placement_rate": 0.6892,
+          "average_package": 529961
+        },
+        "national_institute_of_technology_raipur": {
+          "name": "National Institute of Technology Raipur",
+          "established": 1993,
+          "location": "Raipur",
+          "specializations": [
+            "Mechanical",
+            "Aerospace",
+            "Electronics"
+          ],
+          "placement_rate": 0.7959,
+          "average_package": 930946
+        },
+        "national_institute_of_technology_silchar": {
+          "name": "National Institute of Technology Silchar",
+          "established": 1955,
+          "location": "Silchar",
+          "specializations": [
+            "Cybersecurity",
+            "Mechanical",
+            "Civil"
+          ],
+          "placement_rate": 0.7979,
+          "average_package": 584845
+        },
+        "national_institute_of_technology_agartala": {
+          "name": "National Institute of Technology Agartala",
+          "established": 1973,
+          "location": "Agartala",
+          "specializations": [
+            "Chemical",
+            "Mechanical",
+            "Data Science",
+            "Biotechnology"
+          ],
+          "placement_rate": 0.7639,
+          "average_package": 1160572
+        },
+        "national_institute_of_technology_arunachal_pradesh": {
+          "name": "National Institute of Technology Arunachal Pradesh",
+          "established": 2000,
+          "location": "Yupia",
+          "specializations": [
+            "Electrical",
+            "Aerospace",
+            "Data Science",
+            "Biotechnology",
+            "Software Engineering"
+          ],
+          "placement_rate": 0.7859,
+          "average_package": 1048462
+        },
+        "national_institute_of_technology_delhi": {
+          "name": "National Institute of Technology Delhi",
+          "established": 1966,
+          "location": "Delhi",
+          "specializations": [
+            "Civil",
+            "Mechanical",
+            "Chemical",
+            "Artificial Intelligence"
+          ],
+          "placement_rate": 0.7492,
+          "average_package": 1097935
+        },
+        "national_institute_of_technology_goa": {
+          "name": "National Institute of Technology Goa",
+          "established": 1971,
+          "location": "Goa",
+          "specializations": [
+            "Information Technology",
+            "Software Engineering",
+            "Electronics",
+            "Biotechnology",
+            "Artificial Intelligence",
+            "Cybersecurity"
+          ],
+          "placement_rate": 0.7768,
+          "average_package": 825079
+        },
+        "national_institute_of_technology_manipur": {
+          "name": "National Institute of Technology Manipur",
+          "established": 1979,
+          "location": "Imphal",
+          "specializations": [
+            "Information Technology",
+            "Chemical",
+            "Cybersecurity",
+            "Artificial Intelligence",
+            "Electrical",
+            "Mechanical"
+          ],
+          "placement_rate": 0.8026,
+          "average_package": 1185505
+        },
+        "national_institute_of_technology_meghalaya": {
+          "name": "National Institute of Technology Meghalaya",
+          "established": 1952,
+          "location": "Shillong",
+          "specializations": [
+            "Information Technology",
+            "Civil",
+            "Mechanical",
+            "Aerospace"
+          ],
+          "placement_rate": 0.8043,
+          "average_package": 698548
+        },
+        "national_institute_of_technology_mizoram": {
+          "name": "National Institute of Technology Mizoram",
+          "established": 1994,
+          "location": "Aizawl",
+          "specializations": [
+            "Electrical",
+            "Civil",
+            "Cybersecurity",
+            "Data Science",
+            "Mechanical"
+          ],
+          "placement_rate": 0.7607,
+          "average_package": 838808
+        },
+        "national_institute_of_technology_nagaland": {
+          "name": "National Institute of Technology Nagaland",
+          "established": 1961,
+          "location": "Dimapur",
+          "specializations": [
+            "Cybersecurity",
+            "Artificial Intelligence",
+            "Data Science",
+            "Civil",
+            "Electrical",
+            "Information Technology"
+          ],
+          "placement_rate": 0.6591,
+          "average_package": 855414
+        },
+        "national_institute_of_technology_puducherry": {
+          "name": "National Institute of Technology Puducherry",
+          "established": 1992,
+          "location": "Puducherry",
+          "specializations": [
+            "Software Engineering",
+            "Artificial Intelligence",
+            "Mechanical",
+            "Biotechnology",
+            "Computer Science",
+            "Cybersecurity"
+          ],
+          "placement_rate": 0.7258,
+          "average_package": 619348
+        },
+        "national_institute_of_technology_sikkim": {
+          "name": "National Institute of Technology Sikkim",
+          "established": 1999,
+          "location": "Ravangla",
+          "specializations": [
+            "Software Engineering",
+            "Mechanical",
+            "Aerospace",
+            "Data Science"
+          ],
+          "placement_rate": 0.7011,
+          "average_package": 564236
+        },
+        "national_institute_of_technology_uttarakhand": {
+          "name": "National Institute of Technology Uttarakhand",
+          "established": 1970,
+          "location": "Srinagar",
+          "specializations": [
+            "Data Science",
+            "Biotechnology",
+            "Information Technology",
+            "Chemical",
+            "Aerospace"
+          ],
+          "placement_rate": 0.7443,
+          "average_package": 1175122
+        },
+        "indian_institute_of_information_technology_gwalior": {
+          "name": "Indian Institute of Information Technology Gwalior",
+          "established": 1979,
+          "location": "Gwalior",
+          "specializations": [
+            "Electronics",
+            "Computer Science",
+            "Electrical",
+            "Artificial Intelligence",
+            "Software Engineering"
+          ],
+          "placement_rate": 0.7817,
+          "average_package": 845963
+        },
+        "indian_institute_of_information_technology_jabalpur": {
+          "name": "Indian Institute of Information Technology Jabalpur",
+          "established": 1979,
+          "location": "Jabalpur",
+          "specializations": [
+            "Civil",
+            "Artificial Intelligence",
+            "Electrical",
+            "Software Engineering",
+            "Computer Science",
+            "Information Technology"
+          ],
+          "placement_rate": 0.8197,
+          "average_package": 783926
+        },
+        "indian_institute_of_information_technology_kancheepuram": {
+          "name": "Indian Institute of Information Technology Kancheepuram",
+          "established": 1951,
+          "location": "Chennai",
+          "specializations": [
+            "Cybersecurity",
+            "Biotechnology",
+            "Information Technology"
+          ],
+          "placement_rate": 0.78,
+          "average_package": 518742
+        },
+        "indian_institute_of_information_technology_lucknow": {
+          "name": "Indian Institute of Information Technology Lucknow",
+          "established": 1967,
+          "location": "Lucknow",
+          "specializations": [
+            "Computer Science",
+            "Electrical",
+            "Civil",
+            "Data Science",
+            "Cybersecurity"
+          ],
+          "placement_rate": 0.7868,
+          "average_package": 692943
+        },
+        "indian_institute_of_information_technology_pune": {
+          "name": "Indian Institute of Information Technology Pune",
+          "established": 1984,
+          "location": "Pune",
+          "specializations": [
+            "Data Science",
+            "Biotechnology",
+            "Cybersecurity",
+            "Information Technology"
+          ],
+          "placement_rate": 0.6961,
+          "average_package": 734836
+        },
+        "indian_institute_of_information_technology_vadodara": {
+          "name": "Indian Institute of Information Technology Vadodara",
+          "established": 1951,
+          "location": "Vadodara",
+          "specializations": [
+            "Chemical",
+            "Biotechnology",
+            "Electrical"
+          ],
+          "placement_rate": 0.7853,
+          "average_package": 1040649
+        },
+        "indian_institute_of_information_technology_nagpur": {
+          "name": "Indian Institute of Information Technology Nagpur",
+          "established": 1977,
+          "location": "Nagpur",
+          "specializations": [
+            "Biotechnology",
+            "Electrical",
+            "Mechanical",
+            "Data Science",
+            "Information Technology"
+          ],
+          "placement_rate": 0.8338,
+          "average_package": 799371
+        },
+        "indian_institute_of_information_technology_kota": {
+          "name": "Indian Institute of Information Technology Kota",
+          "established": 1995,
+          "location": "Kota",
+          "specializations": [
+            "Electrical",
+            "Artificial Intelligence",
+            "Electronics",
+            "Data Science",
+            "Civil",
+            "Cybersecurity"
+          ],
+          "placement_rate": 0.7564,
+          "average_package": 1123822
+        },
+        "indian_institute_of_information_technology_sonepat": {
+          "name": "Indian Institute of Information Technology Sonepat",
+          "established": 1970,
+          "location": "Sonepat",
+          "specializations": [
+            "Mechanical",
+            "Cybersecurity",
+            "Artificial Intelligence",
+            "Aerospace",
+            "Software Engineering"
+          ],
+          "placement_rate": 0.7585,
+          "average_package": 704017
+        },
+        "indian_institute_of_information_technology_una": {
+          "name": "Indian Institute of Information Technology Una",
+          "established": 1997,
+          "location": "Una",
+          "specializations": [
+            "Cybersecurity",
+            "Mechanical",
+            "Computer Science",
+            "Biotechnology"
+          ],
+          "placement_rate": 0.7196,
+          "average_package": 816610
+        },
+        "indian_institute_of_information_technology_surat": {
+          "name": "Indian Institute of Information Technology Surat",
+          "established": 1989,
+          "location": "Surat",
+          "specializations": [
+            "Electrical",
+            "Mechanical",
+            "Software Engineering",
+            "Aerospace",
+            "Biotechnology",
+            "Information Technology"
+          ],
+          "placement_rate": 0.7411,
+          "average_package": 1155632
+        },
+        "indian_institute_of_information_technology_bhopal": {
+          "name": "Indian Institute of Information Technology Bhopal",
+          "established": 1975,
+          "location": "Bhopal",
+          "specializations": [
+            "Information Technology",
+            "Artificial Intelligence",
+            "Data Science",
+            "Electronics",
+            "Chemical",
+            "Software Engineering"
+          ],
+          "placement_rate": 0.7596,
+          "average_package": 677114
+        },
+        "indian_institute_of_information_technology_bhagalpur": {
+          "name": "Indian Institute of Information Technology Bhagalpur",
+          "established": 1956,
+          "location": "Bhagalpur",
+          "specializations": [
+            "Computer Science",
+            "Electronics",
+            "Electrical",
+            "Information Technology"
+          ],
+          "placement_rate": 0.7377,
+          "average_package": 1150201
+        },
+        "indian_institute_of_information_technology_agartala": {
+          "name": "Indian Institute of Information Technology Agartala",
+          "established": 1967,
+          "location": "Agartala",
+          "specializations": [
+            "Aerospace",
+            "Electrical",
+            "Computer Science"
+          ],
+          "placement_rate": 0.7582,
+          "average_package": 776571
+        },
+        "indian_institute_of_information_technology_kalyani": {
+          "name": "Indian Institute of Information Technology Kalyani",
+          "established": 1996,
+          "location": "Kalyani",
+          "specializations": [
+            "Electronics",
+            "Mechanical",
+            "Electrical",
+            "Artificial Intelligence",
+            "Data Science",
+            "Civil"
+          ],
+          "placement_rate": 0.8254,
+          "average_package": 1001562
+        },
+        "indian_institute_of_information_technology_ranchi": {
+          "name": "Indian Institute of Information Technology Ranchi",
+          "established": 1992,
+          "location": "Ranchi",
+          "specializations": [
+            "Software Engineering",
+            "Data Science",
+            "Aerospace"
+          ],
+          "placement_rate": 0.8068,
+          "average_package": 799177
+        },
+        "indian_institute_of_information_technology_manipur": {
+          "name": "Indian Institute of Information Technology Manipur",
+          "established": 1959,
+          "location": "Imphal",
+          "specializations": [
+            "Chemical",
+            "Cybersecurity",
+            "Computer Science",
+            "Electrical",
+            "Information Technology",
+            "Software Engineering"
+          ],
+          "placement_rate": 0.7655,
+          "average_package": 1169905
+        },
+        "indian_institute_of_information_technology_kurnool": {
+          "name": "Indian Institute of Information Technology Kurnool",
+          "established": 1972,
+          "location": "Kurnool",
+          "specializations": [
+            "Cybersecurity",
+            "Chemical",
+            "Civil"
+          ],
+          "placement_rate": 0.752,
+          "average_package": 902859
+        },
+        "indian_institute_of_information_technology_tiruchirappalli": {
+          "name": "Indian Institute of Information Technology Tiruchirappalli",
+          "established": 1976,
+          "location": "Tiruchirappalli",
+          "specializations": [
+            "Data Science",
+            "Aerospace",
+            "Cybersecurity",
+            "Electronics",
+            "Computer Science"
+          ],
+          "placement_rate": 0.846,
+          "average_package": 927702
+        },
+        "indian_institute_of_information_technology_dharwad": {
+          "name": "Indian Institute of Information Technology Dharwad",
+          "established": 1961,
+          "location": "Dharwad",
+          "specializations": [
+            "Civil",
+            "Electrical",
+            "Artificial Intelligence"
+          ],
+          "placement_rate": 0.7751,
+          "average_package": 783316
+        },
+        "delhi_technological_university": {
+          "name": "Delhi Technological University",
+          "established": 1966,
+          "location": "Delhi",
+          "specializations": [
+            "Electronics",
+            "Civil",
+            "Electrical"
+          ],
+          "placement_rate": 0.8341,
+          "average_package": 543064
+        },
+        "netaji_subhas_university_of_technology": {
+          "name": "Netaji Subhas University of Technology",
+          "established": 2008,
+          "location": "Delhi",
+          "specializations": [
+            "Electrical",
+            "Cybersecurity",
+            "Civil"
+          ],
+          "placement_rate": 0.8405,
+          "average_package": 1037299
+        },
+        "birla_institute_of_technology_and_science_pilani": {
+          "name": "Birla Institute of Technology and Science Pilani",
+          "established": 1973,
+          "location": "Pilani",
+          "specializations": [
+            "Civil",
+            "Artificial Intelligence",
+            "Data Science",
+            "Electronics"
+          ],
+          "placement_rate": 0.8389,
+          "average_package": 938290
+        },
+        "birla_institute_of_technology_and_science_goa": {
+          "name": "Birla Institute of Technology and Science Goa",
+          "established": 2003,
+          "location": "Goa",
+          "specializations": [
+            "Software Engineering",
+            "Computer Science",
+            "Artificial Intelligence",
+            "Electronics",
+            "Data Science",
+            "Civil"
+          ],
+          "placement_rate": 0.7569,
+          "average_package": 787810
+        },
+        "birla_institute_of_technology_and_science_hyderabad": {
+          "name": "Birla Institute of Technology and Science Hyderabad",
+          "established": 2006,
+          "location": "Hyderabad",
+          "specializations": [
+            "Cybersecurity",
+            "Data Science",
+            "Software Engineering",
+            "Information Technology",
+            "Computer Science",
+            "Biotechnology"
+          ],
+          "placement_rate": 0.7767,
+          "average_package": 1005883
+        },
+        "vellore_institute_of_technology": {
+          "name": "Vellore Institute of Technology",
+          "established": 1987,
+          "location": "Vellore",
+          "specializations": [
+            "Cybersecurity",
+            "Computer Science",
+            "Software Engineering"
+          ],
+          "placement_rate": 0.7269,
+          "average_package": 1157952
+        },
+        "vellore_institute_of_technology_chennai": {
+          "name": "Vellore Institute of Technology Chennai",
+          "established": 2002,
+          "location": "Chennai",
+          "specializations": [
+            "Chemical",
+            "Biotechnology",
+            "Information Technology",
+            "Artificial Intelligence",
+            "Mechanical"
+          ],
+          "placement_rate": 0.7549,
+          "average_package": 659738
+        },
+        "vellore_institute_of_technology_bhopal": {
+          "name": "Vellore Institute of Technology Bhopal",
+          "established": 2004,
+          "location": "Bhopal",
+          "specializations": [
+            "Artificial Intelligence",
+            "Electronics",
+            "Information Technology",
+            "Electrical",
+            "Software Engineering"
+          ],
+          "placement_rate": 0.7124,
+          "average_package": 1087762
+        },
+        "manipal_institute_of_technology": {
+          "name": "Manipal Institute of Technology",
+          "established": 2009,
+          "location": "Manipal",
+          "specializations": [
+            "Mechanical",
+            "Chemical",
+            "Biotechnology",
+            "Cybersecurity",
+            "Computer Science"
+          ],
+          "placement_rate": 0.6541,
+          "average_package": 612845
+        },
+        "international_institute_of_information_technology_hyderabad": {
+          "name": "International Institute of Information Technology Hyderabad",
+          "established": 1975,
+          "location": "Hyderabad",
+          "specializations": [
+            "Software Engineering",
+            "Artificial Intelligence",
+            "Chemical",
+            "Biotechnology",
+            "Mechanical",
+            "Electrical"
+          ],
+          "placement_rate": 0.789,
+          "average_package": 827110
+        },
+        "international_institute_of_information_technology_bangalore": {
+          "name": "International Institute of Information Technology Bangalore",
+          "established": 2007,
+          "location": "Bangalore",
+          "specializations": [
+            "Information Technology",
+            "Civil",
+            "Electrical",
+            "Aerospace"
+          ],
+          "placement_rate": 0.788,
+          "average_package": 1092780
+        },
+        "indraprastha_institute_of_information_technology_delhi": {
+          "name": "Indraprastha Institute of Information Technology Delhi",
+          "established": 1981,
+          "location": "Delhi",
+          "specializations": [
+            "Computer Science",
+            "Electronics",
+            "Electrical",
+            "Software Engineering",
+            "Information Technology",
+            "Chemical"
+          ],
+          "placement_rate": 0.7531,
+          "average_package": 1118745
+        },
+        "thapar_institute_of_engineering_and_technology": {
+          "name": "Thapar Institute of Engineering and Technology",
+          "established": 1963,
+          "location": "Patiala",
+          "specializations": [
+            "Mechanical",
+            "Chemical",
+            "Computer Science",
+            "Electronics",
+            "Artificial Intelligence",
+            "Civil"
+          ],
+          "placement_rate": 0.6927,
+          "average_package": 564214
+        },
+        "bharati_vidyapeeth_college_of_engineering": {
+          "name": "Bharati Vidyapeeth College of Engineering",
+          "established": 2004,
+          "location": "Pune",
+          "specializations": [
+            "Biotechnology",
+            "Chemical",
+            "Information Technology",
+            "Data Science",
+            "Aerospace"
+          ],
+          "placement_rate": 0.6772,
+          "average_package": 551048
+        },
+        "coimbatore_institute_of_technology": {
+          "name": "Coimbatore Institute of Technology",
+          "established": 1958,
+          "location": "Coimbatore",
+          "specializations": [
+            "Chemical",
+            "Aerospace",
+            "Artificial Intelligence",
+            "Computer Science",
+            "Civil",
+            "Electronics"
+          ],
+          "placement_rate": 0.7463,
+          "average_package": 1176755
+        },
+        "government_college_of_technology_coimbatore": {
+          "name": "Government College of Technology Coimbatore",
+          "established": 1954,
+          "location": "Coimbatore",
+          "specializations": [
+            "Civil",
+            "Biotechnology",
+            "Information Technology",
+            "Computer Science",
+            "Data Science"
+          ],
+          "placement_rate": 0.7167,
+          "average_package": 1021159
+        },
+        "kumaraguru_college_of_technology": {
+          "name": "Kumaraguru College of Technology",
+          "established": 1952,
+          "location": "Coimbatore",
+          "specializations": [
+            "Mechanical",
+            "Software Engineering",
+            "Biotechnology",
+            "Computer Science"
+          ],
+          "placement_rate": 0.7165,
+          "average_package": 1099519
+        },
+        "ssn_college_of_engineering": {
+          "name": "SSN College of Engineering",
+          "established": 1996,
+          "location": "Chennai",
+          "specializations": [
+            "Mechanical",
+            "Computer Science",
+            "Artificial Intelligence",
+            "Cybersecurity",
+            "Biotechnology"
+          ],
+          "placement_rate": 0.7385,
+          "average_package": 1034608
+        },
+        "ramaiah_institute_of_technology": {
+          "name": "Ramaiah Institute of Technology",
+          "established": 2002,
+          "location": "Bangalore",
+          "specializations": [
+            "Electronics",
+            "Mechanical",
+            "Chemical",
+            "Biotechnology",
+            "Artificial Intelligence",
+            "Software Engineering"
+          ],
+          "placement_rate": 0.74,
+          "average_package": 1007426
+        },
+        "bms_college_of_engineering": {
+          "name": "BMS College of Engineering",
+          "established": 1970,
+          "location": "Bangalore",
+          "specializations": [
+            "Civil",
+            "Aerospace",
+            "Electronics",
+            "Computer Science",
+            "Electrical",
+            "Software Engineering"
+          ],
+          "placement_rate": 0.7642,
+          "average_package": 1057883
+        },
+        "rv_college_of_engineering": {
+          "name": "RV College of Engineering",
+          "established": 1951,
+          "location": "Bangalore",
+          "specializations": [
+            "Aerospace",
+            "Artificial Intelligence",
+            "Electrical",
+            "Civil",
+            "Chemical",
+            "Cybersecurity"
+          ],
+          "placement_rate": 0.7548,
+          "average_package": 812488
+        },
+        "pes_university": {
+          "name": "PES University",
+          "established": 1998,
+          "location": "Bangalore",
+          "specializations": [
+            "Artificial Intelligence",
+            "Cybersecurity",
+            "Mechanical"
+          ],
+          "placement_rate": 0.6792,
+          "average_package": 728639
+        },
+        "dayananda_sagar_college_of_engineering": {
+          "name": "Dayananda Sagar College of Engineering",
+          "established": 2004,
+          "location": "Bangalore",
+          "specializations": [
+            "Artificial Intelligence",
+            "Civil",
+            "Biotechnology",
+            "Electrical",
+            "Cybersecurity",
+            "Computer Science"
+          ],
+          "placement_rate": 0.7709,
+          "average_package": 579446
+        },
+        "birla_institute_of_technology_mesra": {
+          "name": "Birla Institute of Technology Mesra",
+          "established": 2005,
+          "location": "Ranchi",
+          "specializations": [
+            "Aerospace",
+            "Information Technology",
+            "Civil",
+            "Mechanical",
+            "Electronics"
+          ],
+          "placement_rate": 0.8485,
+          "average_package": 864708
+        },
+        "jamia_millia_islamia": {
+          "name": "Jamia Millia Islamia",
+          "established": 1960,
+          "location": "Delhi",
+          "specializations": [
+            "Electrical",
+            "Electronics",
+            "Mechanical",
+            "Artificial Intelligence"
+          ],
+          "placement_rate": 0.8391,
+          "average_package": 1155539
+        },
+        "aligarh_muslim_university": {
+          "name": "Aligarh Muslim University",
+          "established": 1972,
+          "location": "Aligarh",
+          "specializations": [
+            "Electronics",
+            "Aerospace",
+            "Cybersecurity",
+            "Civil",
+            "Data Science"
+          ],
+          "placement_rate": 0.7878,
+          "average_package": 1008148
+        },
+        "banaras_hindu_university": {
+          "name": "Banaras Hindu University",
+          "established": 1959,
+          "location": "Varanasi",
+          "specializations": [
+            "Computer Science",
+            "Electronics",
+            "Mechanical",
+            "Software Engineering",
+            "Civil",
+            "Data Science"
+          ],
+          "placement_rate": 0.8423,
+          "average_package": 1197524
+        },
+        "university_of_hyderabad": {
+          "name": "University of Hyderabad",
+          "established": 1985,
+          "location": "Hyderabad",
+          "specializations": [
+            "Biotechnology",
+            "Aerospace",
+            "Artificial Intelligence"
+          ],
+          "placement_rate": 0.7532,
+          "average_package": 1129987
+        },
+        "osmania_university": {
+          "name": "Osmania University",
+          "established": 1982,
+          "location": "Hyderabad",
+          "specializations": [
+            "Biotechnology",
+            "Artificial Intelligence",
+            "Computer Science",
+            "Information Technology"
+          ],
+          "placement_rate": 0.8428,
+          "average_package": 820777
+        },
+        "jawaharlal_nehru_technological_university_hyderabad": {
+          "name": "Jawaharlal Nehru Technological University Hyderabad",
+          "established": 2005,
+          "location": "Hyderabad",
+          "specializations": [
+            "Biotechnology",
+            "Electrical",
+            "Cybersecurity"
+          ],
+          "placement_rate": 0.7537,
+          "average_package": 1053279
+        },
+        "jawaharlal_nehru_technological_university_kakinada": {
+          "name": "Jawaharlal Nehru Technological University Kakinada",
+          "established": 1950,
+          "location": "Kakinada",
+          "specializations": [
+            "Electronics",
+            "Civil",
+            "Information Technology",
+            "Software Engineering"
+          ],
+          "placement_rate": 0.8243,
+          "average_package": 767204
+        },
+        "jawaharlal_nehru_technological_university_anantapur": {
+          "name": "Jawaharlal Nehru Technological University Anantapur",
+          "established": 1996,
+          "location": "Anantapur",
+          "specializations": [
+            "Computer Science",
+            "Information Technology",
+            "Mechanical",
+            "Electronics",
+            "Biotechnology"
+          ],
+          "placement_rate": 0.6703,
+          "average_package": 1196616
+        },
+        "andhra_university": {
+          "name": "Andhra University",
+          "established": 1984,
+          "location": "Visakhapatnam",
+          "specializations": [
+            "Biotechnology",
+            "Artificial Intelligence",
+            "Electrical",
+            "Aerospace",
+            "Data Science"
+          ],
+          "placement_rate": 0.6509,
+          "average_package": 548944
+        },
+        "national_institute_of_technology_karnataka": {
+          "name": "National Institute of Technology Karnataka",
+          "established": 1992,
+          "location": "Surathkal",
+          "specializations": [
+            "Data Science",
+            "Electrical",
+            "Artificial Intelligence"
+          ],
+          "placement_rate": 0.7638,
+          "average_package": 518206
+        },
+        "bangalore_institute_of_technology": {
+          "name": "Bangalore Institute of Technology",
+          "established": 1963,
+          "location": "Bangalore",
+          "specializations": [
+            "Cybersecurity",
+            "Electrical",
+            "Civil"
+          ],
+          "placement_rate": 0.7176,
+          "average_package": 550692
+        },
+        "malnad_college_of_engineering": {
+          "name": "Malnad College of Engineering",
+          "established": 2005,
+          "location": "Hassan",
+          "specializations": [
+            "Artificial Intelligence",
+            "Electrical",
+            "Civil",
+            "Cybersecurity",
+            "Aerospace"
+          ],
+          "placement_rate": 0.7364,
+          "average_package": 849448
+        },
+        "siddaganga_institute_of_technology": {
+          "name": "Siddaganga Institute of Technology",
+          "established": 1990,
+          "location": "Tumkur",
+          "specializations": [
+            "Data Science",
+            "Civil",
+            "Computer Science",
+            "Electronics"
+          ],
+          "placement_rate": 0.6867,
+          "average_package": 664787
+        },
+        "walchand_college_of_engineering": {
+          "name": "Walchand College of Engineering",
+          "established": 2005,
+          "location": "Sangli",
+          "specializations": [
+            "Artificial Intelligence",
+            "Data Science",
+            "Biotechnology"
+          ],
+          "placement_rate": 0.8208,
+          "average_package": 632259
+        },
+        "government_college_of_engineering_pune": {
+          "name": "Government College of Engineering Pune",
+          "established": 1980,
+          "location": "Pune",
+          "specializations": [
+            "Information Technology",
+            "Mechanical",
+            "Chemical"
+          ],
+          "placement_rate": 0.7504,
+          "average_package": 583735
+        },
+        "veermata_jijabai_technological_institute": {
+          "name": "Veermata Jijabai Technological Institute",
+          "established": 1995,
+          "location": "Mumbai",
+          "specializations": [
+            "Mechanical",
+            "Chemical",
+            "Civil",
+            "Data Science",
+            "Computer Science"
+          ],
+          "placement_rate": 0.7343,
+          "average_package": 851624
+        },
+        "institute_of_chemical_technology": {
+          "name": "Institute of Chemical Technology",
+          "established": 1974,
+          "location": "Mumbai",
+          "specializations": [
+            "Information Technology",
+            "Artificial Intelligence",
+            "Computer Science",
+            "Civil",
+            "Aerospace"
+          ],
+          "placement_rate": 0.6721,
+          "average_package": 726039
+        },
+        "sardar_patel_institute_of_technology": {
+          "name": "Sardar Patel Institute of Technology",
+          "established": 1963,
+          "location": "Mumbai",
+          "specializations": [
+            "Computer Science",
+            "Civil",
+            "Aerospace",
+            "Mechanical",
+            "Data Science",
+            "Electrical"
+          ],
+          "placement_rate": 0.661,
+          "average_package": 770974
+        },
+        "k_j_somaiya_college_of_engineering": {
+          "name": "K J Somaiya College of Engineering",
+          "established": 1999,
+          "location": "Mumbai",
+          "specializations": [
+            "Chemical",
+            "Artificial Intelligence",
+            "Information Technology",
+            "Mechanical"
+          ],
+          "placement_rate": 0.8135,
+          "average_package": 530491
+        },
+        "fr_conceicao_rodrigues_college_of_engineering": {
+          "name": "Fr Conceicao Rodrigues College of Engineering",
+          "established": 1998,
+          "location": "Mumbai",
+          "specializations": [
+            "Data Science",
+            "Mechanical",
+            "Software Engineering"
+          ],
+          "placement_rate": 0.8075,
+          "average_package": 1050957
+        },
+        "thadomal_shahani_engineering_college": {
+          "name": "Thadomal Shahani Engineering College",
+          "established": 2004,
+          "location": "Mumbai",
+          "specializations": [
+            "Aerospace",
+            "Civil",
+            "Mechanical",
+            "Electrical"
+          ],
+          "placement_rate": 0.8189,
+          "average_package": 633519
+        },
+        "dj_sanghvi_college_of_engineering": {
+          "name": "DJ Sanghvi College of Engineering",
+          "established": 2008,
+          "location": "Mumbai",
+          "specializations": [
+            "Electronics",
+            "Chemical",
+            "Data Science",
+            "Aerospace"
+          ],
+          "placement_rate": 0.6611,
+          "average_package": 1064649
+        },
+        "mukesh_patel_school_of_technology_management_and_engineering": {
+          "name": "Mukesh Patel School of Technology Management and Engineering",
+          "established": 1966,
+          "location": "Mumbai",
+          "specializations": [
+            "Cybersecurity",
+            "Civil",
+            "Biotechnology",
+            "Electronics"
+          ],
+          "placement_rate": 0.6586,
+          "average_package": 1101856
+        },
+        "dwarkadas_j_sanghvi_college_of_engineering": {
+          "name": "Dwarkadas J Sanghvi College of Engineering",
+          "established": 1982,
+          "location": "Mumbai",
+          "specializations": [
+            "Software Engineering",
+            "Data Science",
+            "Artificial Intelligence"
+          ],
+          "placement_rate": 0.6506,
+          "average_package": 681085
+        },
+        "atharva_college_of_engineering": {
+          "name": "Atharva College of Engineering",
+          "established": 1990,
+          "location": "Mumbai",
+          "specializations": [
+            "Data Science",
+            "Civil",
+            "Aerospace",
+            "Software Engineering",
+            "Electronics",
+            "Computer Science"
+          ],
+          "placement_rate": 0.8083,
+          "average_package": 921616
+        },
+        "shri_ramdeobaba_college_of_engineering_and_management": {
+          "name": "Shri Ramdeobaba College of Engineering and Management",
+          "established": 2010,
+          "location": "Nagpur",
+          "specializations": [
+            "Computer Science",
+            "Mechanical",
+            "Electronics",
+            "Artificial Intelligence",
+            "Cybersecurity"
+          ],
+          "placement_rate": 0.8043,
+          "average_package": 757744
+        },
+        "government_college_of_engineering_nagpur": {
+          "name": "Government College of Engineering Nagpur",
+          "established": 1984,
+          "location": "Nagpur",
+          "specializations": [
+            "Cybersecurity",
+            "Electrical",
+            "Software Engineering",
+            "Computer Science",
+            "Chemical",
+            "Biotechnology"
+          ],
+          "placement_rate": 0.8498,
+          "average_package": 926560
+        },
+        "yeshwantrao_chavan_college_of_engineering": {
+          "name": "Yeshwantrao Chavan College of Engineering",
+          "established": 1958,
+          "location": "Nagpur",
+          "specializations": [
+            "Chemical",
+            "Civil",
+            "Computer Science",
+            "Aerospace",
+            "Artificial Intelligence"
+          ],
+          "placement_rate": 0.7272,
+          "average_package": 971558
+        },
+        "priyadarshini_college_of_engineering": {
+          "name": "Priyadarshini College of Engineering",
+          "established": 1982,
+          "location": "Nagpur",
+          "specializations": [
+            "Data Science",
+            "Computer Science",
+            "Chemical",
+            "Software Engineering",
+            "Artificial Intelligence",
+            "Electrical"
+          ],
+          "placement_rate": 0.8153,
+          "average_package": 817457
+        },
+        "shri_guru_gobind_singhji_institute_of_engineering_and_technology": {
+          "name": "Shri Guru Gobind Singhji Institute of Engineering and Technology",
+          "established": 1982,
+          "location": "Nanded",
+          "specializations": [
+            "Information Technology",
+            "Cybersecurity",
+            "Civil",
+            "Electronics",
+            "Data Science",
+            "Mechanical"
+          ],
+          "placement_rate": 0.766,
+          "average_package": 1135291
+        },
+        "government_college_of_engineering_aurangabad": {
+          "name": "Government College of Engineering Aurangabad",
+          "established": 2008,
+          "location": "Aurangabad",
+          "specializations": [
+            "Biotechnology",
+            "Software Engineering",
+            "Electronics",
+            "Cybersecurity",
+            "Computer Science"
+          ],
+          "placement_rate": 0.7062,
+          "average_package": 1188422
+        },
+        "maharashtra_institute_of_technology": {
+          "name": "Maharashtra Institute of Technology",
+          "established": 1984,
+          "location": "Pune",
+          "specializations": [
+            "Civil",
+            "Information Technology",
+            "Electronics",
+            "Software Engineering"
+          ],
+          "placement_rate": 0.798,
+          "average_package": 1142994
+        },
+        "vishwakarma_institute_of_technology": {
+          "name": "Vishwakarma Institute of Technology",
+          "established": 1986,
+          "location": "Pune",
+          "specializations": [
+            "Biotechnology",
+            "Mechanical",
+            "Aerospace",
+            "Cybersecurity",
+            "Electronics"
+          ],
+          "placement_rate": 0.8183,
+          "average_package": 612715
+        },
+        "cummins_college_of_engineering_for_women": {
+          "name": "Cummins College of Engineering for Women",
+          "established": 2000,
+          "location": "Pune",
+          "specializations": [
+            "Biotechnology",
+            "Cybersecurity",
+            "Information Technology",
+            "Software Engineering",
+            "Artificial Intelligence"
+          ],
+          "placement_rate": 0.83,
+          "average_package": 1092689
+        },
+        "sinhgad_college_of_engineering": {
+          "name": "Sinhgad College of Engineering",
+          "established": 1955,
+          "location": "Pune",
+          "specializations": [
+            "Biotechnology",
+            "Aerospace",
+            "Data Science",
+            "Chemical",
+            "Information Technology",
+            "Mechanical"
+          ],
+          "placement_rate": 0.704,
+          "average_package": 832438
+        },
+        "pccoe_pune": {
+          "name": "PCCOE Pune",
+          "established": 1984,
+          "location": "Pune",
+          "specializations": [
+            "Civil",
+            "Electrical",
+            "Software Engineering",
+            "Data Science",
+            "Mechanical",
+            "Aerospace"
+          ],
+          "placement_rate": 0.7225,
+          "average_package": 686381
+        },
+        "army_institute_of_technology": {
+          "name": "Army Institute of Technology",
+          "established": 1982,
+          "location": "Pune",
+          "specializations": [
+            "Computer Science",
+            "Artificial Intelligence",
+            "Aerospace",
+            "Software Engineering",
+            "Information Technology",
+            "Mechanical"
+          ],
+          "placement_rate": 0.757,
+          "average_package": 561327
+        },
+        "dr_d_y_patil_institute_of_technology": {
+          "name": "Dr D Y Patil Institute of Technology",
+          "established": 1964,
+          "location": "Pune",
+          "specializations": [
+            "Cybersecurity",
+            "Biotechnology",
+            "Chemical",
+            "Artificial Intelligence"
+          ],
+          "placement_rate": 0.6544,
+          "average_package": 794539
+        },
+        "zeal_college_of_engineering_and_research": {
+          "name": "Zeal College of Engineering and Research",
+          "established": 1998,
+          "location": "Pune",
+          "specializations": [
+            "Information Technology",
+            "Cybersecurity",
+            "Biotechnology",
+            "Artificial Intelligence",
+            "Aerospace"
+          ],
+          "placement_rate": 0.7148,
+          "average_package": 562361
+        },
+        "jspm_narhe_technical_campus": {
+          "name": "JSPM Narhe Technical Campus",
+          "established": 1954,
+          "location": "Pune",
+          "specializations": [
+            "Aerospace",
+            "Computer Science",
+            "Software Engineering",
+            "Civil",
+            "Biotechnology",
+            "Cybersecurity"
+          ],
+          "placement_rate": 0.6578,
+          "average_package": 1023503
+        },
+        "symbiosis_institute_of_technology": {
+          "name": "Symbiosis Institute of Technology",
+          "established": 2000,
+          "location": "Pune",
+          "specializations": [
+            "Cybersecurity",
+            "Artificial Intelligence",
+            "Electronics",
+            "Data Science"
+          ],
+          "placement_rate": 0.6778,
+          "average_package": 690034
         }
       }
     },
@@ -635,6 +2092,1433 @@
           ],
           "placement_rate": 0.6968602519009492,
           "average_package": 1177755
+        },
+        "amity_university_noida": {
+          "name": "Amity University Noida",
+          "established": 1985,
+          "location": "Noida",
+          "specializations": [
+            "Civil",
+            "Artificial Intelligence",
+            "Aerospace"
+          ],
+          "placement_rate": 0.6342,
+          "average_package": 665003
+        },
+        "amity_university_gurgaon": {
+          "name": "Amity University Gurgaon",
+          "established": 1968,
+          "location": "Gurgaon",
+          "specializations": [
+            "Artificial Intelligence",
+            "Civil",
+            "Aerospace"
+          ],
+          "placement_rate": 0.5117,
+          "average_package": 430040
+        },
+        "amity_university_lucknow": {
+          "name": "Amity University Lucknow",
+          "established": 1969,
+          "location": "Lucknow",
+          "specializations": [
+            "Civil",
+            "Aerospace",
+            "Electrical",
+            "Cybersecurity"
+          ],
+          "placement_rate": 0.7279,
+          "average_package": 675280
+        },
+        "amity_university_jaipur": {
+          "name": "Amity University Jaipur",
+          "established": 1991,
+          "location": "Jaipur",
+          "specializations": [
+            "Electrical",
+            "Software Engineering",
+            "Mechanical",
+            "Civil",
+            "Computer Science"
+          ],
+          "placement_rate": 0.4871,
+          "average_package": 680704
+        },
+        "amity_university_mumbai": {
+          "name": "Amity University Mumbai",
+          "established": 1991,
+          "location": "Mumbai",
+          "specializations": [
+            "Mechanical",
+            "Electrical",
+            "Data Science",
+            "Information Technology",
+            "Computer Science",
+            "Civil"
+          ],
+          "placement_rate": 0.5572,
+          "average_package": 715722
+        },
+        "chitkara_university": {
+          "name": "Chitkara University",
+          "established": 1990,
+          "location": "Chandigarh",
+          "specializations": [
+            "Information Technology",
+            "Mechanical",
+            "Artificial Intelligence"
+          ],
+          "placement_rate": 0.6229,
+          "average_package": 546228
+        },
+        "sharda_university": {
+          "name": "Sharda University",
+          "established": 1950,
+          "location": "Greater Noida",
+          "specializations": [
+            "Electrical",
+            "Aerospace",
+            "Mechanical"
+          ],
+          "placement_rate": 0.4697,
+          "average_package": 735475
+        },
+        "bennett_university": {
+          "name": "Bennett University",
+          "established": 1953,
+          "location": "Greater Noida",
+          "specializations": [
+            "Information Technology",
+            "Cybersecurity",
+            "Software Engineering",
+            "Biotechnology"
+          ],
+          "placement_rate": 0.5937,
+          "average_package": 387248
+        },
+        "galgotias_university": {
+          "name": "Galgotias University",
+          "established": 1997,
+          "location": "Greater Noida",
+          "specializations": [
+            "Aerospace",
+            "Information Technology",
+            "Civil",
+            "Software Engineering",
+            "Electrical",
+            "Data Science"
+          ],
+          "placement_rate": 0.4892,
+          "average_package": 742140
+        },
+        "gl_bajaj_institute_of_technology_and_management": {
+          "name": "GL Bajaj Institute of Technology and Management",
+          "established": 1968,
+          "location": "Greater Noida",
+          "specializations": [
+            "Chemical",
+            "Civil",
+            "Artificial Intelligence",
+            "Data Science",
+            "Biotechnology"
+          ],
+          "placement_rate": 0.6021,
+          "average_package": 695788
+        },
+        "abes_engineering_college": {
+          "name": "ABES Engineering College",
+          "established": 1973,
+          "location": "Ghaziabad",
+          "specializations": [
+            "Biotechnology",
+            "Electronics",
+            "Cybersecurity",
+            "Mechanical",
+            "Aerospace",
+            "Civil"
+          ],
+          "placement_rate": 0.6618,
+          "average_package": 339753
+        },
+        "kiet_group_of_institutions": {
+          "name": "KIET Group of Institutions",
+          "established": 1959,
+          "location": "Ghaziabad",
+          "specializations": [
+            "Software Engineering",
+            "Information Technology",
+            "Aerospace"
+          ],
+          "placement_rate": 0.6672,
+          "average_package": 538297
+        },
+        "ims_engineering_college": {
+          "name": "IMS Engineering College",
+          "established": 1958,
+          "location": "Ghaziabad",
+          "specializations": [
+            "Electrical",
+            "Civil",
+            "Cybersecurity",
+            "Mechanical",
+            "Electronics",
+            "Aerospace"
+          ],
+          "placement_rate": 0.6015,
+          "average_package": 677194
+        },
+        "ajay_kumar_garg_engineering_college": {
+          "name": "Ajay Kumar Garg Engineering College",
+          "established": 1973,
+          "location": "Ghaziabad",
+          "specializations": [
+            "Artificial Intelligence",
+            "Biotechnology",
+            "Civil"
+          ],
+          "placement_rate": 0.5989,
+          "average_package": 457244
+        },
+        "krishna_engineering_college": {
+          "name": "Krishna Engineering College",
+          "established": 1977,
+          "location": "Ghaziabad",
+          "specializations": [
+            "Information Technology",
+            "Mechanical",
+            "Cybersecurity",
+            "Biotechnology"
+          ],
+          "placement_rate": 0.5558,
+          "average_package": 617920
+        },
+        "rd_engineering_college": {
+          "name": "RD Engineering College",
+          "established": 1963,
+          "location": "Ghaziabad",
+          "specializations": [
+            "Computer Science",
+            "Aerospace",
+            "Biotechnology",
+            "Cybersecurity",
+            "Civil"
+          ],
+          "placement_rate": 0.6797,
+          "average_package": 743387
+        },
+        "abesit": {
+          "name": "ABESIT",
+          "established": 1987,
+          "location": "Ghaziabad",
+          "specializations": [
+            "Information Technology",
+            "Data Science",
+            "Artificial Intelligence",
+            "Software Engineering",
+            "Cybersecurity",
+            "Mechanical"
+          ],
+          "placement_rate": 0.4881,
+          "average_package": 608987
+        },
+        "its_engineering_college": {
+          "name": "ITS Engineering College",
+          "established": 1977,
+          "location": "Greater Noida",
+          "specializations": [
+            "Data Science",
+            "Information Technology",
+            "Cybersecurity"
+          ],
+          "placement_rate": 0.6792,
+          "average_package": 544191
+        },
+        "galgotias_college_of_engineering_and_technology": {
+          "name": "Galgotias College of Engineering and Technology",
+          "established": 2009,
+          "location": "Greater Noida",
+          "specializations": [
+            "Data Science",
+            "Chemical",
+            "Electronics",
+            "Software Engineering",
+            "Computer Science",
+            "Biotechnology"
+          ],
+          "placement_rate": 0.6267,
+          "average_package": 643601
+        },
+        "gniot": {
+          "name": "GNIOT",
+          "established": 1952,
+          "location": "Greater Noida",
+          "specializations": [
+            "Artificial Intelligence",
+            "Computer Science",
+            "Biotechnology"
+          ],
+          "placement_rate": 0.5716,
+          "average_package": 388484
+        },
+        "greater_noida_institute_of_technology": {
+          "name": "Greater Noida Institute of Technology",
+          "established": 2006,
+          "location": "Greater Noida",
+          "specializations": [
+            "Data Science",
+            "Chemical",
+            "Software Engineering"
+          ],
+          "placement_rate": 0.5905,
+          "average_package": 778673
+        },
+        "accurate_institute_of_management_and_technology": {
+          "name": "Accurate Institute of Management and Technology",
+          "established": 1965,
+          "location": "Greater Noida",
+          "specializations": [
+            "Civil",
+            "Biotechnology",
+            "Mechanical"
+          ],
+          "placement_rate": 0.5348,
+          "average_package": 722378
+        },
+        "lloyd_institute_of_engineering_and_technology": {
+          "name": "Lloyd Institute of Engineering and Technology",
+          "established": 1955,
+          "location": "Greater Noida",
+          "specializations": [
+            "Cybersecurity",
+            "Aerospace",
+            "Electrical",
+            "Mechanical"
+          ],
+          "placement_rate": 0.5442,
+          "average_package": 677162
+        },
+        "noida_institute_of_engineering_and_technology": {
+          "name": "Noida Institute of Engineering and Technology",
+          "established": 1959,
+          "location": "Greater Noida",
+          "specializations": [
+            "Electronics",
+            "Biotechnology",
+            "Civil",
+            "Chemical",
+            "Data Science",
+            "Aerospace"
+          ],
+          "placement_rate": 0.7013,
+          "average_package": 734800
+        },
+        "jss_academy_of_technical_education": {
+          "name": "JSS Academy of Technical Education",
+          "established": 1978,
+          "location": "Noida",
+          "specializations": [
+            "Electrical",
+            "Software Engineering",
+            "Mechanical"
+          ],
+          "placement_rate": 0.5817,
+          "average_package": 743073
+        },
+        "dronacharya_college_of_engineering": {
+          "name": "Dronacharya College of Engineering",
+          "established": 2000,
+          "location": "Gurgaon",
+          "specializations": [
+            "Information Technology",
+            "Electronics",
+            "Chemical",
+            "Software Engineering",
+            "Data Science"
+          ],
+          "placement_rate": 0.4559,
+          "average_package": 461235
+        },
+        "itm_university": {
+          "name": "ITM University",
+          "established": 1962,
+          "location": "Gurgaon",
+          "specializations": [
+            "Mechanical",
+            "Computer Science",
+            "Artificial Intelligence"
+          ],
+          "placement_rate": 0.5604,
+          "average_package": 505931
+        },
+        "ansal_university": {
+          "name": "Ansal University",
+          "established": 1997,
+          "location": "Gurgaon",
+          "specializations": [
+            "Software Engineering",
+            "Information Technology",
+            "Civil",
+            "Aerospace",
+            "Cybersecurity"
+          ],
+          "placement_rate": 0.5961,
+          "average_package": 490122
+        },
+        "the_northcap_university": {
+          "name": "The NorthCap University",
+          "established": 1998,
+          "location": "Gurgaon",
+          "specializations": [
+            "Information Technology",
+            "Civil",
+            "Mechanical"
+          ],
+          "placement_rate": 0.7446,
+          "average_package": 355645
+        },
+        "manav_rachna_international_institute_of_research_and_studies": {
+          "name": "Manav Rachna International Institute of Research and Studies",
+          "established": 1974,
+          "location": "Faridabad",
+          "specializations": [
+            "Electronics",
+            "Mechanical",
+            "Data Science",
+            "Aerospace",
+            "Chemical",
+            "Civil"
+          ],
+          "placement_rate": 0.6894,
+          "average_package": 361988
+        },
+        "lingayas_vidyapeeth": {
+          "name": "Lingayas Vidyapeeth",
+          "established": 1954,
+          "location": "Faridabad",
+          "specializations": [
+            "Aerospace",
+            "Software Engineering",
+            "Mechanical",
+            "Information Technology"
+          ],
+          "placement_rate": 0.5464,
+          "average_package": 570105
+        },
+        "ymc_university_of_science_and_technology": {
+          "name": "YMC University of Science and Technology",
+          "established": 1958,
+          "location": "Faridabad",
+          "specializations": [
+            "Electronics",
+            "Cybersecurity",
+            "Computer Science",
+            "Civil"
+          ],
+          "placement_rate": 0.5023,
+          "average_package": 300813
+        },
+        "sgt_university": {
+          "name": "SGT University",
+          "established": 1973,
+          "location": "Gurgaon",
+          "specializations": [
+            "Software Engineering",
+            "Artificial Intelligence",
+            "Cybersecurity"
+          ],
+          "placement_rate": 0.6237,
+          "average_package": 520461
+        },
+        "gd_goenka_university": {
+          "name": "GD Goenka University",
+          "established": 1999,
+          "location": "Gurgaon",
+          "specializations": [
+            "Mechanical",
+            "Information Technology",
+            "Data Science"
+          ],
+          "placement_rate": 0.5305,
+          "average_package": 556876
+        },
+        "maharishi_markandeshwar_university": {
+          "name": "Maharishi Markandeshwar University",
+          "established": 1961,
+          "location": "Ambala",
+          "specializations": [
+            "Civil",
+            "Computer Science",
+            "Cybersecurity"
+          ],
+          "placement_rate": 0.6639,
+          "average_package": 642420
+        },
+        "kurukshetra_university": {
+          "name": "Kurukshetra University",
+          "established": 1967,
+          "location": "Kurukshetra",
+          "specializations": [
+            "Electrical",
+            "Data Science",
+            "Cybersecurity"
+          ],
+          "placement_rate": 0.6777,
+          "average_package": 728635
+        },
+        "deenbandhu_chhotu_ram_university_of_science_and_technology": {
+          "name": "Deenbandhu Chhotu Ram University of Science and Technology",
+          "established": 1959,
+          "location": "Murthal",
+          "specializations": [
+            "Cybersecurity",
+            "Electrical",
+            "Chemical",
+            "Information Technology",
+            "Electronics"
+          ],
+          "placement_rate": 0.558,
+          "average_package": 707582
+        },
+        "maharishi_dayanand_university": {
+          "name": "Maharishi Dayanand University",
+          "established": 1954,
+          "location": "Rohtak",
+          "specializations": [
+            "Software Engineering",
+            "Cybersecurity",
+            "Chemical",
+            "Electrical",
+            "Aerospace"
+          ],
+          "placement_rate": 0.6841,
+          "average_package": 382468
+        },
+        "chaudhary_devi_lal_university": {
+          "name": "Chaudhary Devi Lal University",
+          "established": 1982,
+          "location": "Sirsa",
+          "specializations": [
+            "Software Engineering",
+            "Information Technology",
+            "Electronics"
+          ],
+          "placement_rate": 0.6118,
+          "average_package": 396641
+        },
+        "guru_jambheshwar_university_of_science_and_technology": {
+          "name": "Guru Jambheshwar University of Science and Technology",
+          "established": 1984,
+          "location": "Hisar",
+          "specializations": [
+            "Cybersecurity",
+            "Electronics",
+            "Artificial Intelligence",
+            "Electrical"
+          ],
+          "placement_rate": 0.522,
+          "average_package": 342866
+        },
+        "pandit_deendayal_petroleum_university": {
+          "name": "Pandit Deendayal Petroleum University",
+          "established": 1975,
+          "location": "Gandhinagar",
+          "specializations": [
+            "Computer Science",
+            "Software Engineering",
+            "Chemical",
+            "Biotechnology",
+            "Mechanical",
+            "Aerospace"
+          ],
+          "placement_rate": 0.7253,
+          "average_package": 589010
+        },
+        "nirma_university": {
+          "name": "Nirma University",
+          "established": 1980,
+          "location": "Ahmedabad",
+          "specializations": [
+            "Electrical",
+            "Aerospace",
+            "Information Technology",
+            "Data Science"
+          ],
+          "placement_rate": 0.4653,
+          "average_package": 576710
+        },
+        "charotar_university_of_science_and_technology": {
+          "name": "Charotar University of Science and Technology",
+          "established": 1998,
+          "location": "Anand",
+          "specializations": [
+            "Chemical",
+            "Information Technology",
+            "Electrical",
+            "Computer Science",
+            "Artificial Intelligence"
+          ],
+          "placement_rate": 0.5083,
+          "average_package": 756600
+        },
+        "ganpat_university": {
+          "name": "Ganpat University",
+          "established": 1971,
+          "location": "Mehsana",
+          "specializations": [
+            "Artificial Intelligence",
+            "Cybersecurity",
+            "Software Engineering",
+            "Electronics",
+            "Mechanical"
+          ],
+          "placement_rate": 0.5067,
+          "average_package": 616752
+        },
+        "gujarat_technological_university": {
+          "name": "Gujarat Technological University",
+          "established": 1965,
+          "location": "Ahmedabad",
+          "specializations": [
+            "Data Science",
+            "Computer Science",
+            "Electronics",
+            "Biotechnology"
+          ],
+          "placement_rate": 0.4647,
+          "average_package": 485099
+        },
+        "marwadi_university": {
+          "name": "Marwadi University",
+          "established": 1992,
+          "location": "Rajkot",
+          "specializations": [
+            "Computer Science",
+            "Chemical",
+            "Data Science"
+          ],
+          "placement_rate": 0.585,
+          "average_package": 427520
+        },
+        "rk_university": {
+          "name": "RK University",
+          "established": 1969,
+          "location": "Rajkot",
+          "specializations": [
+            "Aerospace",
+            "Chemical",
+            "Information Technology",
+            "Artificial Intelligence",
+            "Electronics",
+            "Civil"
+          ],
+          "placement_rate": 0.7347,
+          "average_package": 500093
+        },
+        "parul_university": {
+          "name": "Parul University",
+          "established": 2007,
+          "location": "Vadodara",
+          "specializations": [
+            "Civil",
+            "Electronics",
+            "Mechanical"
+          ],
+          "placement_rate": 0.5938,
+          "average_package": 689677
+        },
+        "unitedworld_institute_of_technology": {
+          "name": "Unitedworld Institute of Technology",
+          "established": 1980,
+          "location": "Gandhinagar",
+          "specializations": [
+            "Mechanical",
+            "Electrical",
+            "Computer Science"
+          ],
+          "placement_rate": 0.6691,
+          "average_package": 401936
+        },
+        "institute_of_technology_nirma_university": {
+          "name": "Institute of Technology Nirma University",
+          "established": 1994,
+          "location": "Ahmedabad",
+          "specializations": [
+            "Aerospace",
+            "Cybersecurity",
+            "Software Engineering",
+            "Chemical",
+            "Computer Science"
+          ],
+          "placement_rate": 0.6076,
+          "average_package": 596234
+        },
+        "ld_college_of_engineering": {
+          "name": "LD College of Engineering",
+          "established": 1985,
+          "location": "Ahmedabad",
+          "specializations": [
+            "Electrical",
+            "Cybersecurity",
+            "Artificial Intelligence"
+          ],
+          "placement_rate": 0.6245,
+          "average_package": 687676
+        },
+        "government_engineering_college_gandhinagar": {
+          "name": "Government Engineering College Gandhinagar",
+          "established": 1979,
+          "location": "Gandhinagar",
+          "specializations": [
+            "Mechanical",
+            "Artificial Intelligence",
+            "Electrical",
+            "Information Technology",
+            "Electronics",
+            "Biotechnology"
+          ],
+          "placement_rate": 0.4626,
+          "average_package": 721489
+        },
+        "government_engineering_college_rajkot": {
+          "name": "Government Engineering College Rajkot",
+          "established": 2007,
+          "location": "Rajkot",
+          "specializations": [
+            "Civil",
+            "Information Technology",
+            "Data Science",
+            "Biotechnology"
+          ],
+          "placement_rate": 0.7254,
+          "average_package": 383089
+        },
+        "government_engineering_college_surat": {
+          "name": "Government Engineering College Surat",
+          "established": 1993,
+          "location": "Surat",
+          "specializations": [
+            "Electrical",
+            "Information Technology",
+            "Chemical",
+            "Cybersecurity",
+            "Data Science"
+          ],
+          "placement_rate": 0.5213,
+          "average_package": 717202
+        },
+        "government_engineering_college_vadodara": {
+          "name": "Government Engineering College Vadodara",
+          "established": 1968,
+          "location": "Vadodara",
+          "specializations": [
+            "Cybersecurity",
+            "Information Technology",
+            "Biotechnology",
+            "Software Engineering",
+            "Artificial Intelligence"
+          ],
+          "placement_rate": 0.6125,
+          "average_package": 736239
+        },
+        "sarvajanik_college_of_engineering_and_technology": {
+          "name": "Sarvajanik College of Engineering and Technology",
+          "established": 1986,
+          "location": "Surat",
+          "specializations": [
+            "Chemical",
+            "Information Technology",
+            "Software Engineering",
+            "Computer Science",
+            "Electronics",
+            "Biotechnology"
+          ],
+          "placement_rate": 0.4576,
+          "average_package": 349413
+        },
+        "shantilal_shah_engineering_college": {
+          "name": "Shantilal Shah Engineering College",
+          "established": 1951,
+          "location": "Bhavnagar",
+          "specializations": [
+            "Data Science",
+            "Electronics",
+            "Chemical"
+          ],
+          "placement_rate": 0.462,
+          "average_package": 535436
+        },
+        "vishwakarma_government_engineering_college": {
+          "name": "Vishwakarma Government Engineering College",
+          "established": 1962,
+          "location": "Ahmedabad",
+          "specializations": [
+            "Mechanical",
+            "Civil",
+            "Computer Science"
+          ],
+          "placement_rate": 0.5866,
+          "average_package": 323726
+        },
+        "siksha_o_anusandhan_university": {
+          "name": "Siksha O Anusandhan University",
+          "established": 1952,
+          "location": "Bhubaneswar",
+          "specializations": [
+            "Data Science",
+            "Software Engineering",
+            "Artificial Intelligence",
+            "Biotechnology"
+          ],
+          "placement_rate": 0.5086,
+          "average_package": 590178
+        },
+        "institute_of_technical_education_and_research": {
+          "name": "Institute of Technical Education and Research",
+          "established": 2004,
+          "location": "Bhubaneswar",
+          "specializations": [
+            "Mechanical",
+            "Software Engineering",
+            "Artificial Intelligence"
+          ],
+          "placement_rate": 0.6993,
+          "average_package": 399894
+        },
+        "centurion_university_of_technology_and_management": {
+          "name": "Centurion University of Technology and Management",
+          "established": 1974,
+          "location": "Bhubaneswar",
+          "specializations": [
+            "Data Science",
+            "Cybersecurity",
+            "Biotechnology",
+            "Mechanical"
+          ],
+          "placement_rate": 0.5326,
+          "average_package": 630173
+        },
+        "trident_academy_of_technology": {
+          "name": "Trident Academy of Technology",
+          "established": 1972,
+          "location": "Bhubaneswar",
+          "specializations": [
+            "Chemical",
+            "Aerospace",
+            "Biotechnology"
+          ],
+          "placement_rate": 0.4578,
+          "average_package": 689037
+        },
+        "college_of_engineering_and_technology_bhubaneswar": {
+          "name": "College of Engineering and Technology Bhubaneswar",
+          "established": 1995,
+          "location": "Bhubaneswar",
+          "specializations": [
+            "Electrical",
+            "Biotechnology",
+            "Information Technology",
+            "Aerospace",
+            "Civil",
+            "Computer Science"
+          ],
+          "placement_rate": 0.6289,
+          "average_package": 772962
+        },
+        "gandhi_institute_for_technology": {
+          "name": "Gandhi Institute for Technology",
+          "established": 1994,
+          "location": "Bhubaneswar",
+          "specializations": [
+            "Artificial Intelligence",
+            "Aerospace",
+            "Mechanical"
+          ],
+          "placement_rate": 0.6609,
+          "average_package": 480205
+        },
+        "indira_gandhi_institute_of_technology": {
+          "name": "Indira Gandhi Institute of Technology",
+          "established": 1974,
+          "location": "Sarang",
+          "specializations": [
+            "Electronics",
+            "Chemical",
+            "Electrical",
+            "Civil"
+          ],
+          "placement_rate": 0.6853,
+          "average_package": 743438
+        },
+        "veer_surendra_sai_university_of_technology": {
+          "name": "Veer Surendra Sai University of Technology",
+          "established": 1953,
+          "location": "Burla",
+          "specializations": [
+            "Aerospace",
+            "Civil",
+            "Information Technology",
+            "Software Engineering",
+            "Artificial Intelligence"
+          ],
+          "placement_rate": 0.6754,
+          "average_package": 424019
+        },
+        "national_institute_of_science_and_technology": {
+          "name": "National Institute of Science and Technology",
+          "established": 2003,
+          "location": "Berhampur",
+          "specializations": [
+            "Information Technology",
+            "Artificial Intelligence",
+            "Aerospace",
+            "Computer Science",
+            "Mechanical",
+            "Data Science"
+          ],
+          "placement_rate": 0.69,
+          "average_package": 367765
+        },
+        "cv_raman_college_of_engineering": {
+          "name": "CV Raman College of Engineering",
+          "established": 2008,
+          "location": "Bhubaneswar",
+          "specializations": [
+            "Software Engineering",
+            "Artificial Intelligence",
+            "Electrical",
+            "Mechanical",
+            "Electronics",
+            "Cybersecurity"
+          ],
+          "placement_rate": 0.4965,
+          "average_package": 505707
+        },
+        "silicon_institute_of_technology": {
+          "name": "Silicon Institute of Technology",
+          "established": 2007,
+          "location": "Bhubaneswar",
+          "specializations": [
+            "Aerospace",
+            "Software Engineering",
+            "Civil",
+            "Electronics",
+            "Information Technology"
+          ],
+          "placement_rate": 0.6592,
+          "average_package": 346009
+        },
+        "aryan_institute_of_engineering_and_technology": {
+          "name": "Aryan Institute of Engineering and Technology",
+          "established": 2006,
+          "location": "Bhubaneswar",
+          "specializations": [
+            "Civil",
+            "Biotechnology",
+            "Information Technology"
+          ],
+          "placement_rate": 0.6147,
+          "average_package": 596860
+        },
+        "capital_engineering_college": {
+          "name": "Capital Engineering College",
+          "established": 1993,
+          "location": "Bhubaneswar",
+          "specializations": [
+            "Software Engineering",
+            "Data Science",
+            "Civil",
+            "Biotechnology",
+            "Aerospace",
+            "Computer Science"
+          ],
+          "placement_rate": 0.5848,
+          "average_package": 763338
+        },
+        "synergy_institute_of_engineering_and_technology": {
+          "name": "Synergy Institute of Engineering and Technology",
+          "established": 2009,
+          "location": "Dhenkanal",
+          "specializations": [
+            "Data Science",
+            "Civil",
+            "Biotechnology",
+            "Mechanical",
+            "Electrical"
+          ],
+          "placement_rate": 0.5016,
+          "average_package": 502904
+        },
+        "raajdhani_engineering_college": {
+          "name": "Raajdhani Engineering College",
+          "established": 1985,
+          "location": "Bhubaneswar",
+          "specializations": [
+            "Civil",
+            "Data Science",
+            "Cybersecurity",
+            "Biotechnology",
+            "Chemical"
+          ],
+          "placement_rate": 0.5467,
+          "average_package": 635825
+        },
+        "orissa_engineering_college": {
+          "name": "Orissa Engineering College",
+          "established": 2002,
+          "location": "Bhubaneswar",
+          "specializations": [
+            "Mechanical",
+            "Electrical",
+            "Information Technology"
+          ],
+          "placement_rate": 0.5471,
+          "average_package": 485828
+        },
+        "prasad_v_potluri_siddhartha_institute_of_technology": {
+          "name": "Prasad V Potluri Siddhartha Institute of Technology",
+          "established": 1973,
+          "location": "Vijayawada",
+          "specializations": [
+            "Aerospace",
+            "Information Technology",
+            "Electrical",
+            "Software Engineering",
+            "Computer Science"
+          ],
+          "placement_rate": 0.6723,
+          "average_package": 355939
+        },
+        "vignans_foundation_for_science_technology_and_research": {
+          "name": "Vignan's Foundation for Science Technology and Research",
+          "established": 1977,
+          "location": "Guntur",
+          "specializations": [
+            "Electronics",
+            "Aerospace",
+            "Civil",
+            "Software Engineering"
+          ],
+          "placement_rate": 0.7101,
+          "average_package": 388936
+        },
+        "kl_university": {
+          "name": "KL University",
+          "established": 1958,
+          "location": "Guntur",
+          "specializations": [
+            "Chemical",
+            "Data Science",
+            "Civil",
+            "Information Technology"
+          ],
+          "placement_rate": 0.501,
+          "average_package": 367215
+        },
+        "vit_ap_university": {
+          "name": "VIT AP University",
+          "established": 1988,
+          "location": "Amaravati",
+          "specializations": [
+            "Electrical",
+            "Chemical",
+            "Information Technology"
+          ],
+          "placement_rate": 0.6334,
+          "average_package": 673512
+        },
+        "srm_university_ap": {
+          "name": "SRM University AP",
+          "established": 1965,
+          "location": "Amaravati",
+          "specializations": [
+            "Cybersecurity",
+            "Electronics",
+            "Information Technology"
+          ],
+          "placement_rate": 0.6992,
+          "average_package": 756688
+        },
+        "centurion_university": {
+          "name": "Centurion University",
+          "established": 1950,
+          "location": "Vizianagaram",
+          "specializations": [
+            "Electronics",
+            "Biotechnology",
+            "Cybersecurity"
+          ],
+          "placement_rate": 0.7287,
+          "average_package": 559369
+        },
+        "gitam_university": {
+          "name": "Gitam University",
+          "established": 1993,
+          "location": "Visakhapatnam",
+          "specializations": [
+            "Data Science",
+            "Electronics",
+            "Artificial Intelligence"
+          ],
+          "placement_rate": 0.4629,
+          "average_package": 789388
+        },
+        "anil_neerukonda_institute_of_technology_and_sciences": {
+          "name": "Anil Neerukonda Institute of Technology and Sciences",
+          "established": 1964,
+          "location": "Visakhapatnam",
+          "specializations": [
+            "Civil",
+            "Cybersecurity",
+            "Electrical",
+            "Artificial Intelligence",
+            "Information Technology"
+          ],
+          "placement_rate": 0.701,
+          "average_package": 709712
+        },
+        "gayatri_vidya_parishad_college_of_engineering": {
+          "name": "Gayatri Vidya Parishad College of Engineering",
+          "established": 1961,
+          "location": "Visakhapatnam",
+          "specializations": [
+            "Data Science",
+            "Civil",
+            "Mechanical",
+            "Artificial Intelligence",
+            "Aerospace"
+          ],
+          "placement_rate": 0.6948,
+          "average_package": 308569
+        },
+        "dhanekula_institute_of_engineering_and_technology": {
+          "name": "Dhanekula Institute of Engineering and Technology",
+          "established": 1981,
+          "location": "Vijayawada",
+          "specializations": [
+            "Electrical",
+            "Artificial Intelligence",
+            "Civil",
+            "Aerospace"
+          ],
+          "placement_rate": 0.4753,
+          "average_package": 596161
+        },
+        "rvr_and_jc_college_of_engineering": {
+          "name": "RVR and JC College of Engineering",
+          "established": 1978,
+          "location": "Guntur",
+          "specializations": [
+            "Information Technology",
+            "Artificial Intelligence",
+            "Aerospace",
+            "Civil",
+            "Cybersecurity"
+          ],
+          "placement_rate": 0.5805,
+          "average_package": 692826
+        },
+        "bapatla_engineering_college": {
+          "name": "Bapatla Engineering College",
+          "established": 1968,
+          "location": "Bapatla",
+          "specializations": [
+            "Biotechnology",
+            "Electrical",
+            "Chemical",
+            "Electronics",
+            "Artificial Intelligence"
+          ],
+          "placement_rate": 0.4675,
+          "average_package": 405768
+        },
+        "gudlavalleru_engineering_college": {
+          "name": "Gudlavalleru Engineering College",
+          "established": 1960,
+          "location": "Gudlavalleru",
+          "specializations": [
+            "Artificial Intelligence",
+            "Information Technology",
+            "Computer Science",
+            "Mechanical"
+          ],
+          "placement_rate": 0.6151,
+          "average_package": 428064
+        },
+        "kakatiya_institute_of_technology_and_science": {
+          "name": "Kakatiya Institute of Technology and Science",
+          "established": 1991,
+          "location": "Warangal",
+          "specializations": [
+            "Data Science",
+            "Artificial Intelligence",
+            "Information Technology",
+            "Chemical",
+            "Aerospace"
+          ],
+          "placement_rate": 0.5509,
+          "average_package": 303769
+        },
+        "chaitanya_bharathi_institute_of_technology": {
+          "name": "Chaitanya Bharathi Institute of Technology",
+          "established": 1961,
+          "location": "Hyderabad",
+          "specializations": [
+            "Civil",
+            "Artificial Intelligence",
+            "Computer Science",
+            "Data Science"
+          ],
+          "placement_rate": 0.5826,
+          "average_package": 307684
+        },
+        "gokaraju_rangaraju_institute_of_engineering_and_technology": {
+          "name": "Gokaraju Rangaraju Institute of Engineering and Technology",
+          "established": 1976,
+          "location": "Hyderabad",
+          "specializations": [
+            "Electronics",
+            "Civil",
+            "Electrical",
+            "Aerospace"
+          ],
+          "placement_rate": 0.4734,
+          "average_package": 722148
+        },
+        "vasavi_college_of_engineering": {
+          "name": "Vasavi College of Engineering",
+          "established": 1996,
+          "location": "Hyderabad",
+          "specializations": [
+            "Cybersecurity",
+            "Data Science",
+            "Biotechnology",
+            "Electronics"
+          ],
+          "placement_rate": 0.6868,
+          "average_package": 648188
+        },
+        "cvr_college_of_engineering": {
+          "name": "CVR College of Engineering",
+          "established": 1976,
+          "location": "Hyderabad",
+          "specializations": [
+            "Software Engineering",
+            "Artificial Intelligence",
+            "Mechanical",
+            "Data Science",
+            "Aerospace"
+          ],
+          "placement_rate": 0.7477,
+          "average_package": 329456
+        },
+        "malla_reddy_college_of_engineering_and_technology": {
+          "name": "Malla Reddy College of Engineering and Technology",
+          "established": 1990,
+          "location": "Hyderabad",
+          "specializations": [
+            "Mechanical",
+            "Software Engineering",
+            "Chemical",
+            "Data Science",
+            "Electrical"
+          ],
+          "placement_rate": 0.4986,
+          "average_package": 458636
+        },
+        "institute_of_aeronautical_engineering": {
+          "name": "Institute of Aeronautical Engineering",
+          "established": 1962,
+          "location": "Hyderabad",
+          "specializations": [
+            "Cybersecurity",
+            "Software Engineering",
+            "Electrical",
+            "Artificial Intelligence"
+          ],
+          "placement_rate": 0.6197,
+          "average_package": 443187
+        },
+        "sreenidhi_institute_of_science_and_technology": {
+          "name": "Sreenidhi Institute of Science and Technology",
+          "established": 1989,
+          "location": "Hyderabad",
+          "specializations": [
+            "Aerospace",
+            "Electronics",
+            "Software Engineering"
+          ],
+          "placement_rate": 0.494,
+          "average_package": 327802
+        },
+        "vnr_vignana_jyothi_institute_of_engineering_and_technology": {
+          "name": "VNR Vignana Jyothi Institute of Engineering and Technology",
+          "established": 1987,
+          "location": "Hyderabad",
+          "specializations": [
+            "Information Technology",
+            "Artificial Intelligence",
+            "Data Science",
+            "Electrical"
+          ],
+          "placement_rate": 0.5113,
+          "average_package": 544125
+        },
+        "mahindra_university": {
+          "name": "Mahindra University",
+          "established": 2006,
+          "location": "Hyderabad",
+          "specializations": [
+            "Aerospace",
+            "Data Science",
+            "Cybersecurity",
+            "Artificial Intelligence",
+            "Chemical"
+          ],
+          "placement_rate": 0.6715,
+          "average_package": 654287
+        },
+        "icfai_foundation_for_higher_education": {
+          "name": "ICFAI Foundation for Higher Education",
+          "established": 1982,
+          "location": "Hyderabad",
+          "specializations": [
+            "Chemical",
+            "Data Science",
+            "Biotechnology",
+            "Civil"
+          ],
+          "placement_rate": 0.744,
+          "average_package": 335602
+        },
+        "cmr_institute_of_technology": {
+          "name": "CMR Institute of Technology",
+          "established": 1984,
+          "location": "Hyderabad",
+          "specializations": [
+            "Civil",
+            "Mechanical",
+            "Chemical",
+            "Artificial Intelligence"
+          ],
+          "placement_rate": 0.5336,
+          "average_package": 412862
+        },
+        "matrusri_engineering_college": {
+          "name": "Matrusri Engineering College",
+          "established": 1996,
+          "location": "Hyderabad",
+          "specializations": [
+            "Artificial Intelligence",
+            "Civil",
+            "Software Engineering"
+          ],
+          "placement_rate": 0.4831,
+          "average_package": 769702
+        },
+        "tkr_college_of_engineering_and_technology": {
+          "name": "TKR College of Engineering and Technology",
+          "established": 1985,
+          "location": "Hyderabad",
+          "specializations": [
+            "Cybersecurity",
+            "Biotechnology",
+            "Data Science",
+            "Software Engineering",
+            "Chemical",
+            "Information Technology"
+          ],
+          "placement_rate": 0.5222,
+          "average_package": 308128
+        },
+        "sreyas_institute_of_engineering_and_technology": {
+          "name": "Sreyas Institute of Engineering and Technology",
+          "established": 2010,
+          "location": "Hyderabad",
+          "specializations": [
+            "Chemical",
+            "Data Science",
+            "Aerospace"
+          ],
+          "placement_rate": 0.6531,
+          "average_package": 478009
+        },
+        "anurag_group_of_institutions": {
+          "name": "Anurag Group of Institutions",
+          "established": 2008,
+          "location": "Hyderabad",
+          "specializations": [
+            "Artificial Intelligence",
+            "Electronics",
+            "Chemical",
+            "Information Technology"
+          ],
+          "placement_rate": 0.7402,
+          "average_package": 719161
+        },
+        "guru_nanak_institute_of_technology": {
+          "name": "Guru Nanak Institute of Technology",
+          "established": 2006,
+          "location": "Hyderabad",
+          "specializations": [
+            "Artificial Intelligence",
+            "Civil",
+            "Cybersecurity",
+            "Information Technology",
+            "Software Engineering",
+            "Aerospace"
+          ],
+          "placement_rate": 0.4763,
+          "average_package": 411526
+        },
+        "methodist_college_of_engineering_and_technology": {
+          "name": "Methodist College of Engineering and Technology",
+          "established": 1984,
+          "location": "Hyderabad",
+          "specializations": [
+            "Computer Science",
+            "Biotechnology",
+            "Civil"
+          ],
+          "placement_rate": 0.4577,
+          "average_package": 578328
+        },
+        "nalla_malla_reddy_engineering_college": {
+          "name": "Nalla Malla Reddy Engineering College",
+          "established": 1951,
+          "location": "Hyderabad",
+          "specializations": [
+            "Electrical",
+            "Artificial Intelligence",
+            "Computer Science",
+            "Biotechnology"
+          ],
+          "placement_rate": 0.6843,
+          "average_package": 359655
+        },
+        "st_martins_engineering_college": {
+          "name": "St Martins Engineering College",
+          "established": 2008,
+          "location": "Hyderabad",
+          "specializations": [
+            "Electronics",
+            "Information Technology",
+            "Software Engineering"
+          ],
+          "placement_rate": 0.4888,
+          "average_package": 480281
+        },
+        "jyothishmathi_institute_of_technology_and_science": {
+          "name": "Jyothishmathi Institute of Technology and Science",
+          "established": 1976,
+          "location": "Hyderabad",
+          "specializations": [
+            "Cybersecurity",
+            "Electronics",
+            "Electrical",
+            "Chemical"
+          ],
+          "placement_rate": 0.5484,
+          "average_package": 720660
         }
       }
     }

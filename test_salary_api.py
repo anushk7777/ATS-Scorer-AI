@@ -5,12 +5,15 @@ Test script to verify the salary prediction API is working correctly.
 
 import requests
 import json
+import os
 
 def test_salary_prediction():
     """
     Test the salary prediction API endpoint
     """
-    url = "http://localhost:5000/api/predict-salary"
+    # Get API URL from environment variable or use default
+    api_url = os.getenv('API_URL', 'http://localhost:5000')
+    url = f"{api_url}/api/predict-salary"
     
     # Sample resume text for testing
     sample_resume = """

@@ -3375,7 +3375,7 @@
                 console.log('Sending salary prediction request...');
                 
                 // Send request to salary prediction API with JSON payload
-                const response = await fetch('http://localhost:5000/api/predict-salary', {
+                const response = await fetch('./api/predict-salary', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -4259,7 +4259,7 @@ Detailed Scores:
             try {
                 showMessage('Calculating salary prediction...', 'info');
                 
-                const response = await fetch('http://localhost:5000/api/predict-salary', {
+                const response = await fetch('./api/predict-salary', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',

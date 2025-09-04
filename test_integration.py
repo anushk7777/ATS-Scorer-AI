@@ -18,8 +18,8 @@ import os
 from typing import Dict, Any, Optional
 
 # Configuration
-BASE_URL = "http://localhost:5000"
-TEST_TIMEOUT = 30  # seconds
+BASE_URL = os.getenv('API_URL', 'http://localhost:5000')
+TEST_TIMEOUT = int(os.getenv('TEST_TIMEOUT', '30'))  # seconds
 
 # Test data
 SAMPLE_RESUME_TEXT = """

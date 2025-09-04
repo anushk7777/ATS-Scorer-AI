@@ -27,6 +27,7 @@ import sys
 
 # Import our custom modules
 from salary_calculator import OTSSalaryCalculator
+from gemini_semantic_extractor import GeminiSemanticExtractor
 
 # Load environment variables
 load_dotenv()
@@ -60,6 +61,13 @@ try:
 except Exception as e:
     logger.error(f"Failed to initialize salary calculator: {e}")
     salary_calculator = None
+
+try:
+    gemini_extractor = GeminiSemanticExtractor()
+    logger.info("Gemini Semantic Extractor initialized successfully")
+except Exception as e:
+    logger.error(f"Failed to initialize Gemini extractor: {e}")
+    gemini_extractor = None
 
 
 @app.route('/')

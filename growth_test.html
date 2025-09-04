@@ -81,7 +81,7 @@
             resultsDiv.innerHTML = '<div class="result">Testing... Please wait.</div>';
             
             try {
-                const response = await fetch('/api/predict-salary', {
+                const response = await fetch('http://localhost:5000/api/predict-salary', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'

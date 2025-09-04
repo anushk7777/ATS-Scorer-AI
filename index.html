@@ -32,8 +32,8 @@
             --border-radius-sm: 12px;
             --border-radius-lg: 28px;
             --border-radius-xl: 36px;
-            --text-gradient: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #ec4899 100%);
-            --accent-glow: rgba(99, 102, 241, 0.4);
+            --text-gradient: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 50%, #ec4899 100%);
+            --accent-glow: rgba(59, 130, 246, 0.4);
         }
         
         /* Global Reset and Base Styles */
@@ -263,6 +263,27 @@
             box-shadow: var(--shadow-medium);
         }
         
+        /* Premium Secondary Button */
+        .premium-button-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: var(--border-radius-lg);
+            color: white;
+            font-weight: 600;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            box-shadow: var(--shadow-medium);
+            cursor: pointer;
+        }
+        
+        .premium-button-secondary:hover {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(255, 255, 255, 0.4);
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: var(--shadow-hard), var(--shadow-glow);
+        }
+        
         /* Enhanced Progress and Score Elements */
         .progress-bar {
             transition: width 1.2s cubic-bezier(0.4, 0, 0.2, 1);
@@ -287,10 +308,12 @@
         }
         
         .score-circle {
-            stroke-dasharray: 251.2;
-            stroke-dashoffset: 251.2;
+            stroke-dasharray: 282.74; /* 2 * PI * 45 = 282.74 */
+            stroke-dashoffset: 282.74; /* Start with no fill */
             transition: stroke-dashoffset 2.5s cubic-bezier(0.4, 0, 0.2, 1);
             filter: drop-shadow(0 0 8px rgba(99, 102, 241, 0.5));
+            transform-origin: center;
+            transform: rotate(-90deg); /* Start from top */
         }
         
         /* Premium Text Styles */
@@ -768,7 +791,7 @@
         <!-- Enhanced Dynamic Animated Background -->
         <div class="absolute inset-0">
             <div class="absolute inset-0 bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900"></div>
-            <div class="absolute inset-0 bg-gradient-to-r from-indigo-500/20 via-purple-500/20 to-pink-500/20 animate-gradientShift"></div>
+            <div class="absolute inset-0 bg-gradient-to-r from-blue-500/20 via-purple-500/20 to-pink-500/20 animate-gradientShift"></div>
             <div class="absolute inset-0 opacity-40">
                 <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-indigo-500/30 rounded-full blur-3xl animate-float"></div>
                 <div class="absolute top-3/4 right-1/4 w-80 h-80 bg-purple-500/25 rounded-full blur-3xl animate-float" style="animation-delay: 2s"></div>
@@ -791,7 +814,7 @@
             <!-- Main Icon with Glow Effect -->
             <div class="mb-8 fade-in">
                 <div class="inline-block relative">
-                    <div class="absolute inset-0 bg-gradient-to-r from-purple-500 to-blue-500 rounded-full blur-2xl opacity-50 scale-110 animate-pulse"></div>
+                    <div class="absolute inset-0 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 rounded-full blur-2xl opacity-50 scale-110 animate-pulse"></div>
                     <div class="relative p-8 glass rounded-full float-animation">
                         <svg class="w-20 h-20 text-white" fill="currentColor" viewBox="0 0 24 24">
                             <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z" />
@@ -970,18 +993,7 @@
                     </div>
                 </div>
                 
-                <!-- Analyze Another Resume Button -->
-                <div class="text-center mt-12">
-                    <button id="analyze-another-btn" class="group relative px-12 py-6 bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 text-white font-bold text-xl rounded-2xl shadow-2xl hover:shadow-blue-500/25 transition-all duration-500 hover:scale-105 transform">
-                        <div class="absolute inset-0 bg-gradient-to-r from-blue-500 via-purple-500 to-indigo-500 rounded-2xl blur opacity-0 group-hover:opacity-75 transition-opacity duration-500"></div>
-                        <div class="relative flex items-center space-x-3">
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
-                            </svg>
-                            <span>Analyze Another Resume</span>
-                        </div>
-                    </button>
-                </div>
+
             </div>
         </section>
 
@@ -1124,10 +1136,8 @@
                                         <defs>
                                             <linearGradient id="enhanced-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
                                                 <stop offset="0%" style="stop-color:#3b82f6;stop-opacity:1" />
-                                                <stop offset="25%" style="stop-color:#8b5cf6;stop-opacity:1" />
-                                                <stop offset="50%" style="stop-color:#ec4899;stop-opacity:1" />
-                                                <stop offset="75%" style="stop-color:#ffd166;stop-opacity:1" />
-                                                <stop offset="100%" style="stop-color:#10b981;stop-opacity:1" />
+                                                <stop offset="50%" style="stop-color:#8b5cf6;stop-opacity:1" />
+                                                <stop offset="100%" style="stop-color:#ec4899;stop-opacity:1" />
                                             </linearGradient>
                                         </defs>
                                     </circle>
@@ -1139,10 +1149,10 @@
                                 <!-- Score Display -->
                                 <div class="absolute inset-0 flex items-center justify-center">
                                     <div class="text-center score-animate">
-                                        <div id="overall-score" class="text-9xl font-extrabold gradient-text mb-3">0</div>
-                                        <div class="text-3xl text-white/95 font-black tracking-wider">ATS SCORE</div>
+                                        <div id="overall-score" class="text-9xl font-semibold gradient-text mb-3">0</div>
+                                        <div class="text-3xl text-white/95 font-medium tracking-wide">ATS SCORE</div>
                                         <div class="mt-6 px-8 py-3 glass rounded-full">
-                                            <span id="score-grade" class="text-xl font-bold text-white/90">Calculating...</span>
+                                            <span id="score-grade" class="text-xl font-medium text-white/90">Calculating...</span>
                                         </div>
                                     </div>
                                 </div>
@@ -1162,9 +1172,11 @@
                         <!-- Enhanced Score Interpretation -->
                         <div class="mt-12 max-w-4xl mx-auto">
                             <div class="glass-card p-8 hover:scale-[1.02] transition-all duration-500">
-                                <p id="score-interpretation" class="text-2xl text-white/90 font-medium text-center leading-relaxed slide-in-left"></p>
+                                <p id="score-interpretation" class="text-xl text-white/90 font-normal text-center leading-relaxed slide-in-left"></p>
                             </div>
                         </div>
+                        
+
                     </div>
                 </div>
             </div>
@@ -1186,8 +1198,8 @@
                             </div>
                             
                             <!-- Score Display -->
-                            <div class="text-5xl font-black bg-gradient-to-r from-blue-400 to-cyan-500 bg-clip-text text-transparent score-animate mb-3" id="format-score">0</div>
-                            <div class="text-lg text-white/90 font-bold mb-6 tracking-wide">Format & Structure</div>
+                            <div class="text-5xl font-semibold bg-gradient-to-r from-blue-400 to-cyan-500 bg-clip-text text-transparent score-animate mb-3" id="format-score">0</div>
+                                <div class="text-lg text-white/90 font-medium mb-6 tracking-wide">Format & Structure</div>
                             
                             <!-- Enhanced Progress Bar -->
                             <div class="relative">
@@ -1218,8 +1230,8 @@
                             </div>
                             
                             <!-- Score Display -->
-                            <div class="text-5xl font-black bg-gradient-to-r from-emerald-400 to-green-500 bg-clip-text text-transparent score-animate mb-3" id="content-score">0</div>
-                            <div class="text-lg text-white/90 font-bold mb-6 tracking-wide">Content Quality</div>
+                            <div class="text-5xl font-semibold bg-gradient-to-r from-emerald-400 to-green-500 bg-clip-text text-transparent score-animate mb-3" id="content-score">0</div>
+                                <div class="text-lg text-white/90 font-medium mb-6 tracking-wide">Content Quality</div>
                             
                             <!-- Enhanced Progress Bar -->
                             <div class="relative">
@@ -1250,8 +1262,8 @@
                             </div>
                             
                             <!-- Score Display -->
-                            <div class="text-5xl font-black bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text text-transparent score-animate mb-3" id="keywords-score">0</div>
-                            <div class="text-lg text-white/90 font-bold mb-6 tracking-wide">Keyword Optimization</div>
+                            <div class="text-5xl font-semibold bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text text-transparent score-animate mb-3" id="keywords-score">0</div>
+                                <div class="text-lg text-white/90 font-medium mb-6 tracking-wide">Keyword Optimization</div>
                             
                             <!-- Enhanced Progress Bar -->
                             <div class="relative">
@@ -1282,8 +1294,8 @@
                             </div>
                             
                             <!-- Score Display -->
-                            <div class="text-5xl font-black bg-gradient-to-r from-indigo-400 to-purple-500 bg-clip-text text-transparent score-animate mb-3" id="readability-score">0</div>
-                            <div class="text-lg text-white/90 font-bold mb-6 tracking-wide">ATS Readability</div>
+                            <div class="text-5xl font-semibold bg-gradient-to-r from-indigo-400 to-purple-500 bg-clip-text text-transparent score-animate mb-3" id="readability-score">0</div>
+                                <div class="text-lg text-white/90 font-medium mb-6 tracking-wide">ATS Readability</div>
                             
                             <!-- Enhanced Progress Bar -->
                             <div class="relative">
@@ -1348,26 +1360,40 @@
                     </div>
                 </div>
 
-                <!-- Ultra-Premium Action Buttons -->
-                <div class="mt-20 flex flex-col sm:flex-row gap-10 justify-center">
-                    <button onclick="resetToUpload()" id="analyze-another" class="premium-button-primary px-12 py-6 text-white font-black text-xl hover:scale-105 transition-all duration-500 group relative overflow-hidden">
-                        <div class="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-cyan-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                        <span class="relative flex items-center justify-center gap-4">
-                            <svg class="w-8 h-8 group-hover:rotate-180 transition-transform duration-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
-                            </svg>
-                            <span class="gradient-text font-black">Analyze Another Resume</span>
-                        </span>
-                    </button>
-                    <button id="download-report" class="premium-button-secondary px-12 py-6 text-white font-black text-xl hover:scale-105 transition-all duration-500 group relative overflow-hidden">
-                        <div class="absolute inset-0 bg-gradient-to-r from-emerald-500/20 to-green-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                        <span class="relative flex items-center justify-center gap-4">
-                            <svg class="w-8 h-8 group-hover:translate-y-1 transition-transform duration-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
-                            </svg>
-                            <span class="gradient-text font-black">Download Report</span>
-                        </span>
-                    </button>
+
+            </div>
+        </section>
+        
+        <!-- Action Buttons Section - Always Visible -->
+        <section id="action-buttons-section" class="mb-12">
+            <div class="glass-card p-8 fade-in relative overflow-hidden">
+                <!-- Dynamic Background Effects -->
+                <div class="absolute inset-0 bg-gradient-to-br from-blue-500/10 via-purple-500/10 to-pink-500/10"></div>
+                
+                <div class="relative z-10">
+                    <!-- Ultra-Premium Action Buttons -->
+                    <div class="flex flex-col sm:flex-row gap-10 justify-center">
+                        <button id="download-report" class="premium-button-secondary px-12 py-6 text-white font-black text-xl hover:scale-105 transition-all duration-500 group relative overflow-hidden">
+                            <div class="absolute inset-0 bg-gradient-to-r from-blue-500/20 via-purple-500/20 to-pink-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                            <span class="relative flex items-center justify-center gap-4">
+                                <svg class="w-8 h-8 group-hover:translate-y-1 transition-transform duration-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                                </svg>
+                                <span class="gradient-text font-black">Download Report</span>
+                            </span>
+                        </button>
+                        
+                        <!-- Analyze Another Resume Button -->
+                        <button id="analyze-another-btn" class="premium-button-secondary px-12 py-6 text-white font-medium text-xl hover:scale-105 transition-all duration-500 group relative overflow-hidden">
+                            <div class="absolute inset-0 bg-gradient-to-r from-blue-500/20 via-purple-500/20 to-pink-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                            <span class="relative flex items-center justify-center gap-4">
+                                <svg class="w-8 h-8 group-hover:rotate-180 transition-transform duration-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+                                </svg>
+                                <span class="gradient-text font-medium">Analyze Another Resume</span>
+                            </span>
+                        </button>
+                    </div>
                 </div>
             </div>
         </section>
@@ -1376,7 +1402,7 @@
         <section id="salary-section" class="hidden mb-12">
             <div class="glass-card p-16 fade-in relative overflow-hidden">
                 <!-- Dynamic Background Effects -->
-                <div class="absolute inset-0 bg-gradient-to-br from-green-500/15 via-emerald-500/15 to-teal-500/15 animate-gradientShift"></div>
+                <div class="absolute inset-0 bg-gradient-to-br from-green-500/15 via-emerald-500/15 to-green-600/15 animate-gradientShift"></div>
                 <div class="absolute inset-0 opacity-20">
                     <div class="absolute top-20 right-20 w-40 h-40 bg-green-400/30 rounded-full blur-3xl animate-float"></div>
                     <div class="absolute bottom-20 left-20 w-32 h-32 bg-emerald-400/30 rounded-full blur-3xl animate-float" style="animation-delay: 3s"></div>
@@ -1387,7 +1413,7 @@
                     <!-- Section Header -->
                     <div class="text-center mb-16">
                         <div class="inline-block relative mb-8">
-                            <div class="absolute inset-0 bg-gradient-to-r from-green-500 via-emerald-500 to-teal-500 rounded-full blur-2xl opacity-40 scale-125 animate-pulse"></div>
+                            <div class="absolute inset-0 bg-gradient-to-r from-green-500 via-emerald-500 to-green-600 rounded-full blur-2xl opacity-40 scale-125 animate-pulse"></div>
                             <div class="relative p-6 glass rounded-full">
                                 <svg class="w-16 h-16 text-white" fill="currentColor" viewBox="0 0 24 24">
                                     <path d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4M11,17H13V15H11V17M11,13H13V7H11V13Z" />
@@ -1411,8 +1437,8 @@
                                 
                                 <div class="relative z-10">
                                     <div class="mb-8">
-                                        <div class="text-6xl font-black bg-gradient-to-r from-green-400 to-emerald-500 bg-clip-text text-transparent mb-4" id="predicted-salary">₹0</div>
-                                        <div class="text-xl text-white/90 font-bold tracking-wide">Estimated Annual Salary</div>
+                                        <div class="text-6xl font-semibold bg-gradient-to-r from-green-400 to-emerald-500 bg-clip-text text-transparent mb-4" id="predicted-salary">₹0</div>
+                            <div class="text-xl text-white/90 font-medium tracking-wide">Estimated Annual Salary</div>
                                     </div>
                                     
                                     <!-- Experience Level Badge -->
@@ -1524,21 +1550,21 @@
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                             <!-- 1 Year -->
                             <div class="text-center glass-card p-6">
-                                <div class="text-2xl font-bold text-green-400 mb-2" id="growth-1year">₹0</div>
+                                <div class="text-2xl font-medium text-green-400 mb-2" id="growth-1year">₹0</div>
                                 <div class="text-white/80 font-medium">1 Year</div>
                                 <div class="text-sm text-white/60 mt-1" id="growth-1year-percent">+0%</div>
                             </div>
                             
                             <!-- 3 Years -->
                             <div class="text-center glass-card p-6">
-                                <div class="text-2xl font-bold text-emerald-400 mb-2" id="growth-3years">₹0</div>
+                                <div class="text-2xl font-medium text-emerald-400 mb-2" id="growth-3years">₹0</div>
                                 <div class="text-white/80 font-medium">3 Years</div>
                                 <div class="text-sm text-white/60 mt-1" id="growth-3years-percent">+0%</div>
                             </div>
                             
                             <!-- 5 Years -->
                             <div class="text-center glass-card p-6">
-                                <div class="text-2xl font-bold text-teal-400 mb-2" id="growth-5years">₹0</div>
+                                <div class="text-2xl font-medium text-teal-400 mb-2" id="growth-5years">₹0</div>
                                 <div class="text-white/80 font-medium">5 Years</div>
                                 <div class="text-sm text-white/60 mt-1" id="growth-5years-percent">+0%</div>
                             </div>
@@ -2002,7 +2028,7 @@
                 formatAnalysis: 'from-green-400 via-emerald-400 to-green-500',
                 contentAnalysis: 'from-rose-400 via-pink-400 to-rose-500',
                 keywordAnalysis: 'from-indigo-400 via-purple-400 to-indigo-500',
-                readabilityAnalysis: 'from-teal-400 via-cyan-400 to-teal-500',
+                readabilityAnalysis: 'from-blue-400 via-purple-400 to-pink-500',
                 complete: 'from-green-400 via-emerald-400 to-green-600',
                 default: 'from-blue-400 via-purple-400 to-pink-400'
             };
@@ -3165,22 +3191,26 @@
 
             overallScoreElement.textContent = analysisResults.overall;
             
-            // Animate score circle
-            const circumference = 2 * Math.PI * 40; // radius = 40
-            const offset = circumference - (analysisResults.overall / 100) * circumference;
-            scoreCircle.style.strokeDashoffset = offset;
+            // Animate score circle with loading effect
+            const circumference = 2 * Math.PI * 45; // radius = 45
+            const targetOffset = circumference - (analysisResults.overall / 100) * circumference;
+            
+            // Reset circle to empty state first
+            scoreCircle.style.strokeDashoffset = circumference;
+            
+            // Trigger animation after a short delay for visual effect
+            setTimeout(() => {
+                scoreCircle.style.strokeDashoffset = targetOffset;
+            }, 500);
 
             // Score interpretation
             let interpretation = '';
             if (analysisResults.overall >= 80) {
                 interpretation = 'Excellent! Your resume is well-optimized for ATS systems.';
-                scoreCircle.style.stroke = '#10b981'; // green
             } else if (analysisResults.overall >= 60) {
                 interpretation = 'Good! Some improvements could boost your ATS compatibility.';
-                scoreCircle.style.stroke = '#ffd166'; // warm yellow
             } else {
                 interpretation = 'Needs improvement. Focus on the suggestions below.';
-                scoreCircle.style.stroke = '#8b5cf6'; // purple
             }
             scoreInterpretation.textContent = interpretation;
 
@@ -3285,7 +3315,7 @@
                 const priorityGradients = {
                     'high': 'from-purple-400 to-pink-500',
                     'medium': 'from-amber-400 to-yellow-500',
-                    'low': 'from-blue-400 to-cyan-500'
+                    'low': 'from-blue-400 to-purple-500'
                 };
                 const gradientClass = priorityGradients[suggestion.priority] || priorityGradients['medium'];
                 
@@ -3345,7 +3375,7 @@
                 console.log('Sending salary prediction request...');
                 
                 // Send request to salary prediction API with JSON payload
-                const response = await fetch('/api/predict-salary', {
+                const response = await fetch('http://localhost:5000/api/predict-salary', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -3937,21 +3967,73 @@ Detailed Scores:
             // Action buttons
             document.getElementById('download-report').addEventListener('click', downloadReport);
             
-            // Analyze Another Resume button
-            document.getElementById('analyze-another-btn').addEventListener('click', () => {
-                // Hide salary section
-                document.getElementById('salary-section').classList.add('hidden');
-                
-                // Reset file input and UI
-                removeFile();
-                
-                // Scroll back to upload section
-                document.getElementById('upload-section').scrollIntoView({ 
-                    behavior: 'smooth', 
-                    block: 'start' 
-                });
+            // Analyze Another Resume button - using event delegation since button is in hidden section initially
+            document.addEventListener('click', (e) => {
+                if (e.target.closest('#analyze-another-btn')) {
+                    console.log('Analyze Another Resume button clicked');
+                    
+                    // Hide salary section
+                    const salarySection = document.getElementById('salary-section');
+                    if (salarySection) {
+                        salarySection.classList.add('hidden');
+                    }
+                    
+                    // Reset file input and UI
+                    removeFile();
+                    
+                    // Scroll back to upload section
+                    const uploadSection = document.getElementById('upload-section');
+                    if (uploadSection) {
+                        uploadSection.scrollIntoView({ 
+                            behavior: 'smooth', 
+                            block: 'start' 
+                        });
+                    }
+                }
             });
             
+            // Analyze Another Resume button
+            const analyzeAnotherBtn = document.getElementById('analyze-another-btn');
+            if (analyzeAnotherBtn) {
+                analyzeAnotherBtn.addEventListener('click', () => {
+                    // Reset the application to initial state
+                    currentFile = null;
+                    analysisResults = null;
+                    
+                    // Hide results and show upload section
+                    resultsSection.classList.add('hidden');
+                    processingSection.classList.add('hidden');
+                    uploadSection.classList.remove('hidden');
+                    
+                    // Hide salary section
+                    const salarySection = document.getElementById('salary-section');
+                    if (salarySection) {
+                        salarySection.classList.add('hidden');
+                    }
+                    
+                    // Reset file input
+                    fileInput.value = '';
+                    fileInfo.classList.add('hidden');
+                    
+                    // Clear any previous messages
+                    clearPreviousErrors();
+                    
+                    // Scroll to top
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                });
+            }
+            
+            // Download Report button
+            const downloadReportBtn = document.getElementById('download-report-btn');
+            if (downloadReportBtn) {
+                downloadReportBtn.addEventListener('click', () => {
+                    if (analysisResults) {
+                        downloadReport();
+                    } else {
+                        showMessage('No analysis results available to download', 'warning');
+                    }
+                });
+            }
 
         }
         
@@ -4177,7 +4259,7 @@ Detailed Scores:
             try {
                 showMessage('Calculating salary prediction...', 'info');
                 
-                const response = await fetch('/api/predict-salary', {
+                const response = await fetch('http://localhost:5000/api/predict-salary', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -4254,7 +4336,16 @@ Detailed Scores:
         };
         
         // Initialize app when DOM is loaded
-        document.addEventListener('DOMContentLoaded', initializeApp);
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('DOM Content Loaded - initializing app');
+            initializeApp();
+            
+            // Debug: Check if button exists after DOM is loaded
+            setTimeout(() => {
+                const btn = document.getElementById('analyze-another-btn');
+                console.log('Button check after timeout:', btn ? 'Found' : 'Not found');
+            }, 1000);
+        });
     </script>
 </body>
 </html>

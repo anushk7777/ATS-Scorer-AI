@@ -407,7 +407,7 @@
                 formatAnalysis: 'from-green-400 via-emerald-400 to-green-500',
                 contentAnalysis: 'from-rose-400 via-pink-400 to-rose-500',
                 keywordAnalysis: 'from-indigo-400 via-purple-400 to-indigo-500',
-                readabilityAnalysis: 'from-teal-400 via-cyan-400 to-teal-500',
+                readabilityAnalysis: 'from-blue-400 via-purple-400 to-pink-500',
                 complete: 'from-green-400 via-emerald-400 to-green-600',
                 default: 'from-blue-400 via-purple-400 to-pink-400'
             };

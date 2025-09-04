@@ -1,0 +1,83 @@
+{
+  "breakdown": {
+    "base_salary": 9.0,
+    "college_multiplier": 1.24,
+    "college_name": "Indian Institute of Technology Delhi",
+    "college_premium": 7.190000000000001,
+    "college_tier": {
+      "institution": "Indian Institute of Technology Delhi",
+      "tier": "tier_1"
+    },
+    "graduation_year": 2020,
+    "identified_role": "backend_developer",
+    "location": "Bangalore",
+    "location_factor": 1.3,
+    "role_adjustment": 0,
+    "skills_identified": [
+      "react",
+      "python",
+      "machine learning",
+      "java",
+      "javascript",
+      "go"
+    ],
+    "years_experience": 3.0
+  },
+  "calculation_details": {
+    "multipliers": {
+      "college_premium": 1.24,
+      "location_adjustment": 1.3,
+      "role_adjustment": 1.02,
+      "skill_bonus": 1.094
+    },
+    "premium_college_info": {
+      "database_weightage": 1.24,
+      "final_multiplier": 1.24,
+      "tier": "tier_1"
+    }
+  },
+  "confidence_factors": {
+    "college_confidence": "high",
+    "experience_confidence": "high",
+    "overall_confidence": "high",
+    "role_confidence": "medium"
+  },
+  "estimated_salary": 16.19,
+  "experience_level": "junior",
+  "growth_projection": {
+    "growth_factors": {
+      "base_yearly_growth": 0.12,
+      "promotion_boost": 0.25
+    },
+    "role_transitions": [],
+    "year_1": {
+      "percentage": 12.0,
+      "salary": 18.13
+    },
+    "year_3": {
+      "percentage": 64.6,
+      "salary": 26.64
+    },
+    "year_5": {
+      "percentage": 58.1,
+      "salary": 25.6
+    }
+  },
+  "salary_range": {
+    "confidence_level": 0.8,
+    "market_factors": {
+      "college_impact": true,
+      "experience_level": "junior",
+      "location_tier": "Tier 1",
+      "market_condition": "hot",
+      "skill_demand": "critical"
+    },
+    "max": 12.86,
+    "median": 11.08,
+    "min": 6.92,
+    "recommendations": [
+      "Critical skills detected - aim for upper range of salary band",
+      "Hot job market - consider targeting above-median offers"
+    ]
+  }
+}

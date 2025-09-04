@@ -23,6 +23,19 @@ from resume_validator import ResumeContentValidator, ValidationResult
 from dynamic_salary_range import DynamicSalaryRangeCalculator
 
 
+"""
+OTS Salary Calculator Service
+
+This module provides comprehensive salary calculation functionality for OTS Solutions.
+It handles experience-based calculations, premium college weightage, role multipliers,
+location adjustments, and skill-based bonuses.
+
+Author: OTS Solutions Development Team
+Version: 1.0.0
+Last Updated: 2025-01-25
+"""
+
+# --- SalaryCalculationResult dataclass ---
 @dataclass
 class SalaryCalculationResult:
     """
@@ -49,12 +62,11 @@ class SalaryCalculationResult:
     college_tier: Optional[str]
     breakdown: Dict[str, Any]
 
-
+# --- OTSSalaryCalculator class ---
 class OTSSalaryCalculator:
     """
     Main salary calculator class for OTS Solutions.
-    
-    This class handles all aspects of salary calculation including:
+    Handles all aspects of salary calculation including:
     - Experience-based base salary determination
     - Premium college weightage with time decay
     - Role-specific multipliers
@@ -552,10 +564,9 @@ class OTSSalaryCalculator:
     def calculate_salary(self, resume_text: str) -> SalaryCalculationResult:
         """
         Calculate comprehensive salary based on resume analysis with enhanced premium college weightage.
-        
+        This method validates the resume, extracts all relevant information, applies all multipliers, and returns a detailed result.
         Args:
             resume_text: Raw resume text content
-            
         Returns:
             SalaryCalculationResult object with detailed breakdown
         """
@@ -565,7 +576,6 @@ class OTSSalaryCalculator:
         
         # Validate resume content before processing
         validation_result = self.resume_validator.validate_resume(resume_text)
-        
         # Check if document is a valid resume
         if not validation_result.is_valid_resume:
             # Return error result for non-resume documents
@@ -598,13 +608,10 @@ class OTSSalaryCalculator:
         role = self.extract_role_info(resume_text)
         location = self.extract_location(resume_text)
         skills = self.extract_skills(resume_text)
-        
         # Calculate base salary
         base_salary, experience_band = self.calculate_base_salary(years_experience)
-        
         # Calculate multipliers with enhanced premium college weightage
         college_multiplier, college_tier = self.calculate_college_multiplier(college_name, graduation_year)
-        
         # Apply enhanced premium college weightage from database
         enhanced_info = None
         if college_name:
@@ -613,18 +620,15 @@ class OTSSalaryCalculator:
                 college_multiplier = enhanced_multiplier
             # Update college_tier from enhanced database if available
             if enhanced_info and enhanced_info.get('found_in_database'):
-                college_tier = enhanced_info.get('tier', college_tier)  # Update college_tier from enhanced database
-        
+                college_tier = enhanced_info.get('tier', college_tier)
         role_multiplier = self.config['role_multipliers'].get(role, {}).get('multiplier', 1.0)
         # Calculate location multiplier using city configuration
         location_multiplier, city_info = self.city_config.get_city_multiplier(location)
-        
         # Add tech hub bonus if applicable
         tech_hub_bonus = self.city_config.get_tech_hub_bonus(location)
         if tech_hub_bonus > 0:
             location_multiplier += tech_hub_bonus
         skill_multiplier = self.calculate_skill_multiplier(skills)
-        
         # Calculate final salary
         final_salary = (
             base_salary * 
@@ -633,14 +637,10 @@ class OTSSalaryCalculator:
             location_multiplier * 
             skill_multiplier
         )
-        
         # Apply validation rules
         min_cap = self.config['validation_rules']['min_salary_cap']
         max_cap = self.config['validation_rules']['max_salary_cap']
         final_salary = max(min_cap, min(final_salary, max_cap))
-        
-        # Use city_info already obtained from get_city_multiplier call
-        
         # Create detailed breakdown with premium college and city info
         breakdown = {
             'years_experience': years_experience,
@@ -674,7 +674,6 @@ class OTSSalaryCalculator:
                 'final_salary': final_salary
             }
         }
-        
         return SalaryCalculationResult(
             base_salary=round(base_salary, 2),
             college_multiplier=college_multiplier,

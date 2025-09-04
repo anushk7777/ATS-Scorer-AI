@@ -52,3 +52,7 @@ wheels/
 
 # Jupyter Notebook
 .ipynb_checkpoints
+
+# Task files
+# tasks.json
+# tasks/ 

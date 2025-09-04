@@ -1,0 +1,200 @@
+# OTS-Specific Salary Prediction Integration - PRD2
+
+## Overview
+Extend the existing ATS Resume Scoring Application with a specialized salary prediction feature exclusively for OTS Solutions. This feature will provide accurate compensation estimates based on OTS's specific salary bands, premium college weightage system, and years of experience factors.
+
+## Core Features
+
+### 1. OTS-Specific Salary Calculation Engine
+- Implement OTS salary bands based on years of experience
+- Apply premium college weightage system
+- Factor in year-on-year growth patterns
+- Consider role-specific multipliers
+- Calculate experience-based progression
+
+### 2. Premium College Integration
+- Maintain a catalog of premium colleges
+- Apply weighted factors for graduates
+- Implement decay factor for college premium over years
+- Consider specialized programs/degrees
+
+### 3. Experience-Based Calculations
+- Parse and validate years of experience
+- Apply appropriate salary bands
+- Calculate year-on-year growth
+- Factor in role transitions
+- Consider skill progression
+
+### 4. UI Integration
+- Add "Salary Predicted" section in results
+  - Position: Below the overall score and above detailed breakdowns
+  - Style: Clean, card-based layout with clear typography
+  - Components:
+    - Estimated Base Salary at OTS (prominently displayed)
+    - Experience Level Indicator
+    - College Tier Impact (if applicable)
+    - Potential Growth Path
+- Display calculated base salary with clear formatting
+- Show experience-based progression with visual indicators
+- Indicate premium college factors and their impact
+- Present growth projections in an easy-to-understand format
+
+## User Experience
+
+### User Personas
+1. HR Team
+   - Needs quick salary estimates for candidates
+   - Requires accurate premium college assessment
+   - Wants to see experience-based progression
+
+2. Hiring Managers
+   - Need to validate salary bands
+   - Want to see candidate qualifications impact
+   - Require growth projection insights
+
+### Key User Flows
+1. Resume Upload & Analysis
+   - User uploads resume
+   - System performs ATS analysis
+   - Salary prediction runs automatically
+   - Results displayed in dedicated section
+
+2. Salary Information Display
+   - Clear base salary indication in the results section
+     - Prominent display of estimated OTS salary
+     - Formatted with appropriate currency symbols
+     - Color-coded for easy recognition
+   - Premium college factor breakdown
+     - College tier identification
+     - Applied weightage details
+     - Impact on base salary calculation
+   - Experience-based progression chart
+     - Current experience level
+     - Next salary band milestone
+     - Years to next level
+   - Growth potential indicators
+     - Year-on-year growth projections
+     - Role transition opportunities
+     - Skill-based premium potential
+
+## Technical Architecture
+
+### Components
+1. Salary Prediction Module
+   - OTS salary band configuration
+   - Premium college database
+   - Experience calculation logic
+   - Growth projection algorithms
+
+2. Frontend Integration
+   - Salary display component
+   - Progress visualization
+   - Interactive elements
+   - Responsive design
+
+### Data Models
+1. OTS Salary Bands
+   ```javascript
+   {
+     experienceBands: [
+       { range: "0-2", baseSalary: 400000 },
+       { range: "2-5", baseSalary: 800000 },
+       // ...
+     ],
+     growthFactors: {
+       yearly: 1.12,
+       roleTransition: 1.25
+     }
+   }
+   ```
+
+2. Premium College Weights
+   ```javascript
+   {
+     collegeTiers: [
+       { tier: "premium", weight: 1.3 },
+       { tier: "standard", weight: 1.0 }
+     ],
+     decayFactor: 0.95  // per year
+   }
+   ```
+
+## Development Roadmap
+
+### Phase 1: Foundation
+- Set up salary band configuration
+- Implement basic experience calculation
+- Create premium college database
+- Add basic salary display UI
+
+### Phase 2: Enhanced Features
+- Implement college weightage system
+- Add growth projections
+- Enhance UI with detailed breakdowns
+- Add interactive elements
+
+### Phase 3: Refinements
+- Fine-tune calculations
+- Add edge case handling
+- Enhance visualization
+- Implement feedback system
+
+## Logical Dependency Chain
+1. Core Salary Logic
+   - Basic salary band implementation
+   - Experience calculation
+   - Initial UI integration
+
+2. Premium Features
+   - College weightage system
+   - Growth projections
+   - Enhanced visualizations
+
+3. Polish & Optimization
+   - Edge case handling
+   - UI refinements
+   - Performance optimization
+
+## Risks and Mitigations
+
+### Technical Challenges
+1. Accurate Experience Calculation
+   - Risk: Incorrect experience parsing
+   - Mitigation: Robust parsing logic with manual override
+
+2. College Recognition
+   - Risk: Missing or misclassified institutions
+   - Mitigation: Comprehensive database with fuzzy matching
+
+### Implementation Risks
+1. Calculation Accuracy
+   - Risk: Incorrect salary predictions
+   - Mitigation: Thorough testing with HR validation
+
+2. Performance Impact
+   - Risk: Slow salary calculations
+   - Mitigation: Optimize algorithms and caching
+
+## Appendix
+
+### Salary Band Structure
+- Entry Level (0-2 years): ₹4-6 LPA
+- Mid Level (2-5 years): ₹8-12 LPA
+- Senior Level (5-8 years): ₹15-20 LPA
+- Lead Level (8+ years): ₹20+ LPA
+
+### Premium College Categories
+1. Tier 1 (1.3x weight)
+   - IITs
+   - NITs
+   - BITS
+
+2. Tier 2 (1.15x weight)
+   - State Technical Universities
+   - Deemed Universities
+
+### Growth Factors
+- Annual Growth: 12%
+- Role Transition: 25%
+- Skill Premium: 5-15%
+- Location Factor: 0.8-1.2x

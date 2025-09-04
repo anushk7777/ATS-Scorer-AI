@@ -1337,7 +1337,7 @@
 
                 <!-- Ultra-Premium Action Buttons -->
                 <div class="mt-20 flex flex-col sm:flex-row gap-10 justify-center">
-                    <button id="analyze-another" class="premium-button-primary px-12 py-6 text-white font-black text-xl hover:scale-105 transition-all duration-500 group relative overflow-hidden">
+                    <button onclick="resetToUpload()" id="analyze-another" class="premium-button-primary px-12 py-6 text-white font-black text-xl hover:scale-105 transition-all duration-500 group relative overflow-hidden">
                         <div class="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-cyan-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                         <span class="relative flex items-center justify-center gap-4">
                             <svg class="w-8 h-8 group-hover:rotate-180 transition-transform duration-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -3116,16 +3116,74 @@
 
         /**
          * Reset application to upload state
-         */
-        /**
-         * Reset UI to upload state
+         * Resets all UI elements and clears analysis results
          */
         function resetToUpload() {
+            // Reset section visibility
             processingSection.classList.add('hidden');
             resultsSection.classList.add('hidden');
             uploadSection.classList.remove('hidden');
+            
+            // Clear file input and progress
             removeFile();
             updateProgress(0);
+            
+            // Reset analysis results
+            analysisResults = null;
+            
+            // Clear all dynamic content
+            document.getElementById('suggestions-list').innerHTML = '';
+            document.getElementById('format-details').innerHTML = '';
+            document.getElementById('content-details').innerHTML = '';
+            document.getElementById('keywords-details').innerHTML = '';
+            document.getElementById('readability-details').innerHTML = '';
+            
+            // Reset score displays and their animations
+            ['format-score', 'content-score', 'keywords-score', 'readability-score', 'overall-score'].forEach(id => {
+                const element = document.getElementById(id);
+                if (element) {
+                    element.textContent = '0';
+                    element.style.animation = 'none';
+                    element.offsetHeight; // Trigger reflow
+                    element.style.animation = null;
+                }
+            });
+            
+            // Reset progress bars and their animations
+            ['format-progress', 'content-progress', 'keywords-progress', 'readability-progress', 'overall-progress'].forEach(id => {
+                const element = document.getElementById(id);
+                if (element) {
+                    element.style.width = '0%';
+                    element.style.animation = 'none';
+                    element.offsetHeight; // Trigger reflow
+                    element.style.animation = null;
+                }
+            });
+            
+            // Reset file input fields
+            const fileInput = document.getElementById('resume');
+            if (fileInput) fileInput.value = '';
+            const dropZoneInput = document.getElementById('file-input');
+            if (dropZoneInput) dropZoneInput.value = '';
+            
+            // Reset file info section
+            const fileInfo = document.getElementById('file-info');
+            if (fileInfo) fileInfo.classList.add('hidden');
+            
+            // Reset processing status
+            const processingStatus = document.getElementById('processing-status');
+            if (processingStatus) processingStatus.textContent = 'Extracting text from PDF...';
+            
+            // Reset AI insights section if it exists
+            const aiInsights = document.getElementById('ai-insights');
+            if (aiInsights) {
+                aiInsights.classList.add('hidden');
+                const aiInsightsContent = document.getElementById('ai-insights-content');
+                if (aiInsightsContent) aiInsightsContent.innerHTML = '';
+            }
+            
+            // Show upload message
+            showSuccessMessage('Ready to analyze another resume!');
         }
 
         /**

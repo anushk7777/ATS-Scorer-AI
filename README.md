@@ -1,109 +1,105 @@
-# ATS Resume Analyzer - Enhanced with Gemini AI
+# ATS Resume Analyzer
 
 ## Overview
 
-The ATS Resume Analyzer is an advanced web application that combines traditional resume analysis with cutting-edge AI technology. This enhanced version integrates Google's Gemini API for semantic keyword extraction and provides sophisticated salary prediction and job matching capabilities.
+The ATS Resume Analyzer is an advanced web application that provides comprehensive resume analysis and scoring. This application helps job seekers optimize their resumes for Applicant Tracking Systems (ATS) by analyzing format, content quality, keyword optimization, and overall ATS readability.
 
 ## Features
 
 ### 🎯 Core Features
 - **Resume Analysis**: Upload and analyze resumes in PDF, DOC, or text format
-- **Enhanced Salary Prediction**: AI-powered salary estimation using semantic analysis
-- **Job Description Matching**: Match resumes against job requirements
-- **Skills Extraction**: Identify technical and soft skills using Gemini AI
-- **Experience Analysis**: Evaluate years of experience and expertise levels
+- **ATS Scoring**: Comprehensive scoring system for ATS compatibility
+- **Format Analysis**: Evaluate resume structure and formatting
+- **Content Quality**: Analyze content depth and relevance
+- **Keyword Optimization**: Identify keyword usage and optimization opportunities
+- **ATS Readability**: Assess how well ATS systems can parse the resume
+- **Detailed Feedback**: Get specific recommendations for improvement
+- **Modern UI**: Beautiful, responsive interface with glassmorphism design
 
-### 🚀 Enhanced Features (v2.0)
-- **Gemini AI Integration**: Semantic keyword extraction using sentence transformers
-- **Advanced ML Model**: Retrained with semantically extracted features
-- **Job Matching Interface**: HR-friendly job description input and analysis
-- **Real-time Matching**: Live skills matching with recommendations
-- **RESTful API**: Backend services for enhanced functionality
+## Technical Stack
+
+### Frontend Technologies
+- **HTML5**: Semantic markup and modern web standards
+- **CSS3**: Advanced styling with glassmorphism effects and animations
+- **JavaScript (ES6+)**: Interactive functionality and resume analysis
+- **File API**: Resume upload and processing capabilities
+- **Canvas API**: Dynamic score visualizations and charts
+- **Local Storage**: Client-side data persistence
+
+### Analysis Engine
+- **Text Processing**: Advanced content analysis algorithms
+- **Format Detection**: Resume structure and layout evaluation
+- **Keyword Analysis**: ATS-friendly keyword optimization
+- **Scoring System**: Comprehensive ATS compatibility scoring
+- **Report Generation**: Detailed feedback and recommendations
 
 ## Architecture
 
 ```
-┌─────────────────┐    ┌──────────────────┐    ┌─────────────────┐
-│   Frontend      │    │   Backend API    │    │   Gemini AI     │
-│   (HTML/JS)     │◄──►│   (Flask)        │◄──►│   Service       │
-│                 │    │                  │    │                 │
-│ • Resume Upload │    │ • Salary Predict │    │ • Semantic      │
-│ • Job Matching  │    │ • Job Analysis   │    │   Extraction    │
-│ • Results UI    │    │ • Skills Match   │    │ • Skill ID      │
-└─────────────────┘    └──────────────────┘    └─────────────────┘
-                                │
-                                ▼
-                       ┌──────────────────┐
-                       │   ML Models      │
-                       │                  │
-                       │ • Salary Model   │
-                       │ • Feature Eng.   │
-                       │ • Predictions    │
-                       └──────────────────┘
+┌─────────────────────────────────────────┐
+│              Frontend Application        │
+│              (HTML/CSS/JS)              │
+│                                         │
+│  ┌─────────────┐  ┌─────────────────┐   │
+│  │   Upload    │  │   Analysis      │   │
+│  │   System    │  │   Engine        │   │
+│  │             │  │                 │   │
+│  │ • File      │  │ • Format Check  │   │
+│  │   Handling  │  │ • Content Eval  │   │
+│  │ • Validation│  │ • Keyword Scan  │   │
+│  │ • Preview   │  │ • ATS Scoring   │   │
+│  └─────────────┘  └─────────────────┘   │
+│                                         │
+│  ┌─────────────────────────────────────┐ │
+│  │          Results Display            │ │
+│  │                                     │ │
+│  │ • Score Visualization               │ │
+│  │ • Detailed Analysis                 │ │
+│  │ • Improvement Suggestions           │ │
+│  │ • Report Generation                 │ │
+│  └─────────────────────────────────────┘ │
+└─────────────────────────────────────────┘
 ```
 
-## Installation
+## Installation & Setup
 
 ### Prerequisites
-- Python 3.8 or higher
-- Google Gemini API key
-- Modern web browser
+- Modern web browser (Chrome, Firefox, Safari, Edge)
+- Local web server (optional, for file upload functionality)
 
 ### Quick Start
-
-1. **Clone or download the project**
+1. **Clone the repository**
    ```bash
-   # If using git
-   git clone <repository-url>
+   git clone https://github.com/yourusername/ats-resume-analyzer.git
    cd ats-resume-analyzer
    ```
 
-2. **Set up environment**
+2. **Start a local server** (recommended)
    ```bash
-   # Copy environment template
-   cp .env.example .env
+   # Using Python
+   python -m http.server 8000
    
-   # Edit .env file and add your Gemini API key
-   # Get your key from: https://makersuite.google.com/app/apikey
+   # Using Node.js
+   npx serve .
+   
+   # Using PHP
+   php -S localhost:8000
    ```
 
-3. **Start the backend server**
-   ```bash
-   python start_backend.py
-   ```
-   This script will:
-   - Check Python version compatibility
-   - Install required dependencies
-   - Validate environment configuration
-   - Start the Flask backend server
+3. **Open the application**
+   - Navigate to `http://localhost:8000`
+   - Or open `index.html` directly in your browser
 
-4. **Start the frontend server**
-   ```bash
-   # In a new terminal
-   python -m http.server 8080
-   ```
+### Usage
+1. **Upload a resume**
+   - Drag and drop or click to select a resume file
+   - Supported formats: PDF, DOC, DOCX, TXT
 
-5. **Access the application**
-   - Frontend: http://localhost:8080
-   - Backend API: http://localhost:5000
-
-### Manual Installation
-
-If you prefer manual setup:
-
-```bash
-# Install dependencies
-pip install -r requirements.txt
-
-# Set up environment variables
-export GEMINI_API_KEY="your_api_key_here"
-
-# Start backend
-python app.py
-
-# Start frontend (in another terminal)
-python -m http.server 8080
-```
+2. **Analyze results**
+   - View comprehensive ATS compatibility analysis
+   - Get detailed scoring and feedback
+   - Download analysis reports
+   - Use "Analyze Another Resume" to test multiple resumes
 
 ## Configuration
 

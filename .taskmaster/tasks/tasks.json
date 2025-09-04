@@ -258,11 +258,155 @@
         ],
         "status": "pending",
         "subtasks": []
+      },
+      {
+        "id": 55,
+        "title": "Create Configuration for OTS Salary Bands and Growth Factors",
+        "description": "Establish the foundational configuration files for OTS-specific salary bands and growth factors as specified in the PRD. This will serve as the single source of truth for the calculation engine.",
+        "details": "Create a new directory `src/config`. Inside, create a file `salaryConfig.js`. This file should export an object containing `experienceBands` and `growthFactors` based on the data models in the PRD. For example: `experienceBands: [{ range: '0-2', baseSalary: 400000 }, ...]`, `growthFactors: { yearly: 1.12, roleTransition: 1.25 }`.",
+        "testStrategy": "Create a unit test to import the configuration and assert that the data structure is correct and values match the PRD. Verify that the exported object is not mutable.",
+        "priority": "high",
+        "dependencies": [],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 56,
+        "title": "Implement Core Salary Calculation Service",
+        "description": "Develop a service module that calculates the base salary for a candidate based on their years of experience and the configured salary bands.",
+        "details": "Create a new file `src/services/salaryService.js`. This service should have a primary function, e.g., `calculateBaseSalary({ yearsOfExperience })`, that imports the configuration from `salaryConfig.js` (Task 55). The function should determine the correct salary band for the given experience and return the corresponding base salary.",
+        "testStrategy": "Write unit tests for the `calculateBaseSalary` function. Test various experience levels, including edge cases like 0 years, 2 years (boundary), and values outside the defined bands.",
+        "priority": "high",
+        "dependencies": [
+          55
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 57,
+        "title": "Create Initial 'SalaryPredicted' UI Component",
+        "description": "Develop a new React component to display the predicted salary information. Initially, it will show the estimated base salary and experience level.",
+        "details": "Create a new component file `src/components/SalaryDisplay.js`. This component should accept props like `estimatedSalary`, `experienceLevel`, etc. Style it using a clean, card-based layout as per the PRD. Integrate this new component into the main results view (likely `src/components/ScoreDisplay.js`), positioning it below the overall score.",
+        "testStrategy": "Use Storybook or a similar tool to visually test the component with various props. Ensure it renders correctly with and without data. Check responsiveness on different screen sizes.",
+        "priority": "high",
+        "dependencies": [],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 58,
+        "title": "Integrate Salary Service with Resume Analysis Flow",
+        "description": "Connect the salary calculation logic to the main application flow, so that the salary is predicted automatically after a resume is analyzed.",
+        "details": "In the component that handles the resume analysis result (likely `src/App.js`), after receiving the analysis data (which includes years of experience), call the `calculateBaseSalary` function from the `salaryService`. Pass the calculated salary and other relevant data as props to the `SalaryDisplay` component.",
+        "testStrategy": "Perform an end-to-end test. Upload a resume, wait for the analysis to complete, and verify that the `SalaryDisplay` component appears with the correctly calculated base salary based on the parsed experience.",
+        "priority": "high",
+        "dependencies": [
+          56,
+          57
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 59,
+        "title": "Establish Premium College Database and Configuration",
+        "description": "Create a configuration file to store the list of premium colleges, their tiers, weightage, and the decay factor.",
+        "details": "Create a new file `src/config/collegeConfig.js`. This file will export an object containing `collegeTiers` (e.g., `{ tier: 'premium', weight: 1.3 }`) and a `decayFactor` (e.g., 0.95). It should also include a list of colleges mapped to their respective tiers.",
+        "testStrategy": "Write a unit test to ensure the configuration file can be imported and contains the expected data structures (`collegeTiers`, `decayFactor`, college list).",
+        "priority": "medium",
+        "dependencies": [
+          55
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 60,
+        "title": "Enhance Salary Service with Premium College Weightage",
+        "description": "Update the salary calculation service to factor in the premium college weightage, including the decay of the premium over time.",
+        "details": "Modify `src/services/salaryService.js`. The main calculation function should now accept college information and graduation year. It will use `collegeConfig.js` to find the appropriate weight. The final weight should be calculated as `baseWeight * (decayFactor ^ yearsSinceGraduation)`. Apply this final weight to the base salary.",
+        "testStrategy": "Update unit tests for the salary service. Add test cases for candidates from premium and standard colleges, and verify the weight is applied correctly. Test the decay factor by simulating different numbers of years post-graduation.",
+        "priority": "medium",
+        "dependencies": [
+          56,
+          59
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 61,
+        "title": "Update Salary UI to Display College Tier Impact",
+        "description": "Enhance the `SalaryDisplay` component to show the impact of the candidate's college tier on their estimated salary.",
+        "details": "Add a new section to the `SalaryDisplay` component. It should conditionally render if a college premium is applied. Display the identified college tier (e.g., 'Tier 1 College'), the applied weightage, and the resulting impact on the base salary. For example: '+ ₹80,000 (Premium College Bonus)'.",
+        "testStrategy": "Update the component's visual tests (e.g., Storybook) to include states where a college premium is applied and where it is not. Verify the information is clear and accurately reflects the calculations.",
+        "priority": "medium",
+        "dependencies": [
+          57,
+          60
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 62,
+        "title": "Implement Growth Projection Logic in Salary Service",
+        "description": "Extend the salary service to calculate and return potential salary growth based on year-on-year and role transition factors.",
+        "details": "Add a new function to `src/services/salaryService.js`, e.g., `calculateGrowthProjections`. This function will take the calculated base salary and experience level as input. It will use the `growthFactors` from `salaryConfig.js` to project salary for the next 1-3 years and estimate the salary upon a potential role transition.",
+        "testStrategy": "Write new unit tests for the `calculateGrowthProjections` function. Verify that the annual growth and role transition multipliers are applied correctly to the base salary.",
+        "priority": "medium",
+        "dependencies": [
+          56
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 63,
+        "title": "Add 'Potential Growth Path' Visualization to UI",
+        "description": "Enhance the `SalaryDisplay` component to visually represent the candidate's potential salary growth path.",
+        "details": "Add a 'Potential Growth Path' section to the `SalaryDisplay` component. Use the data from the `calculateGrowthProjections` service (Task 62). Display the projected salary for the next year using the annual growth factor. You can use simple text, a small chart, or progress indicators to show this information clearly.",
+        "testStrategy": "Visually test the component to ensure the growth projections are displayed in an easy-to-understand format. Test with different base salaries to ensure the projections update accordingly.",
+        "priority": "low",
+        "dependencies": [
+          57,
+          62
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 64,
+        "title": "Refine Experience Parsing and Validation Logic",
+        "description": "Improve the accuracy of experience parsing from resumes to handle various formats and edge cases, providing a more reliable input for the salary engine.",
+        "details": "Locate the existing resume parsing logic. Enhance it to handle different text formats for years of experience (e.g., '3 yrs', '4.5 years', '2 years 6 months'). Add validation to ensure the parsed value is a number. Consider adding a manual override field in the UI as a mitigation strategy if parsing fails.",
+        "testStrategy": "Create a test suite with a wide variety of resume snippets containing different experience formats. Assert that the parser extracts the correct numerical value in each case. Test with resumes where experience is not mentioned to ensure graceful failure.",
+        "priority": "low",
+        "dependencies": [
+          58
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 65,
+        "title": "Create OTS-Specific Synthetic Salary Calculation Database",
+        "description": "Develop a comprehensive, standalone configuration file containing synthetic data for OTS-specific salary calculations, including a premium college catalog, detailed salary bands, role-based multipliers, and location-based adjustments.",
+        "details": "Create a new file at `src/config/otsSalaryDatabase.js`. This file will export a single, frozen object containing all configuration data specified in PRD2.txt, and must be kept separate from general ML training configurations. The structure should be as follows:\n1. `premiumColleges`: An array of objects, where each object contains `name` (string), `tier` (string, e.g., 'tier1'), and `weight` (number).\n2. `salaryBands`: An array of objects defining OTS job levels. Each object should include `level` (string, e.g., 'L3'), `experienceYears` (string, e.g., '2-4'), `baseMin` (number), and `baseMax` (number).\n3. `roleMultipliers`: A key-value object mapping role titles (string) to a numerical multiplier. Example: `{ \"Software Engineer\": 1.0, \"Data Scientist\": 1.1 }`.\n4. `locationAdjustments`: A key-value object mapping geographic locations (string) to a cost-of-living multiplier. Example: `{ \"SF Bay Area\": 1.25, \"Austin, TX\": 1.05 }`.\nAll data points must be sourced directly from PRD2.txt.",
+        "testStrategy": "Create a new unit test file `otsSalaryDatabase.test.js`. The tests should:\n1. Verify that the `otsSalaryDatabase.js` module can be imported without errors.\n2. Assert that the main exported object is frozen using `Object.isFrozen()` to prevent runtime modifications.\n3. Validate the data schema for each key (`premiumColleges`, `salaryBands`, `roleMultipliers`, `locationAdjustments`), ensuring they are the correct type (array/object) and their contents have the specified properties and types.\n4. Spot-check at least two specific data points from each section against the values in PRD2.txt to ensure accuracy (e.g., check the weight for a specific college, the base salary for a specific level, and the multiplier for a specific role and location).",
+        "status": "pending",
+        "dependencies": [
+          55,
+          59
+        ],
+        "priority": "high",
+        "subtasks": []
       }
     ],
     "metadata": {
       "created": "2025-09-01T14:39:06.911Z",
-      "updated": "2025-09-02T09:34:38.831Z",
+      "updated": "2025-09-04T06:24:44.476Z",
       "description": "Tasks for master context"
     }
   }

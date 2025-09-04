@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Growth Projection Test</title>
+</head>
+<body>
+    <h1>Testing Growth Projection Display</h1>
+    
+    <div id="growth-1year">₹0</div>
+    <div id="growth-1year-percent">+0%</div>
+    
+    <div id="growth-3years">₹0</div>
+    <div id="growth-3years-percent">+0%</div>
+    
+    <div id="growth-5years">₹0</div>
+    <div id="growth-5years-percent">+0%</div>
+    
+    <script>
+        function formatCurrency(amount) {
+            // Convert LPA to actual amount for display
+            const actualAmount = amount * 100000; // Convert LPA to rupees
+            if (actualAmount >= 10000000) {
+                return `₹${(actualAmount / 10000000).toFixed(1)}Cr`;
+            } else if (actualAmount >= 100000) {
+                return `₹${(actualAmount / 100000).toFixed(1)}L`;
+            } else {
+                return `₹${actualAmount.toLocaleString('en-IN')}`;
+            }
+        }
+        
+        // Test with sample data
+        const testData = {
+            year_1: { salary: 22.11, percentage: 9.6 },
+            year_3: { salary: 33.19, percentage: 64.6 },
+            year_5: { salary: 28.55, percentage: 41.6 }
+        };
+        
+        // Update display
+        document.getElementById('growth-1year').textContent = formatCurrency(testData.year_1.salary);
+        document.getElementById('growth-1year-percent').textContent = `+${testData.year_1.percentage}%`;
+        
+        document.getElementById('growth-3years').textContent = formatCurrency(testData.year_3.salary);
+        document.getElementById('growth-3years-percent').textContent = `+${testData.year_3.percentage}%`;
+        
+        document.getElementById('growth-5years').textContent = formatCurrency(testData.year_5.salary);
+        document.getElementById('growth-5years-percent').textContent = `+${testData.year_5.percentage}%`;
+        
+        console.log('Test completed - check the display above');
+    </script>
+</body>
+</html>

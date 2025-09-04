@@ -1358,6 +1358,165 @@
                 </div>
             </div>
         </section>
+        
+        <!-- Salary Prediction Section -->
+        <section id="salary-section" class="hidden mb-12">
+            <div class="glass-card p-16 fade-in relative overflow-hidden">
+                <!-- Dynamic Background Effects -->
+                <div class="absolute inset-0 bg-gradient-to-br from-green-500/15 via-emerald-500/15 to-teal-500/15 animate-gradientShift"></div>
+                <div class="absolute inset-0 opacity-20">
+                    <div class="absolute top-20 right-20 w-40 h-40 bg-green-400/30 rounded-full blur-3xl animate-float"></div>
+                    <div class="absolute bottom-20 left-20 w-32 h-32 bg-emerald-400/30 rounded-full blur-3xl animate-float" style="animation-delay: 3s"></div>
+                    <div class="absolute top-1/2 left-1/2 w-24 h-24 bg-teal-400/30 rounded-full blur-3xl animate-float" style="animation-delay: 1.5s"></div>
+                </div>
+                
+                <div class="relative z-10">
+                    <!-- Section Header -->
+                    <div class="text-center mb-16">
+                        <div class="inline-block relative mb-8">
+                            <div class="absolute inset-0 bg-gradient-to-r from-green-500 via-emerald-500 to-teal-500 rounded-full blur-2xl opacity-40 scale-125 animate-pulse"></div>
+                            <div class="relative p-6 glass rounded-full">
+                                <svg class="w-16 h-16 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4M11,17H13V15H11V17M11,13H13V7H11V13Z" />
+                                </svg>
+                            </div>
+                        </div>
+                        <h2 class="text-7xl font-black mb-8 bounce-in gradient-text glow-text">
+                            Salary Prediction
+                        </h2>
+                        <p class="text-2xl text-white/90 max-w-4xl mx-auto leading-relaxed">
+                            AI-powered salary estimation based on your experience, skills, and premium college background.
+                        </p>
+                    </div>
+                    
+                    <!-- Salary Prediction Results -->
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
+                        <!-- Main Salary Display -->
+                        <div class="text-center">
+                            <div class="glass-card p-12 hover:scale-105 transition-all duration-500 relative overflow-hidden">
+                                <div class="absolute inset-0 bg-gradient-to-br from-green-500/10 to-emerald-500/10 opacity-0 hover:opacity-100 transition-opacity duration-500"></div>
+                                
+                                <div class="relative z-10">
+                                    <div class="mb-8">
+                                        <div class="text-6xl font-black bg-gradient-to-r from-green-400 to-emerald-500 bg-clip-text text-transparent mb-4" id="predicted-salary">₹0</div>
+                                        <div class="text-xl text-white/90 font-bold tracking-wide">Estimated Annual Salary</div>
+                                    </div>
+                                    
+                                    <!-- Experience Level Badge -->
+                                    <div class="inline-flex items-center space-x-2 glass px-6 py-3 rounded-full mb-6">
+                                        <div class="w-3 h-3 bg-green-400 rounded-full animate-pulse"></div>
+                                        <span id="experience-level" class="text-white/90 font-semibold">Calculating...</span>
+                                    </div>
+                                    
+                                    <!-- Salary Range -->
+                                    <div class="text-center">
+                                        <div class="text-sm text-white/70 mb-2">Salary Range</div>
+                                        <div class="flex justify-center items-center space-x-4">
+                                            <span id="salary-min" class="text-lg font-semibold text-white/80">₹0</span>
+                                            <div class="w-16 h-1 bg-gradient-to-r from-green-400 to-emerald-500 rounded-full"></div>
+                                            <span id="salary-max" class="text-lg font-semibold text-white/80">₹0</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Salary Breakdown -->
+                        <div class="space-y-6">
+                            <!-- Base Salary -->
+                            <div class="glass-card p-6 hover:scale-[1.02] transition-all duration-300">
+                                <div class="flex justify-between items-center">
+                                    <div class="flex items-center space-x-3">
+                                        <div class="w-4 h-4 bg-blue-400 rounded-full"></div>
+                                        <span class="text-white/90 font-medium">Base Salary</span>
+                                    </div>
+                                    <span id="base-salary" class="text-white font-semibold">₹0</span>
+                                </div>
+                            </div>
+                            
+                            <!-- College Premium -->
+                            <div class="glass-card p-6 hover:scale-[1.02] transition-all duration-300">
+                                <div class="flex justify-between items-center">
+                                    <div class="flex items-center space-x-3">
+                                        <div class="w-4 h-4 bg-purple-400 rounded-full"></div>
+                                        <span class="text-white/90 font-medium">College Premium</span>
+                                    </div>
+                                    <span id="college-premium" class="text-white font-semibold">+₹0</span>
+                                </div>
+                                <div class="mt-2 text-sm text-white/60" id="college-tier">Tier information will appear here</div>
+                            </div>
+                            
+                            <!-- Role Multiplier -->
+                            <div class="glass-card p-6 hover:scale-[1.02] transition-all duration-300">
+                                <div class="flex justify-between items-center">
+                                    <div class="flex items-center space-x-3">
+                                        <div class="w-4 h-4 bg-yellow-400 rounded-full"></div>
+                                        <span class="text-white/90 font-medium">Role Adjustment</span>
+                                    </div>
+                                    <span id="role-adjustment" class="text-white font-semibold">+₹0</span>
+                                </div>
+                            </div>
+                            
+                            <!-- Location Factor -->
+                            <div class="glass-card p-6 hover:scale-[1.02] transition-all duration-300">
+                                <div class="flex justify-between items-center">
+                                    <div class="flex items-center space-x-3">
+                                        <div class="w-4 h-4 bg-green-400 rounded-full"></div>
+                                        <span class="text-white/90 font-medium">Location Factor</span>
+                                    </div>
+                                    <span id="location-factor" class="text-white font-semibold">×1.0</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Growth Projection -->
+                    <div class="glass-card p-12 mb-12 hover:scale-[1.02] transition-all duration-500">
+                        <h3 class="text-3xl font-bold text-white mb-8 text-center">
+                            <span class="bg-gradient-to-r from-green-400 to-emerald-500 bg-clip-text text-transparent">Growth Projection</span>
+                        </h3>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                            <!-- 1 Year -->
+                            <div class="text-center glass-card p-6">
+                                <div class="text-2xl font-bold text-green-400 mb-2" id="growth-1year">₹0</div>
+                                <div class="text-white/80 font-medium">1 Year</div>
+                                <div class="text-sm text-white/60 mt-1" id="growth-1year-percent">+0%</div>
+                            </div>
+                            
+                            <!-- 3 Years -->
+                            <div class="text-center glass-card p-6">
+                                <div class="text-2xl font-bold text-emerald-400 mb-2" id="growth-3years">₹0</div>
+                                <div class="text-white/80 font-medium">3 Years</div>
+                                <div class="text-sm text-white/60 mt-1" id="growth-3years-percent">+0%</div>
+                            </div>
+                            
+                            <!-- 5 Years -->
+                            <div class="text-center glass-card p-6">
+                                <div class="text-2xl font-bold text-teal-400 mb-2" id="growth-5years">₹0</div>
+                                <div class="text-white/80 font-medium">5 Years</div>
+                                <div class="text-sm text-white/60 mt-1" id="growth-5years-percent">+0%</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Salary Insights -->
+                    <div class="glass-card p-8">
+                        <h4 class="text-xl font-bold text-white mb-6 flex items-center">
+                            <svg class="w-6 h-6 mr-3 text-yellow-400" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12,2L13.09,8.26L22,9L13.09,9.74L12,16L10.91,9.74L2,9L10.91,8.26L12,2Z" />
+                            </svg>
+                            Salary Insights
+                        </h4>
+                        <div id="salary-insights" class="space-y-3 text-white/80">
+                            <p>• Salary calculation is based on your experience level, skills, and educational background</p>
+                            <p>• Premium college graduates typically receive 15-30% higher starting salaries</p>
+                            <p>• Location and role specialization significantly impact compensation</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
         </div>
         
 
@@ -2102,7 +2261,12 @@
                     fullText += pageText + '\n';
                 }
 
-                return fullText.trim();
+                const extractedText = fullText.trim();
+                
+                // Store resume text globally for salary prediction
+                window.currentResumeText = extractedText;
+                
+                return extractedText;
             } catch (error) {
                 console.error('Error extracting text from PDF:', error);
                 
@@ -3104,15 +3268,153 @@
             document.getElementById('keywords-details').innerHTML = analysisResults.keywords.details.join('<br>');
             document.getElementById('readability-details').innerHTML = analysisResults.readability.details.join('<br>');
             
-            // Salary prediction display removed
+            // Automatically trigger salary prediction after ATS analysis
+            setTimeout(() => {
+                triggerSalaryPrediction();
+            }, 1000);
             
             // Show success message for completed analysis
             showSuccessMessage('Resume analysis completed successfully! Review your results below.');
         }
 
         /**
-         * Display salary prediction function removed
+         * Automatically trigger salary prediction after ATS analysis
+         * Sends resume data to salary prediction API and displays results
          */
+        async function triggerSalaryPrediction() {
+            try {
+                // Show loading state for salary section
+                const salarySection = document.getElementById('salary-section');
+                salarySection.classList.remove('hidden');
+                salarySection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                
+                // Show loading indicators
+                document.getElementById('predicted-salary').textContent = 'Calculating...';
+                document.getElementById('experience-level').textContent = 'Analyzing...';
+                
+                // Get the resume text from the global variable (set during analysis)
+                if (!window.currentResumeText) {
+                    throw new Error('No resume text available. Please analyze the resume first.');
+                }
+                
+                console.log('Sending salary prediction request...');
+                
+                // Send request to salary prediction API with JSON payload
+                const response = await fetch('/api/predict-salary', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        resume_text: window.currentResumeText
+                    })
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
+                const salaryData = await response.json();
+                console.log('Salary prediction response:', salaryData);
+                
+                // Display salary prediction results
+                displaySalaryResults(salaryData);
+                
+            } catch (error) {
+                console.error('Salary prediction error:', error);
+                
+                // Show error state
+                document.getElementById('predicted-salary').textContent = 'Error calculating salary';
+                document.getElementById('experience-level').textContent = 'Analysis failed';
+                
+                showAnimatedNotification(
+                    'Salary prediction failed. Please try again.',
+                    'error',
+                    3000
+                );
+            }
+        }
+        
+        /**
+         * Display salary prediction results in the UI
+         * @param {Object} salaryData - Salary prediction data from API
+         */
+        function displaySalaryResults(salaryData) {
+            // Format currency function for LPA conversion
+            function formatCurrency(amount) {
+                // Convert LPA to actual rupees for display
+                const actualAmount = amount * 100000;
+                
+                if (actualAmount >= 10000000) {
+                    return `₹${(actualAmount / 10000000).toFixed(1)} Cr`;
+                } else if (actualAmount >= 100000) {
+                    return `₹${(actualAmount / 100000).toFixed(1)} L`;
+                } else {
+                    return `₹${actualAmount.toLocaleString('en-IN')}`;
+                }
+            }
+            
+            // Update main salary display
+            document.getElementById('predicted-salary').textContent = formatCurrency(salaryData.estimated_salary);
+            document.getElementById('experience-level').textContent = salaryData.experience_level || 'Not specified';
+            
+            // Update salary range
+            const salaryRange = salaryData.salary_range || {};
+            document.getElementById('salary-min').textContent = formatCurrency(salaryRange.min || salaryData.estimated_salary * 0.8);
+            document.getElementById('salary-max').textContent = formatCurrency(salaryRange.max || salaryData.estimated_salary * 1.2);
+            
+            // Update salary breakdown
+            document.getElementById('base-salary').textContent = formatCurrency(salaryData.base_salary || salaryData.estimated_salary);
+            document.getElementById('college-premium').textContent = `+${formatCurrency(salaryData.college_premium || 0)}`;
+            document.getElementById('role-adjustment').textContent = `+${formatCurrency(salaryData.role_adjustment || 0)}`;
+            document.getElementById('location-factor').textContent = `×${salaryData.location_factor || 1.0}`;
+            
+            // Update college tier information
+            const collegeTier = salaryData.college_tier || 'Not specified';
+            document.getElementById('college-tier').textContent = `College Tier: ${collegeTier}`;
+            
+            // Update growth projections
+            if (salaryData.growth_projection) {
+                const growth = salaryData.growth_projection;
+                console.log('Processing growth projection:', growth);
+                
+                // 1 Year projection
+                if (growth.year_1) {
+                    document.getElementById('growth-1year').textContent = formatCurrency(growth.year_1.salary);
+                    document.getElementById('growth-1year-percent').textContent = `+${growth.year_1.percentage}%`;
+                }
+                
+                // 3 Years projection
+                if (growth.year_3) {
+                    document.getElementById('growth-3years').textContent = formatCurrency(growth.year_3.salary);
+                    document.getElementById('growth-3years-percent').textContent = `+${growth.year_3.percentage}%`;
+                }
+                
+                // 5 Years projection
+                if (growth.year_5) {
+                    document.getElementById('growth-5years').textContent = formatCurrency(growth.year_5.salary);
+                    document.getElementById('growth-5years-percent').textContent = `+${growth.year_5.percentage}%`;
+                }
+            } else {
+                console.log('No growth projection data found');
+            }
+            
+            // Update salary insights
+            const insights = salaryData.insights || [
+                '• Salary calculation is based on your experience level, skills, and educational background',
+                '• Premium college graduates typically receive 15-30% higher starting salaries',
+                '• Location and role specialization significantly impact compensation'
+            ];
+            
+            document.getElementById('salary-insights').innerHTML = insights.map(insight => `<p>${insight}</p>`).join('');
+            
+            // Show success notification
+            showAnimatedNotification(
+                'Salary prediction completed successfully! 💰',
+                'success',
+                3000
+            );
+        }
 
         /**
          * Reset application to upload state
@@ -3123,6 +3425,10 @@
             processingSection.classList.add('hidden');
             resultsSection.classList.add('hidden');
             uploadSection.classList.remove('hidden');
+            
+            // Hide salary section
+            const salarySection = document.getElementById('salary-section');
+            if (salarySection) salarySection.classList.add('hidden');
             
             // Clear file input and progress
             removeFile();
@@ -3180,6 +3486,41 @@
                 aiInsights.classList.add('hidden');
                 const aiInsightsContent = document.getElementById('ai-insights-content');
                 if (aiInsightsContent) aiInsightsContent.innerHTML = '';
+            }
+            
+            // Reset salary prediction fields
+            const salaryFields = [
+                'predicted-salary', 'experience-level', 'salary-min', 'salary-max',
+                'base-salary', 'college-premium', 'role-adjustment', 'location-factor',
+                'college-tier', 'growth-1year', 'growth-1year-percent', 'growth-3years',
+                'growth-3years-percent', 'growth-5years', 'growth-5years-percent'
+            ];
+            
+            salaryFields.forEach(fieldId => {
+                const element = document.getElementById(fieldId);
+                if (element) {
+                    if (fieldId.includes('percent')) {
+                        element.textContent = '+0%';
+                    } else if (fieldId === 'location-factor') {
+                        element.textContent = '×1.0';
+                    } else if (fieldId === 'college-tier') {
+                        element.textContent = 'Tier information will appear here';
+                    } else if (fieldId === 'experience-level') {
+                        element.textContent = 'Calculating...';
+                    } else {
+                        element.textContent = '₹0';
+                    }
+                }
+            });
+            
+            // Reset salary insights
+            const salaryInsights = document.getElementById('salary-insights');
+            if (salaryInsights) {
+                salaryInsights.innerHTML = `
+                    <p>• Salary calculation is based on your experience level, skills, and educational background</p>
+                    <p>• Premium college graduates typically receive 15-30% higher starting salaries</p>
+                    <p>• Location and role specialization significantly impact compensation</p>
+                `;
             }
             
             // Show upload message
@@ -3565,6 +3906,222 @@ Detailed Scores:
 
         
 
+        
+        /**
+         * Salary Prediction Functions
+         * Handles integration with the OTS Salary Calculator backend API
+         */
+        
+        /**
+         * Format currency value for display
+         * @param {number} amount - Amount to format
+         * @returns {string} Formatted currency string
+         */
+        function formatCurrency(amount) {
+            // Handle LPA (Lakhs Per Annum) values - convert to actual rupees for display
+            const actualAmount = amount * 100000; // Convert LPA to rupees
+            if (actualAmount >= 10000000) {
+                return `₹${(actualAmount / 10000000).toFixed(1)}Cr`;
+            } else if (actualAmount >= 100000) {
+                return `₹${(actualAmount / 100000).toFixed(1)}L`;
+            } else {
+                return `₹${actualAmount.toLocaleString('en-IN')}`;
+            }
+        }
+        
+        /**
+         * Calculate percentage increase
+         * @param {number} current - Current value
+         * @param {number} future - Future value
+         * @returns {number} Percentage increase
+         */
+        function calculatePercentageIncrease(current, future) {
+            return Math.round(((future - current) / current) * 100);
+        }
+        
+        /**
+         * Update salary prediction UI with calculated data
+         * @param {Object} salaryData - Salary prediction response from API
+         */
+        function updateSalaryUI(salaryData) {
+            try {
+                // Main salary display
+                document.getElementById('predicted-salary').textContent = formatCurrency(salaryData.estimated_salary);
+                document.getElementById('experience-level').textContent = salaryData.experience_level || 'Not specified';
+                
+                // Salary range
+                document.getElementById('salary-min').textContent = formatCurrency(salaryData.salary_range?.min || 0);
+                document.getElementById('salary-max').textContent = formatCurrency(salaryData.salary_range?.max || 0);
+                
+                // Salary breakdown
+                document.getElementById('base-salary').textContent = formatCurrency(salaryData.breakdown?.base_salary || 0);
+                document.getElementById('college-premium').textContent = `+${formatCurrency(salaryData.breakdown?.college_premium || 0)}`;
+                document.getElementById('role-adjustment').textContent = `+${formatCurrency(salaryData.breakdown?.role_adjustment || 0)}`;
+                document.getElementById('location-factor').textContent = `×${salaryData.breakdown?.location_factor || 1.0}`;
+                
+                // Enhanced college tier information
+                const collegeTier = salaryData.breakdown?.college_tier;
+                const collegeMultiplier = salaryData.breakdown?.college_multiplier || 1.0;
+                const premiumCollegeInfo = salaryData.calculation_details?.premium_college_info;
+                
+                if (collegeTier && premiumCollegeInfo) {
+                    const tierDisplay = collegeTier.tier.replace('tier_', 'Tier ').toUpperCase();
+                    const multiplierText = collegeMultiplier > 1.0 ? `${collegeMultiplier.toFixed(2)}x multiplier` : 'No premium';
+                    const institutionName = collegeTier.institution || premiumCollegeInfo.college_name || 'Institution detected';
+                    
+                    document.getElementById('college-tier').innerHTML = `
+                        <div class="font-medium text-white/90">${tierDisplay} Institution</div>
+                        <div class="text-xs text-white/70 mt-1">${institutionName}</div>
+                        <div class="text-xs text-green-400 mt-1">${multiplierText}</div>
+                    `;
+                } else if (collegeTier) {
+                    const tierDisplay = collegeTier.tier.replace('tier_', 'Tier ').toUpperCase();
+                    const multiplierText = collegeMultiplier > 1.0 ? `${collegeMultiplier.toFixed(2)}x multiplier` : 'No premium';
+                    document.getElementById('college-tier').innerHTML = `
+                        <div class="font-medium text-white/90">${tierDisplay} Institution</div>
+                        <div class="text-xs text-green-400 mt-1">${multiplierText}</div>
+                    `;
+                } else {
+                    document.getElementById('college-tier').innerHTML = `
+                        <div class="text-white/70">No premium college detected</div>
+                        <div class="text-xs text-white/50 mt-1">Standard calculation applied</div>
+                    `;
+                }
+                
+                // Growth projections
+                const growth = salaryData.growth_projection;
+                console.log('Growth projection data:', growth);
+                if (growth) {
+                    // 1 Year
+                    const year1Salary = growth.year_1?.salary || 0;
+                    const year1Percent = growth.year_1?.percentage || 0;
+                    console.log('Year 1:', year1Salary, year1Percent);
+                    document.getElementById('growth-1year').textContent = formatCurrency(year1Salary);
+                    document.getElementById('growth-1year-percent').textContent = `+${year1Percent}%`;
+                    
+                    // 3 Years
+                    const year3Salary = growth.year_3?.salary || 0;
+                    const year3Percent = growth.year_3?.percentage || 0;
+                    console.log('Year 3:', year3Salary, year3Percent);
+                    document.getElementById('growth-3years').textContent = formatCurrency(year3Salary);
+                    document.getElementById('growth-3years-percent').textContent = `+${year3Percent}%`;
+                    
+                    // 5 Years
+                    const year5Salary = growth.year_5?.salary || 0;
+                    const year5Percent = growth.year_5?.percentage || 0;
+                    console.log('Year 5:', year5Salary, year5Percent);
+                    document.getElementById('growth-5years').textContent = formatCurrency(year5Salary);
+                    document.getElementById('growth-5years-percent').textContent = `+${year5Percent}%`;
+                } else {
+                    console.log('No growth projection data found');
+                }
+                
+                // Update insights with personalized information
+                const insights = document.getElementById('salary-insights');
+                if (salaryData.insights && salaryData.insights.length > 0) {
+                    insights.innerHTML = salaryData.insights.map(insight => `<p>• ${insight}</p>`).join('');
+                }
+                
+                // Show the salary section
+                document.getElementById('salary-section').classList.remove('hidden');
+                
+                // Smooth scroll to salary section
+                setTimeout(() => {
+                    document.getElementById('salary-section').scrollIntoView({ 
+                        behavior: 'smooth', 
+                        block: 'start' 
+                    });
+                }, 500);
+                
+            } catch (error) {
+                console.error('Error updating salary UI:', error);
+                showMessage('Error displaying salary prediction results', 'error');
+            }
+        }
+        
+        /**
+         * Call the salary prediction API
+         * @param {string} resumeText - Extracted resume text
+         */
+        async function predictSalary(resumeText) {
+            try {
+                showMessage('Calculating salary prediction...', 'info');
+                
+                const response = await fetch('/api/predict-salary', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        resume_text: resumeText
+                    })
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
+                const salaryData = await response.json();
+                
+                if (salaryData.success) {
+                    updateSalaryUI(salaryData);
+                    showMessage('Salary prediction completed successfully!', 'success');
+                } else {
+                    throw new Error(salaryData.error || 'Failed to predict salary');
+                }
+                
+            } catch (error) {
+                console.error('Salary prediction error:', error);
+                showMessage(`Salary prediction failed: ${error.message}`, 'error');
+                
+                // Hide salary section on error
+                document.getElementById('salary-section').classList.add('hidden');
+            }
+        }
+        
+        /**
+         * Enhanced processFile function to include salary prediction
+         * This extends the existing file processing to include salary calculation
+         */
+        const originalProcessFile = window.processFile;
+        
+        window.processFile = async function(file) {
+            try {
+                // Call the original processFile function
+                if (originalProcessFile) {
+                    await originalProcessFile(file);
+                }
+                
+                // Extract text from the processed file for salary prediction
+                let resumeText = '';
+                
+                if (file.type === 'application/pdf') {
+                    // For PDF files, extract text using PDF.js
+                    const arrayBuffer = await file.arrayBuffer();
+                    const pdf = await pdfjsLib.getDocument(arrayBuffer).promise;
+                    
+                    for (let i = 1; i <= pdf.numPages; i++) {
+                        const page = await pdf.getPage(i);
+                        const textContent = await page.getTextContent();
+                        resumeText += textContent.items.map(item => item.str).join(' ') + ' ';
+                    }
+                } else {
+                    // For text files, read directly
+                    resumeText = await file.text();
+                }
+                
+                // Trigger salary prediction if we have text
+                if (resumeText.trim().length > 100) {
+                    await predictSalary(resumeText.trim());
+                } else {
+                    showMessage('Resume text too short for salary prediction', 'warning');
+                }
+                
+            } catch (error) {
+                console.error('Enhanced file processing error:', error);
+                showMessage(`File processing error: ${error.message}`, 'error');
+            }
+        };
         
         // Initialize app when DOM is loaded
         document.addEventListener('DOMContentLoaded', initializeApp);

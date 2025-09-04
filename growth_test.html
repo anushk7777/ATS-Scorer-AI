@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Growth Projection Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #1a1a1a;
+            color: white;
+        }
+        .result {
+            background: #2a2a2a;
+            padding: 20px;
+            margin: 10px 0;
+            border-radius: 8px;
+            border-left: 4px solid #4CAF50;
+        }
+        .growth-item {
+            display: flex;
+            justify-content: space-between;
+            margin: 10px 0;
+            padding: 10px;
+            background: #333;
+            border-radius: 4px;
+        }
+        .salary {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #4CAF50;
+        }
+        .percentage {
+            color: #FFA726;
+        }
+        button {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background: #45a049;
+        }
+        .error {
+            color: #f44336;
+            background: #2a1a1a;
+            border-left-color: #f44336;
+        }
+    </style>
+</head>
+<body>
+    <h1>🚀 Growth Projection Test</h1>
+    <p>This page tests the salary growth projection feature directly.</p>
+    
+    <button onclick="testGrowthProjection()">Test Growth Projection</button>
+    
+    <div id="results"></div>
+    
+    <script>
+        function formatCurrency(amount) {
+            // Handle LPA (Lakhs Per Annum) values - convert to actual rupees for display
+            const actualAmount = amount * 100000; // Convert LPA to rupees
+            if (actualAmount >= 10000000) {
+                return `₹${(actualAmount / 10000000).toFixed(1)}Cr`;
+            } else if (actualAmount >= 100000) {
+                return `₹${(actualAmount / 100000).toFixed(1)}L`;
+            } else {
+                return `₹${actualAmount.toLocaleString('en-IN')}`;
+            }
+        }
+        
+        async function testGrowthProjection() {
+            const resultsDiv = document.getElementById('results');
+            resultsDiv.innerHTML = '<div class="result">Testing... Please wait.</div>';
+            
+            try {
+                const response = await fetch('/api/predict-salary', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        resume_text: `John Doe
+Senior Software Developer
+
+Education:
+B.Tech Computer Science, Indian Institute of Technology Delhi (2018)
+
+Experience:
+5 years of experience in full-stack development
+
+Skills:
+Python, React, Node.js, AWS, Docker
+
+Location: Bangalore`
+                    })
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
+                const data = await response.json();
+                console.log('Full API Response:', data);
+                
+                let html = `
+                    <div class="result">
+                        <h3>✅ API Response Successful</h3>
+                        <p><strong>Current Salary:</strong> ${formatCurrency(data.estimated_salary)}</p>
+                        <p><strong>Experience Level:</strong> ${data.experience_level}</p>
+                    </div>
+                `;
+                
+                if (data.growth_projection) {
+                    const growth = data.growth_projection;
+                    html += `
+                        <div class="result">
+                            <h3>📈 Growth Projections</h3>
+                            <div class="growth-item">
+                                <span><strong>1 Year:</strong></span>
+                                <span>
+                                    <span class="salary">${formatCurrency(growth.year_1?.salary || 0)}</span>
+                                    <span class="percentage">(+${growth.year_1?.percentage || 0}%)</span>
+                                </span>
+                            </div>
+                            <div class="growth-item">
+                                <span><strong>3 Years:</strong></span>
+                                <span>
+                                    <span class="salary">${formatCurrency(growth.year_3?.salary || 0)}</span>
+                                    <span class="percentage">(+${growth.year_3?.percentage || 0}%)</span>
+                                </span>
+                            </div>
+                            <div class="growth-item">
+                                <span><strong>5 Years:</strong></span>
+                                <span>
+                                    <span class="salary">${formatCurrency(growth.year_5?.salary || 0)}</span>
+                                    <span class="percentage">(+${growth.year_5?.percentage || 0}%)</span>
+                                </span>
+                            </div>
+                        </div>
+                    `;
+                } else {
+                    html += `
+                        <div class="result error">
+                            <h3>❌ No Growth Projection Data</h3>
+                            <p>The API response did not include growth projection data.</p>
+                        </div>
+                    `;
+                }
+                
+                if (data.breakdown?.college_tier) {
+                    html += `
+                        <div class="result">
+                            <h3>🎓 College Information</h3>
+                            <p><strong>College:</strong> ${data.breakdown.college_name}</p>
+                            <p><strong>Tier:</strong> ${data.breakdown.college_tier.tier}</p>
+                            <p><strong>Multiplier:</strong> ${data.breakdown.college_multiplier}x</p>
+                        </div>
+                    `;
+                }
+                
+                resultsDiv.innerHTML = html;
+                
+            } catch (error) {
+                console.error('Error:', error);
+                resultsDiv.innerHTML = `
+                    <div class="result error">
+                        <h3>❌ Error</h3>
+                        <p>Failed to test growth projection: ${error.message}</p>
+                        <p>Check the browser console for more details.</p>
+                    </div>
+                `;
+            }
+        }
+        
+        // Auto-run test on page load
+        window.addEventListener('load', () => {
+            setTimeout(testGrowthProjection, 1000);
+        });
+    </script>
+</body>
+</html>

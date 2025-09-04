@@ -26,7 +26,7 @@ from loguru import logger
 import sys
 
 # Import our custom modules
-# Removed salary prediction imports
+from salary_calculator import OTSSalaryCalculator
 
 # Load environment variables
 load_dotenv()
@@ -54,7 +54,12 @@ cors_origins = os.getenv('CORS_ORIGINS', 'http://localhost:8080').split(',')
 CORS(app, origins=cors_origins)
 
 # Initialize our services
-# Removed salary prediction initialization
+try:
+    salary_calculator = OTSSalaryCalculator('ots_salary_config.json')
+    logger.info("OTS Salary Calculator initialized successfully")
+except Exception as e:
+    logger.error(f"Failed to initialize salary calculator: {e}")
+    salary_calculator = None
 
 
 @app.route('/')
@@ -82,7 +87,8 @@ def health_check():
             'status': 'healthy',
             'services': {
                 'api_version': '1.0.0',
-                'ats_analyzer': True
+                'ats_analyzer': True,
+                'salary_calculator': salary_calculator is not None
             },
             'version': '1.0.0'
         }
@@ -222,6 +228,120 @@ def analyze_job_description():
         logger.error(f"Job analysis error: {e}")
         return jsonify({
             'error': 'Internal server error during job analysis',
+            'details': str(e)
+        }), 500
+
+
+@app.route('/api/predict-salary', methods=['POST'])
+def predict_salary():
+    """
+    Predict salary based on resume analysis using OTS salary calculator
+    
+    Expected JSON payload:
+    {
+        "resume_text": "string"
+    }
+    
+    Returns:
+        JSON response with salary prediction and detailed breakdown
+    """
+    try:
+        if not salary_calculator:
+            return jsonify({
+                'error': 'Salary prediction service not available',
+                'fallback': True
+            }), 503
+        
+        data = request.get_json()
+        if not data or 'resume_text' not in data:
+            return jsonify({
+                'error': 'resume_text is required'
+            }), 400
+        
+        logger.info("Processing salary prediction request")
+        
+        # Calculate salary using OTS calculator
+        result = salary_calculator.calculate_salary(data['resume_text'])
+        
+        # Project salary growth
+        growth_projection_raw = salary_calculator.project_salary_growth(
+            result.final_salary, years=5, 
+            current_experience=result.breakdown['years_experience'],
+            current_role=result.breakdown['role']
+        )
+        
+        # Format growth projection for frontend
+        growth_projection = {
+            'year_1': {
+                'salary': growth_projection_raw['yearly_breakdown'].get('year_1', {}).get('salary', result.final_salary),
+                'percentage': growth_projection_raw['yearly_breakdown'].get('year_1', {}).get('total_growth_from_current', 0)
+            },
+            'year_3': {
+                'salary': growth_projection_raw['yearly_breakdown'].get('year_3', {}).get('salary', result.final_salary),
+                'percentage': growth_projection_raw['yearly_breakdown'].get('year_3', {}).get('total_growth_from_current', 0)
+            },
+            'year_5': {
+                'salary': growth_projection_raw['yearly_breakdown'].get('year_5', {}).get('salary', result.final_salary),
+                'percentage': growth_projection_raw['yearly_breakdown'].get('year_5', {}).get('total_growth_from_current', 0)
+            },
+            'role_transitions': growth_projection_raw.get('role_transitions', []),
+            'growth_factors': growth_projection_raw.get('growth_factors', {})
+        }
+        
+        # Format response with enhanced college tier information
+        response = {
+            'estimated_salary': result.final_salary,
+            'experience_level': result.experience_band,
+            'salary_range': {
+                'min': result.base_salary * 0.9,
+                'max': result.base_salary * 1.3
+            },
+            'breakdown': {
+                'base_salary': result.base_salary,
+                'college_premium': (result.final_salary - result.base_salary) if result.college_multiplier > 1.0 else 0,
+                'role_adjustment': 0,  # Can be enhanced later
+                'location_factor': result.location_multiplier,
+                'college_tier': {
+                    'tier': result.college_tier,
+                    'institution': result.breakdown.get('college_name', 'Unknown')
+                } if result.college_tier else None,
+                'college_multiplier': result.college_multiplier,
+                'years_experience': result.breakdown['years_experience'],
+                'college_name': result.breakdown['college_name'],
+                'graduation_year': result.breakdown['graduation_year'],
+                'identified_role': result.breakdown['role'],
+                'location': result.breakdown['location'],
+                'skills_identified': result.breakdown['skills']
+            },
+            'calculation_details': {
+                'premium_college_info': result.breakdown.get('premium_college_info', {}),
+                'multipliers': {
+                    'college_premium': result.college_multiplier,
+                    'role_adjustment': result.role_multiplier,
+                    'location_adjustment': result.location_multiplier,
+                    'skill_bonus': result.skill_multiplier
+                }
+            },
+            'growth_projection': growth_projection,
+            'confidence_factors': {
+                'experience_confidence': 'high' if result.breakdown['years_experience'] > 0 else 'low',
+                'college_confidence': 'high' if result.breakdown['college_name'] else 'medium',
+                'role_confidence': 'high' if result.breakdown['role'] != 'backend_developer' else 'medium',
+                'overall_confidence': 'high' if all([
+                    result.breakdown['years_experience'] > 0,
+                    result.breakdown['college_name'],
+                    len(result.breakdown['skills']) > 2
+                ]) else 'medium'
+            }
+        }
+        
+        logger.info(f"Salary prediction completed: ₹{result.final_salary} LPA for {result.experience_band} level")
+        return jsonify(response), 200
+        
+    except Exception as e:
+        logger.error(f"Salary prediction error: {e}")
+        return jsonify({
+            'error': 'Internal server error during salary prediction',
             'details': str(e)
         }), 500
 

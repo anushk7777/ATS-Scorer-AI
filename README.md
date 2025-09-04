@@ -8,6 +8,7 @@ The ATS Resume Analyzer is an advanced web application that provides comprehensi
 
 ### 🎯 Core Features
 - **Resume Analysis**: Upload and analyze resumes in PDF, DOC, or text format
+<<<<<<< HEAD
 - **ATS Scoring**: Comprehensive scoring system for ATS compatibility
 - **Format Analysis**: Evaluate resume structure and formatting
 - **Content Quality**: Analyze content depth and relevance
@@ -15,15 +16,6 @@ The ATS Resume Analyzer is an advanced web application that provides comprehensi
 - **ATS Readability**: Assess how well ATS systems can parse the resume
 - **Detailed Feedback**: Get specific recommendations for improvement
 - **Modern UI**: Beautiful, responsive interface with glassmorphism design
-
-### 🚀 Enhanced Features (v2.0)
-- **Gemini AI Integration**: Semantic keyword extraction using sentence transformers
-- **Advanced ML Model**: Retrained with semantically extracted features
-- **Real-time Matching**: Live skills matching with recommendations
-- **RESTful API**: Backend services for enhanced functionality
-- **Enhanced Salary Prediction**: AI-powered salary estimation using semantic analysis
-- **Skills Extraction**: Identify technical and soft skills using Gemini AI
-- **Experience Analysis**: Evaluate years of experience and expertise levels
 
 ## Technical Stack
 
@@ -41,15 +33,52 @@ The ATS Resume Analyzer is an advanced web application that provides comprehensi
 - **Keyword Analysis**: ATS-friendly keyword optimization
 - **Scoring System**: Comprehensive ATS compatibility scoring
 - **Report Generation**: Detailed feedback and recommendations
+=======
+- **Enhanced Salary Prediction**: AI-powered salary estimation using semantic analysis
+- **Skills Extraction**: Identify technical and soft skills using Gemini AI
+- **Experience Analysis**: Evaluate years of experience and expertise levels
+
+### 🚀 Enhanced Features (v2.0)
+- **Gemini AI Integration**: Semantic keyword extraction using sentence transformers
+- **Advanced ML Model**: Retrained with semantically extracted features
+- **Real-time Matching**: Live skills matching with recommendations
+- **RESTful API**: Backend services for enhanced functionality
+>>>>>>> 1aafc1989f0055cf7614dc9e9136fbc99af31dc5
 
 ## Architecture
 
 ```
+<<<<<<< HEAD
+┌─────────────────────────────────────────┐
+│              Frontend Application        │
+│              (HTML/CSS/JS)              │
+│                                         │
+│  ┌─────────────┐  ┌─────────────────┐   │
+│  │   Upload    │  │   Analysis      │   │
+│  │   System    │  │   Engine        │   │
+│  │             │  │                 │   │
+│  │ • File      │  │ • Format Check  │   │
+│  │   Handling  │  │ • Content Eval  │   │
+│  │ • Validation│  │ • Keyword Scan  │   │
+│  │ • Preview   │  │ • ATS Scoring   │   │
+│  └─────────────┘  └─────────────────┘   │
+│                                         │
+│  ┌─────────────────────────────────────┐ │
+│  │          Results Display            │ │
+│  │                                     │ │
+│  │ • Score Visualization               │ │
+│  │ • Detailed Analysis                 │ │
+│  │ • Improvement Suggestions           │ │
+│  │ • Report Generation                 │ │
+│  └─────────────────────────────────────┘ │
+└─────────────────────────────────────────┘
+=======
 ┌─────────────────┐    ┌──────────────────┐    ┌─────────────────┐
 │   Frontend      │    │   Backend API    │    │   Gemini AI     │
 │   (HTML/JS)     │◄──►│   (Flask)        │◄──►│   Service       │
 │                 │    │                  │    │                 │
 │ • Resume Upload │    │ • Salary Predict │    │ • Semantic      │
+
 │ • Results UI    │    │ • Skills Match   │    │ • Skill ID      │
 └─────────────────┘    └──────────────────┘    └─────────────────┘
                                 │
@@ -57,9 +86,11 @@ The ATS Resume Analyzer is an advanced web application that provides comprehensi
                        ┌──────────────────┐
                        │   ML Models      │
                        │                  │
+            
                        │ • Feature Eng.   │
                        │ • Predictions    │
                        └──────────────────┘
+>>>>>>> 1aafc1989f0055cf7614dc9e9136fbc99af31dc5
 ```
 
 ## Installation & Setup
@@ -144,6 +175,8 @@ CORS_ORIGINS=http://localhost:8080
    - Market data correlation
    - Location and industry factors
 
+
+
 4. **Upload Resume for Matching**
 5. **View Results**:
    - Overall match percentage
@@ -172,6 +205,7 @@ Content-Type: application/json
   "company_size": "string" (optional)
 }
 ```
+
 
 ## File Structure
 

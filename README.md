@@ -16,6 +16,15 @@ The ATS Resume Analyzer is an advanced web application that provides comprehensi
 - **Detailed Feedback**: Get specific recommendations for improvement
 - **Modern UI**: Beautiful, responsive interface with glassmorphism design
 
+### 🚀 Enhanced Features (v2.0)
+- **Gemini AI Integration**: Semantic keyword extraction using sentence transformers
+- **Advanced ML Model**: Retrained with semantically extracted features
+- **Real-time Matching**: Live skills matching with recommendations
+- **RESTful API**: Backend services for enhanced functionality
+- **Enhanced Salary Prediction**: AI-powered salary estimation using semantic analysis
+- **Skills Extraction**: Identify technical and soft skills using Gemini AI
+- **Experience Analysis**: Evaluate years of experience and expertise levels
+
 ## Technical Stack
 
 ### Frontend Technologies
@@ -36,29 +45,21 @@ The ATS Resume Analyzer is an advanced web application that provides comprehensi
 ## Architecture
 
 ```
-┌─────────────────────────────────────────┐
-│              Frontend Application        │
-│              (HTML/CSS/JS)              │
-│                                         │
-│  ┌─────────────┐  ┌─────────────────┐   │
-│  │   Upload    │  │   Analysis      │   │
-│  │   System    │  │   Engine        │   │
-│  │             │  │                 │   │
-│  │ • File      │  │ • Format Check  │   │
-│  │   Handling  │  │ • Content Eval  │   │
-│  │ • Validation│  │ • Keyword Scan  │   │
-│  │ • Preview   │  │ • ATS Scoring   │   │
-│  └─────────────┘  └─────────────────┘   │
-│                                         │
-│  ┌─────────────────────────────────────┐ │
-│  │          Results Display            │ │
-│  │                                     │ │
-│  │ • Score Visualization               │ │
-│  │ • Detailed Analysis                 │ │
-│  │ • Improvement Suggestions           │ │
-│  │ • Report Generation                 │ │
-│  └─────────────────────────────────────┘ │
-└─────────────────────────────────────────┘
+┌─────────────────┐    ┌──────────────────┐    ┌─────────────────┐
+│   Frontend      │    │   Backend API    │    │   Gemini AI     │
+│   (HTML/JS)     │◄──►│   (Flask)        │◄──►│   Service       │
+│                 │    │                  │    │                 │
+│ • Resume Upload │    │ • Salary Predict │    │ • Semantic      │
+│ • Results UI    │    │ • Skills Match   │    │ • Skill ID      │
+└─────────────────┘    └──────────────────┘    └─────────────────┘
+                                │
+                                ▼
+                       ┌──────────────────┐
+                       │   ML Models      │
+                       │                  │
+                       │ • Feature Eng.   │
+                       │ • Predictions    │
+                       └──────────────────┘
 ```
 
 ## Installation & Setup
@@ -143,16 +144,6 @@ CORS_ORIGINS=http://localhost:8080
    - Market data correlation
    - Location and industry factors
 
-### Job Description Matching
-
-1. **Switch to Job Matching Tab**
-2. **Enter Job Description**: Paste the complete job posting
-3. **Analyze Requirements**: System extracts:
-   - Required skills
-   - Preferred qualifications
-   - Experience requirements
-   - Education needs
-
 4. **Upload Resume for Matching**
 5. **View Results**:
    - Overall match percentage
@@ -179,27 +170,6 @@ Content-Type: application/json
   "job_title": "string" (optional),
   "location": "string" (optional),
   "company_size": "string" (optional)
-}
-```
-
-### Job Description Analysis
-```http
-POST /api/analyze-job
-Content-Type: application/json
-
-{
-  "job_description": "string"
-}
-```
-
-### Resume-Job Matching
-```http
-POST /api/match-job
-Content-Type: application/json
-
-{
-  "job_description": "string",
-  "resume_text": "string"
 }
 ```
 

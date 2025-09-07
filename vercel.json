@@ -27,11 +27,5 @@
   "env": {
     "FLASK_ENV": "production",
     "CORS_ORIGINS": "*"
-  },
-  "functions": {
-    "app.py": {
-      "memory": 1024,
-      "maxDuration": 30
-    }
   }
 }

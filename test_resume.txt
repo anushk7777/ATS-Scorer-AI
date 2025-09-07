@@ -1,0 +1,13 @@
+John Doe
+Software Engineer
+
+Experience:
+- 3 years at Tech Corp developing web applications
+- Led team of 5 developers
+- Improved system performance by 30%
+
+Skills:
+Python, JavaScript, React, Node.js
+
+Education:
+BS Computer Science, State University, 2020

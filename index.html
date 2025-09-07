@@ -2528,31 +2528,16 @@
             if (emailRegex.test(text)) {
                 contactScore += config.contactInfo.email;
                 analysis.details.push('✓ Professional email address found');
-            } else {
-                // Only suggest email if resume has substantial content but missing contact info
-                if (text.length > 200 && (text.match(/\b(experience|education|skills|work)\b/gi) || []).length > 2) {
-                    analysis.suggestions.push('Add a professional email address');
-                }
             }
 
             if (phoneRegex.test(text)) {
                 contactScore += config.contactInfo.phone;
                 analysis.details.push('✓ Phone number found');
-            } else {
-                // Only suggest phone number if email is present but phone is missing
-                if (emailRegex.test(text)) {
-                    analysis.suggestions.push('Include a phone number');
-                }
             }
 
             if (linkedinRegex.test(text)) {
                 contactScore += config.contactInfo.linkedin;
                 analysis.details.push('✓ LinkedIn profile included');
-            } else {
-                // Only suggest LinkedIn if other contact info is present
-                if (emailRegex.test(text) || phoneRegex.test(text)) {
-                    analysis.suggestions.push('Consider adding LinkedIn profile URL');
-                }
             }
 
             // Enhanced section analysis
@@ -2578,11 +2563,6 @@
                 if (section.regex.test(text)) {
                     sectionScore += section.points;
                     analysis.details.push(`✓ ${section.name} section found`);
-                } else {
-                    // Only suggest missing sections if resume has substantial content
-                    if (text.length > 200) {
-                        analysis.suggestions.push(`Add a ${section.name} section`);
-                    }
                 }
             });
 
@@ -2592,11 +2572,6 @@
             if (headingMatches && headingMatches.length >= 3) {
                 structureScore += config.structure.clearHeadings;
                 analysis.details.push('✓ Clear section headings detected');
-            } else {
-                // Only suggest headings if resume has multiple sections but poor formatting
-                if (text.length > 300 && (text.match(/\n/g) || []).length > 10) {
-                    analysis.suggestions.push('Use clear, consistent section headings');
-                }
             }
 
             // Check for consistent formatting (bullet points, dates, etc.)
@@ -2608,11 +2583,6 @@
             if (bulletMatches && bulletMatches.length >= 3 && dateMatches && dateMatches.length >= 2) {
                 structureScore += config.structure.consistentFormatting;
                 analysis.details.push('✓ Consistent formatting detected');
-            } else {
-                // Only suggest formatting improvements if there's experience content but inconsistent formatting
-                if (text.match(/\b(experience|work|employment|job|position)\b/gi) && text.length > 400) {
-                    analysis.suggestions.push('Use consistent formatting for dates and bullet points');
-                }
             }
 
             // Calculate final score and breakdown
@@ -2706,12 +2676,6 @@
             } else if (totalMetrics >= config.quantifiableAchievements.minimum) {
                 achievementScore = Math.round((totalMetrics / config.quantifiableAchievements.optimal) * config.quantifiableAchievements.points);
                 analysis.details.push(`✓ Good quantifiable achievements (${totalMetrics} metrics found)`);
-            } else {
-                // Only suggest adding metrics if there's substantial experience content but few metrics
-                const hasExperienceContent = text.match(/\b(experience|work|employment|job|position|role|responsibility|achievement|accomplish|manage|lead|develop|implement)\b/gi);
-                if (hasExperienceContent && hasExperienceContent.length > 5 && text.length > 500) {
-                    analysis.suggestions.push(`Add more quantifiable achievements and metrics (found ${totalMetrics}, need at least ${config.quantifiableAchievements.minimum})`);
-                }
             }
 
             // Enhanced AI analysis integration
@@ -2732,11 +2696,6 @@
                 if (aiAnalysis.overallScore && aiAnalysis.overallScore >= 70) {
                     aiEnhancementScore += 5;
                     analysis.details.push('🤖 High-quality content detected by AI');
-                }
-            } else {
-                // Only suggest AI analysis if resume has substantial content that could benefit from AI insights
-                if (text.length > 300 && (text.match(/\b(experience|skills|education|work)\b/gi) || []).length > 3) {
-                    analysis.suggestions.push('Enable AI analysis for more detailed content insights');
                 }
             }
 
@@ -2864,26 +2823,13 @@
                 analysis.suggestions.push(`⚙️ Include ${config.technicalKeywords.minRequired - technicalFound.length} more technical implementation keywords`);
             }
             
-            if (softFound.length < config.softSkills.minRequired) {
-                analysis.suggestions.push(`🤝 Add ${config.softSkills.minRequired - softFound.length} more soft skill keywords`);
-            }
+
             
-            // Add general keyword optimization tips if no AI analysis and resume has professional content
-            if (!aiAnalysis || !aiAnalysis.keywordOptimization) {
-                if (text.length > 400 && (coreFound.length > 0 || technicalFound.length > 0 || softFound.length > 0)) {
-                    analysis.suggestions.push('💡 Enable AI analysis for personalized keyword recommendations');
-                    analysis.suggestions.push('📋 Review job postings in your field for relevant keywords');
-                }
-            }
+
             
             // Add performance feedback based on overall score
             if (analysis.score >= config.excellentThreshold) {
                 analysis.details.push('🌟 Excellent keyword optimization!');
-            } else if (analysis.score < config.improvementThreshold) {
-                // Only suggest improvement if there's actual content to improve
-                if (text.length > 200 && (text.match(/\b(experience|skills|work|job)\b/gi) || []).length > 2) {
-                    analysis.suggestions.push('⚠️ Keyword optimization needs significant improvement');
-                }
             }
 
             return analysis;
@@ -2918,7 +2864,6 @@
                     config.specialCharacters.maxPenalty
                 );
                 specialCharScore = Math.max(specialCharScore - penalty, 0);
-                analysis.suggestions.push(`🚫 Reduce ${specialChars - config.specialCharacters.maxAllowed} special characters that may confuse ATS systems`);
             } else {
                 analysis.details.push('✅ Optimal special character usage detected');
             }
@@ -2933,10 +2878,6 @@
             } else if (densityRatio > config.contentDensity.maxRatio) {
                 const penalty = Math.round((densityRatio - config.contentDensity.maxRatio) * config.contentDensity.penaltyMultiplier);
                 contentDensityScore = Math.max(contentDensityScore - penalty, 0);
-                // Only suggest content density improvement if there's substantial content with formatting issues
-                if (text.length > 500 && lines.length > 10) {
-                    analysis.suggestions.push('📝 Improve content density - consolidate short lines and add more detail');
-                }
             }
             
             // Calculate base score from rule-based analysis
@@ -3000,11 +2941,6 @@
                     // ATS compatibility score feedback
                     if (aiAnalysis.atsCompatibility.score >= config.excellentThreshold) {
                         analysis.details.push('🎯 Excellent ATS compatibility detected!');
-                    } else if (aiAnalysis.atsCompatibility.score < config.improvementThreshold) {
-                        // Only suggest ATS improvement if there's substantial content to improve
-                        if (text.length > 300) {
-                            analysis.suggestions.push('⚠️ ATS compatibility needs significant improvement');
-                        }
                     }
                 }
                 
@@ -3022,12 +2958,6 @@
             // Enhanced performance feedback based on SCORING_CONFIG thresholds
             if (analysis.score >= config.excellentThreshold) {
                 analysis.details.push('🌟 Outstanding readability and ATS compatibility!');
-            } else if (analysis.score < config.improvementThreshold) {
-                // Only suggest improvements if there's substantial content that could be improved
-                if (text.length > 300 && (text.match(/\b(experience|education|skills|work)\b/gi) || []).length > 2) {
-                    analysis.suggestions.push('⚠️ Readability and ATS compatibility need significant improvement');
-                    analysis.suggestions.push('📋 Consider using simpler formatting and standard resume sections');
-                }
             }
 
             return analysis;

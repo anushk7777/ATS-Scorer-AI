@@ -3205,7 +3205,7 @@
         }
 
         /**
-         * Generate actionable improvement suggestions with prioritization
+         * Generate actionable improvement suggestions with prioritization based on actual analysis results
          * @param {Object} analysisResults - Complete analysis results including AI insights
          * @returns {Array} Array of prioritized suggestion objects
          */
@@ -3214,14 +3214,14 @@
             
             // High Priority Suggestions (Critical for ATS success)
             
-            // ATS Compatibility Issues (Highest Priority)
+            // ATS Compatibility Issues (Highest Priority) - Only if AI analysis detected specific issues
             if (analysisResults.aiAnalysis && analysisResults.aiAnalysis.atsCompatibility) {
                 const ats = analysisResults.aiAnalysis.atsCompatibility;
-                if (ats.score < 70) {
+                if (ats.score < 70 && ats.feedback) {
                     suggestions.push({
                         priority: 'high',
-                        title: 'Critical ATS Compatibility Issues',
-                        description: ats.feedback || 'Your resume has formatting issues that may prevent ATS systems from reading it properly.',
+                        title: 'ATS Compatibility Needs Attention',
+                        description: ats.feedback,
                         impact: 'High - May prevent your resume from being seen by recruiters'
                     });
                 }
@@ -3229,46 +3229,61 @@
                 if (ats.formatIssues && ats.formatIssues.length > 0) {
                     suggestions.push({
                         priority: 'high',
-                        title: 'Fix Format Issues',
-                        description: `Address these ATS format problems: ${ats.formatIssues.slice(0, 3).join(', ')}`,
+                        title: 'Fix Detected Format Issues',
+                        description: `Address these specific ATS format problems: ${ats.formatIssues.slice(0, 3).join(', ')}`,
                         impact: 'High - Improves ATS parsing accuracy'
                     });
                 }
             }
             
-            // Missing Critical Keywords
+            // Missing Critical Keywords - Only if specific missing keywords are identified
             if (analysisResults.keywords.score < 60) {
-                suggestions.push({
-                    priority: 'high',
-                    title: 'Add Industry-Specific Keywords',
-                    description: 'Your resume lacks important keywords that recruiters and ATS systems look for.',
-                    impact: 'High - Significantly improves search visibility'
-                });
+                // Check if we have specific missing keywords from AI analysis
+                const missingKeywords = analysisResults.aiAnalysis?.missingKeywords || [];
+                if (missingKeywords.length > 0) {
+                    suggestions.push({
+                        priority: 'high',
+                        title: 'Add Missing Industry Keywords',
+                        description: `Consider adding these important keywords: ${missingKeywords.slice(0, 5).join(', ')}`,
+                        impact: 'High - Significantly improves search visibility'
+                    });
+                } else if (analysisResults.keywords.suggestions && analysisResults.keywords.suggestions.length > 0) {
+                    // Fallback to rule-based keyword suggestions
+                    const keywordSuggestion = analysisResults.keywords.suggestions[0];
+                    if (keywordSuggestion.includes('keywords') || keywordSuggestion.includes('add')) {
+                        suggestions.push({
+                            priority: 'high',
+                            title: 'Improve Keyword Coverage',
+                            description: keywordSuggestion,
+                            impact: 'High - Improves search visibility'
+                        });
+                    }
+                }
             }
             
-            // Medium Priority Suggestions (Important for competitiveness)
+            // Medium Priority Suggestions (Important for competitiveness) - Only if specific issues detected
             
-            // Industry Alignment
+            // Industry Alignment - Only if AI detected specific industry and alignment issues
             if (analysisResults.aiAnalysis && analysisResults.aiAnalysis.industryAlignment) {
                 const industry = analysisResults.aiAnalysis.industryAlignment;
-                if (industry.alignmentScore < 70) {
+                if (industry.alignmentScore < 70 && industry.detectedIndustry) {
                     suggestions.push({
                         priority: 'medium',
-                        title: `Improve ${industry.detectedIndustry || 'Industry'} Alignment`,
-                        description: 'Tailor your resume content to better match industry standards and expectations.',
+                        title: `Improve ${industry.detectedIndustry} Industry Alignment`,
+                        description: `Your resume shows ${industry.alignmentScore}% alignment with ${industry.detectedIndustry} industry standards. Consider adding more industry-specific terminology and experience.`,
                         impact: 'Medium - Increases relevance for target roles'
                     });
                 }
             }
             
-            // Competitive Positioning
+            // Competitive Positioning - Only if AI analysis provides specific feedback
             if (analysisResults.aiAnalysis && analysisResults.aiAnalysis.competitiveAnalysis) {
                 const comp = analysisResults.aiAnalysis.competitiveAnalysis;
-                if (comp.marketPosition === 'below_average') {
+                if (comp.marketPosition === 'below_average' && comp.feedback) {
                     suggestions.push({
                         priority: 'medium',
                         title: 'Strengthen Competitive Position',
-                        description: 'Your resume needs more compelling achievements and differentiators to stand out.',
+                        description: comp.feedback,
                         impact: 'Medium - Helps you compete better against other candidates'
                     });
                 }
@@ -3276,41 +3291,45 @@
                 if (comp.gaps && comp.gaps.length > 0) {
                     suggestions.push({
                         priority: 'medium',
-                        title: 'Address Skill Gaps',
+                        title: 'Address Identified Skill Gaps',
                         description: `Consider highlighting or developing these areas: ${comp.gaps.slice(0, 3).join(', ')}`,
                         impact: 'Medium - Fills important competency gaps'
                     });
                 }
             }
             
-            // Content Quality Issues
-            if (analysisResults.content.score < 70) {
+            // Content Quality Issues - Only if specific content suggestions exist
+            if (analysisResults.content.score < 70 && analysisResults.content.suggestions && analysisResults.content.suggestions.length > 0) {
+                const contentSuggestion = analysisResults.content.suggestions[0];
                 suggestions.push({
                     priority: 'medium',
                     title: 'Enhance Content Quality',
-                    description: 'Improve the depth and relevance of your professional experience descriptions.',
+                    description: contentSuggestion,
                     impact: 'Medium - Makes your experience more compelling'
                 });
             }
             
-            // Low Priority Suggestions (Nice to have improvements)
+            // Low Priority Suggestions (Nice to have improvements) - Only if specific feedback available
             
-            // Professional Summary Enhancement
-            if (analysisResults.aiAnalysis && analysisResults.aiAnalysis.professionalSummary) {
+            // Professional Summary Enhancement - Only if AI provides specific feedback
+            if (analysisResults.aiAnalysis && analysisResults.aiAnalysis.professionalSummary && 
+                typeof analysisResults.aiAnalysis.professionalSummary === 'string' && 
+                analysisResults.aiAnalysis.professionalSummary.length > 50) {
                 suggestions.push({
                     priority: 'low',
                     title: 'Optimize Professional Summary',
-                    description: 'Refine your professional summary to better capture your value proposition.',
+                    description: analysisResults.aiAnalysis.professionalSummary,
                     impact: 'Low - Improves first impression'
                 });
             }
             
-            // Format and Structure Improvements
-            if (analysisResults.format.score < 80) {
+            // Format and Structure Improvements - Only if specific format suggestions exist
+            if (analysisResults.format.score < 80 && analysisResults.format.suggestions && analysisResults.format.suggestions.length > 0) {
+                const formatSuggestion = analysisResults.format.suggestions[0];
                 suggestions.push({
                     priority: 'low',
                     title: 'Polish Format and Structure',
-                    description: 'Fine-tune formatting, spacing, and section organization for better readability.',
+                    description: formatSuggestion,
                     impact: 'Low - Enhances visual appeal and organization'
                 });
             }
@@ -3337,22 +3356,34 @@
                 });
             }
             
-            // Fallback to basic suggestions if no AI analysis
-            if (!analysisResults.aiAnalysis) {
-                const basicSuggestions = [
-                    ...analysisResults.format.suggestions,
-                    ...analysisResults.content.suggestions,
-                    ...analysisResults.keywords.suggestions,
-                    ...analysisResults.readability.suggestions
-                ];
+            // Fallback to basic suggestions if no AI analysis - Only use actual suggestions from analysis
+            if (!analysisResults.aiAnalysis && suggestions.length < 3) {
+                const basicSuggestions = [];
                 
-                basicSuggestions.forEach((suggestion, index) => {
-                    suggestions.push({
-                        priority: index < 3 ? 'high' : index < 6 ? 'medium' : 'low',
-                        title: 'Improvement Recommendation',
-                        description: suggestion,
-                        impact: 'Varies - General improvement'
-                    });
+                // Only add suggestions that actually exist and are meaningful
+                if (analysisResults.format.suggestions && analysisResults.format.suggestions.length > 0) {
+                    basicSuggestions.push(...analysisResults.format.suggestions.filter(s => s && s.length > 10));
+                }
+                if (analysisResults.content.suggestions && analysisResults.content.suggestions.length > 0) {
+                    basicSuggestions.push(...analysisResults.content.suggestions.filter(s => s && s.length > 10));
+                }
+                if (analysisResults.keywords.suggestions && analysisResults.keywords.suggestions.length > 0) {
+                    basicSuggestions.push(...analysisResults.keywords.suggestions.filter(s => s && s.length > 10));
+                }
+                if (analysisResults.readability.suggestions && analysisResults.readability.suggestions.length > 0) {
+                    basicSuggestions.push(...analysisResults.readability.suggestions.filter(s => s && s.length > 10));
+                }
+                
+                // Only create suggestions if we have meaningful content
+                basicSuggestions.slice(0, 6).forEach((suggestion, index) => {
+                    if (suggestion && suggestion.trim().length > 10) {
+                        suggestions.push({
+                            priority: index < 2 ? 'high' : index < 4 ? 'medium' : 'low',
+                            title: 'Improvement Recommendation',
+                            description: suggestion.trim(),
+                            impact: index < 2 ? 'High - Important improvement' : index < 4 ? 'Medium - Helpful enhancement' : 'Low - General improvement'
+                        });
+                    }
                 });
             }
             

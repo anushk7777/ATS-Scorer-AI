@@ -8,6 +8,7 @@ import sys
 import os
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
+from datetime import datetime
 from job_matching_system import AdvancedJobMatcher
 from gemini_semantic_extractor import ExtractedSkills, JobRequirements
 
@@ -87,7 +88,10 @@ def test_full_matching_pipeline():
             soft_skills=["Communication", "Problem solving", "Team collaboration"],
             programming_languages=["Python", "JavaScript"],
             frameworks_tools=["Django", "React", "Git"],
-            certifications=["AWS Certified Developer"]
+            certifications=["AWS Certified Developer"],
+            domains=["Web Development", "Cloud Computing"],
+            confidence_score=0.85,
+            extraction_timestamp=datetime.now().isoformat()
         )
         
         # Sample job requirements
@@ -95,8 +99,11 @@ def test_full_matching_pipeline():
             required_skills=["Python programming", "Web development", "Database management"],
             preferred_skills=["Cloud platforms", "Frontend frameworks"],
             soft_skills_required=["Communication", "Teamwork"],
-            years_experience_required=3,
-            education_level="Bachelor's degree"
+            experience_required="3+ years",
+            job_role="Senior Developer",
+            industry="Technology",
+            education_requirements=["Bachelor's degree in Computer Science"],
+            confidence_score=0.9
         )
         
         # Test enhanced skill analysis

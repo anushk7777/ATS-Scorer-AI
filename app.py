@@ -115,7 +115,7 @@ def health_check():
 @app.route('/api/match-job', methods=['POST'])
 def match_job_description():
     """
-    Job description matching endpoint
+    Job description matching endpoint with dynamic insights generation
     
     Expected JSON payload:
     {
@@ -124,7 +124,7 @@ def match_job_description():
     }
     
     Returns:
-        JSON response with matching analysis and recommendations
+        JSON response with matching analysis, recommendations and dynamic insights
     """
     try:
         if not gemini_extractor:
@@ -155,7 +155,45 @@ def match_job_description():
             resume_skills, job_requirements
         )
         
-        # Return job matching analysis in expected format
+        # Generate dynamic insights based on the analysis
+        insights = {
+            'skill_gaps': [
+                {
+                    'skill': skill,
+                    'importance': 'critical' if skill in job_requirements.required_skills else 'preferred',
+                    'learning_resources': f"Online courses and documentation for {skill}",
+                    'estimated_learning_time': '2-3 months' if skill in job_requirements.required_skills else '1-2 months'
+                }
+                for skill in match_result.missing_skills
+            ],
+            'strengths': [
+                {
+                    'skill': skill,
+                    'relevance': 'high' if skill in job_requirements.required_skills else 'medium',
+                    'application': 'Core job requirement' if skill in job_requirements.required_skills else 'Value-add skill'
+                }
+                for skill in match_result.matched_skills
+            ],
+            'experience_insights': {
+                'level_match': 'Sufficient' if resume_experience.years_of_experience >= float(job_requirements.experience_required.split('-')[0]) else 'Insufficient',
+                'growth_potential': 'High' if resume_experience.years_of_experience < float(job_requirements.experience_required.split('-')[1]) else 'Moderate',
+                'role_alignment': 'Direct' if any(role.lower() in job_requirements.job_role.lower() for role in resume_experience.job_roles) else 'Related'
+            },
+            'improvement_areas': [
+                {
+                    'area': f"Gain practical experience in {skill}",
+                    'priority': 'High' if skill in job_requirements.required_skills else 'Medium',
+                    'action_items': [
+                        f"Complete projects using {skill}",
+                        f"Obtain certification in {skill}",
+                        f"Contribute to open source projects using {skill}"
+                    ]
+                }
+                for skill in match_result.missing_skills[:3]  # Focus on top 3 missing skills
+            ]
+        }
+        
+        # Return job matching analysis with dynamic insights
         result = {
             'overall_match_score': match_result.overall_match_score * 100,
             'skills_analysis': {
@@ -176,7 +214,8 @@ def match_job_description():
                 'certifications': resume_skills.certifications,
                 'years_experience': resume_experience.years_of_experience,
                 'experience_level': resume_experience.experience_level
-            }
+            },
+            'insights': insights  # Add dynamic insights to the response
         }
         
         logger.info(f"Job matching completed with score: {match_result.overall_match_score * 100:.1f}%")

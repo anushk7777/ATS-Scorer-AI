@@ -6,10 +6,134 @@
     <title>ATS Resume Scorer - AI-Powered Resume Analysis</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <script>
+        // Gradient Circular Loading Bar Logic
+        /**
+         * Shows the loading bar and animates the score
+         * @param {number} score - The ATS score to display (0-100)
+         * @param {number} avg - The average score (optional)
+         */
+        function showScoreLoader(score, avg) {
+            const loader = document.getElementById('score-loader');
+            const bar = loader.querySelector('.circular-bar');
+            const text = loader.querySelector('.circular-text');
+            const scoreBox = document.getElementById('score-box');
+            const avgBox = document.getElementById('score-avg');
+            loader.style.display = 'flex';
+            avgBox.textContent = avg || 75;
+            // Animate score
+            let current = 0;
+            const maxScore = 100;
+            const radius = 80;
+            const circumference = 2 * Math.PI * radius;
+            function animate() {
+                if (current < score) {
+                    current += 1;
+                    const percent = current / maxScore;
+                    const dash = percent * circumference;
+                    bar.setAttribute('stroke-dasharray', `${dash} ${circumference-dash}`);
+                    text.textContent = current;
+                    scoreBox.textContent = `${current}/100`;
+                    requestAnimationFrame(animate);
+                } else {
+                    bar.setAttribute('stroke-dasharray', `${score/maxScore*circumference} ${circumference-score/maxScore*circumference}`);
+                    text.textContent = score;
+                    scoreBox.textContent = `${score}/100`;
+                }
+            }
+            animate();
+        }
+        /**
+         * Hides the loading bar
+         */
+        function hideScoreLoader() {
+            const loader = document.getElementById('score-loader');
+            loader.style.display = 'none';
+        }
+        // Example usage: showScoreLoader(63, 75);
+    </script>
     <!-- <script src="./salary-prediction.js"></script> -->
     <style>
         /* Import Premium Fonts */
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap');
+        /* Gradient Circular Loading Bar Styles */
+        .loading-bar-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 260px;
+            position: relative;
+        }
+        .circular-loader {
+            width: 200px;
+            height: 200px;
+            position: relative;
+        }
+        .circular-bg {
+            stroke: #22223b;
+            stroke-width: 16;
+        }
+        .circular-bar {
+            stroke: url(#gradientStroke);
+            stroke-width: 16;
+            stroke-linecap: round;
+            transition: stroke-dasharray 0.6s cubic-bezier(0.4,0,0.2,1);
+        }
+        .circular-text {
+            font-size: 64px;
+            font-weight: 800;
+            fill: url(#textGradient);
+            text-anchor: middle;
+            dominant-baseline: middle;
+            font-family: 'Inter', sans-serif;
+        }
+        .circular-label {
+            font-size: 24px;
+            font-weight: 600;
+            fill: #fff;
+            text-anchor: middle;
+            dominant-baseline: middle;
+            font-family: 'Inter', sans-serif;
+        }
+        .circular-score-box {
+            position: absolute;
+            left: 50%;
+            top: 70%;
+            transform: translate(-50%, -50%);
+            background: var(--glass-bg-strong);
+            border-radius: 16px;
+            padding: 10px 32px;
+            font-size: 28px;
+            font-weight: 700;
+            color: #fff;
+            box-shadow: var(--shadow-soft);
+            border: 1px solid var(--glass-border);
+        }
+        .circular-avg-box {
+            position: absolute;
+            left: 20%;
+            top: 90%;
+            transform: translate(-50%, -50%);
+            background: var(--glass-bg);
+            border-radius: 12px;
+            padding: 6px 18px;
+            font-size: 18px;
+            color: #fff;
+            border: 1px solid var(--glass-border);
+        }
+        .circular-max-box {
+            position: absolute;
+            left: 80%;
+            top: 10%;
+            transform: translate(-50%, -50%);
+            background: var(--glass-bg);
+            border-radius: 12px;
+            padding: 6px 18px;
+            font-size: 18px;
+            color: #fff;
+            border: 1px solid var(--glass-border);
+        }
+    
         
         /* Ultra-Modern Design System Variables */
         :root {
@@ -784,6 +908,32 @@
     </style>
 </head>
 <body>
+        <!-- Gradient Circular Loading Bar Component -->
+        <div id="score-loader" class="loading-bar-container" style="display:none;">
+            <svg class="circular-loader" viewBox="0 0 200 200">
+                <defs>
+                    <linearGradient id="gradientStroke" x1="0" y1="0" x2="1" y2="1">
+                        <stop offset="0%" stop-color="#6366f1"/>
+                        <stop offset="25%" stop-color="#8b5cf6"/>
+                        <stop offset="50%" stop-color="#a855f7"/>
+                        <stop offset="75%" stop-color="#d946ef"/>
+                        <stop offset="100%" stop-color="#ec4899"/>
+                    </linearGradient>
+                    <linearGradient id="textGradient" x1="0" y1="0" x2="1" y2="1">
+                        <stop offset="0%" stop-color="#3b82f6"/>
+                        <stop offset="50%" stop-color="#8b5cf6"/>
+                        <stop offset="100%" stop-color="#ec4899"/>
+                    </linearGradient>
+                </defs>
+                <circle class="circular-bg" cx="100" cy="100" r="80" fill="none"/>
+                <circle class="circular-bar" cx="100" cy="100" r="80" fill="none" stroke-dasharray="0 502"/>
+                <text class="circular-text" x="100" y="110">0</text>
+                <text class="circular-label" x="100" y="150">ATS SCORE</text>
+            </svg>
+            <div class="circular-score-box" id="score-box">0/100</div>
+            <div class="circular-avg-box">Avg: <span id="score-avg">75</span></div>
+            <div class="circular-max-box">Max</div>
+        </div>
 
     
     <!-- Ultra-Premium Hero Section with Dynamic Background -->
@@ -3375,7 +3525,11 @@
                 console.log('Sending salary prediction request...');
                 
                 // Send request to salary prediction API with JSON payload
-                const response = await fetch('http://localhost:5000/api/predict-salary', {
+                // Detect environment and use appropriate API URL
+                const apiUrl = window.location.hostname === 'localhost' 
+                    ? 'http://localhost:5000/api/predict-salary'
+                    : '/api/predict-salary';
+                const response = await fetch(apiUrl, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -4259,7 +4413,8 @@ Detailed Scores:
             try {
                 showMessage('Calculating salary prediction...', 'info');
                 
-                const response = await fetch('http://localhost:5000/api/predict-salary', {
+                // Use the same environment-aware API URL
+                const response = await fetch(apiUrl, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',

@@ -81,7 +81,11 @@
             resultsDiv.innerHTML = '<div class="result">Testing... Please wait.</div>';
             
             try {
-                const response = await fetch('http://localhost:5000/api/predict-salary', {
+                // Detect environment and use appropriate API URL
+                const apiUrl = window.location.hostname === 'localhost' 
+                    ? 'http://localhost:5000/api/predict-salary'
+                    : '/api/predict-salary';
+                const response = await fetch(apiUrl, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'

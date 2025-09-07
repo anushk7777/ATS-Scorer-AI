@@ -169,21 +169,25 @@ CORS_ORIGINS=http://localhost:8080
    - Education background
    - Certifications
 
-3. **Salary Prediction**: Get enhanced predictions based on:
+3. **Dynamic Insights Generation**: Get comprehensive analysis:
+   - Skill gap analysis with confidence scores
+   - Candidate strengths and expertise areas
+   - Experience alignment insights
+   - Personalized improvement recommendations
+   - Career growth opportunities
+
+4. **Salary Prediction**: Get enhanced predictions based on:
    - Semantic skill analysis
    - Experience evaluation
    - Market data correlation
    - Location and industry factors
 
-
-
-4. **Upload Resume for Matching**
-5. **View Results**:
+5. **Job Matching**: Upload job description for matching:
    - Overall match percentage
-   - Matched skills
-   - Missing skills
-   - Additional skills
-   - Improvement recommendations
+   - Matched skills with confidence scores
+   - Missing skills with recommendations
+   - Additional relevant skills
+   - Detailed improvement roadmap
 
 ## API Endpoints
 
